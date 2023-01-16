@@ -1,9 +1,17 @@
 # Import necessary libraries
 library(jsonlite)
 library(dplyr)
+library(here)
+
+# Get the path to the project root directory
+project_dir <- here::here()
+
+# Use the project root directory as a base for other file paths
+raw_data_file <- file.path(project_dir, "data", "raw_data", "CCxG_Ditrans_10000.json")
+
 
 # Load the CCxG propbank-annotated .json corpus data
-corpus_df <- fromJSON("C:/Users/tommo/Documents/VS_Code/R_Ditransative/CCxG_Ditrans_10000.json")
+corpus_df <- fromJSON(raw_data_file)
 
 # Convert JSON data to data frame
 corpus_df <- as.data.frame(corpus_df)
