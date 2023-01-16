@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Thomas Moerman">
+
+<title>Computational Construction Grammar and Collostructional Analysis on a PropBank-annotated Corpus</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="CCxG_Coll_files/libs/clipboard/clipboard.min.js"></script>
+<script src="CCxG_Coll_files/libs/quarto-html/quarto.js"></script>
+<script src="CCxG_Coll_files/libs/quarto-html/popper.min.js"></script>
+<script src="CCxG_Coll_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="CCxG_Coll_files/libs/quarto-html/anchor.min.js"></script>
+<link href="CCxG_Coll_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="CCxG_Coll_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="CCxG_Coll_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="CCxG_Coll_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="CCxG_Coll_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+<script src="CCxG_Coll_files/libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="CCxG_Coll_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="toc-section-number">1</span>  Introduction</a></li>
+  <li><a href="#sample-paper_filesfigure-htmlexample-ontonotes-annotation.png-vaneeckeppt" id="toc-sample-paper_filesfigure-htmlexample-ontonotes-annotation.png-vaneeckeppt" class="nav-link" data-scroll-target="#sample-paper_filesfigure-htmlexample-ontonotes-annotation.png-vaneeckeppt"><span class="toc-section-number">2</span>  []#(sample-paper_files/figure-html/example-ontonotes-annotation.png/) <span class="citation" data-cites="VanEeckePPT">(<strong>VanEeckePPT?</strong>)</span></a></li>
+  <li><a href="#data-processing-and-methodology" id="toc-data-processing-and-methodology" class="nav-link" data-scroll-target="#data-processing-and-methodology"><span class="toc-section-number">3</span>  Data Processing and Methodology</a></li>
+  <li><a href="#results-and-discussion" id="toc-results-and-discussion" class="nav-link" data-scroll-target="#results-and-discussion"><span class="toc-section-number">4</span>  Results and Discussion</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="toc-section-number">5</span>  Conclusion</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Computational Construction Grammar and Collostructional Analysis on a PropBank-annotated Corpus</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Thomas Moerman </p>
+          </div>
+  </div>
+    
+    
+  </div>
+  
+<div>
+  <div class="abstract">
+    <div class="abstract-title">Abstract</div>
+    This paper uses Computational Construction Grammar approach and collostructional analysis on a PropBank-annotated corpus. It was written during an internship at the VUB AI-Lab. The corpus and dataset were accessed through this internship.
+  </div>
+</div>
+
+</header>
+
+<section id="introduction" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
+<p>Construction Grammar (CxG) is a general term for a family of theories used for describing and interpreting language. It emphasises the importance of regular patterns of language use, known as constructions. It argues that these constructions capture all linguistic knowledge in the shape of form-meaning pairs. In other words, in CxG the traditional concepts of lexicon and grammar are combined into one. There is no distinction between the two as form is inherently connected to meaning <span class="citation" data-cites="allthecxgboysandgirls">(<a href="#ref-allthecxgboysandgirls" role="doc-biblioref"><strong>allthecxgboysandgirls?</strong></a>)</span>. Collostructional analysis, developed by <span class="citation" data-cites="griesstefall">(<a href="#ref-griesstefall" role="doc-biblioref"><strong>griesstefall?</strong></a>)</span>, is a combination of several quantative (statistical) methods for examining the relationship between words (lemmas) and structures. The term collostruction, a blend of the words collocation and construction, describes the method of measuring the level of attraction or repulsion that words have towards specific syntactic constructions.</p>
+<p>Most studies using collostructional analysis have focused on the relationship between verbs and constructions that convey information about argument structure (<span class="citation" data-cites="gries2013">(<a href="#ref-gries2013" role="doc-biblioref"><strong>gries2013?</strong></a>)</span>). This present paper follows in those footsteps but will take a slightly different approach. It still studies the patterns of co-occurrence between verbs and specific English argument constructions. However, instead of only examining the lemma, this paper focuses on the role-set or word sense of a specific lemma in relation to its place in an argument structure construction. It does this by performing collustructional analysis <span class="citation" data-cites="specifywhichones">(<a href="#ref-specifywhichones" role="doc-biblioref"><strong>specifywhichones?</strong></a>)</span> on a data set taken from the propbank-annotated OntoNotes 5.0 corpus. What follows is a brief description of the corpus and data set used.</p>
+<p>OntoNotes 5.0 <span class="citation" data-cites="Weischedel2013">(<a href="#ref-Weischedel2013" role="doc-biblioref"><strong>Weischedel2013?</strong></a>)</span> is a corpus consisting of a subset of English, Chinese and Arabic texts. It can be described as a broad-coverage corpus as it spans several genres including religious texts, telephone conversations, news articles and weblogs. In total it consists of 2.9 million words. The corpus is annotated with a number of different layers of information. These are presented in the corpus as follows:</p>
+</section>
+<section id="sample-paper_filesfigure-htmlexample-ontonotes-annotation.png-vaneeckeppt" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> []#(sample-paper_files/figure-html/example-ontonotes-annotation.png/) <span class="citation" data-cites="VanEeckePPT">(<a href="#ref-VanEeckePPT" role="doc-biblioref"><strong>VanEeckePPT?</strong></a>)</span></h1>
+<p>In the above example, the utterance “With their unique charm, these well-known cartoon images once again caused Hong Kong to be a focus of worldwide attention.” is annotated with a treebank, propbank, word sense annotation, ontology, coreference and entity names annotation layer. A complete description of these annotations can be found in <span class="citation" data-cites="Xue2012">(<a href="#ref-Xue2012" role="doc-biblioref"><strong>Xue2012?</strong></a>)</span>. For the purpose of the present study, the propbank annotation layer is of particular interest. The propbank layer (https://propbank.github.io/) annotates the argument structure of verbs. It does this by providing a list of possible roles for each verb. These roles are called arguments. The word sense annotation layer provides a list of possible word senses for each word. These word senses are also called role sets. The propbank layer is used to identify the argument structure. The word sense layer is used to identify the specific word sense of a verb. To illustrate how these annotations should be interpreted, consider the following utterance:</p>
+<ul>
+<li>She gave Peter a watch.</li>
+</ul>
+<p>In this utterance, the verb “gave” would be annotated with the lemma “give” and the role set “give.01” which is described as “transfer” in https://propbank.github.io/v3.4.0/frames/. The verb here is the frame evoking element (FEE). The role set “give.01” has three arguments: “Arg0”, “Arg1” and “Arg2”. In propbank annotation this means that “Arg0” is the giver, “Arg1” is the thing given and “Arg2” is the entity given to. In traditional grammar, these arguments would be described as the agent (Arg0), patient (Arg1) and instrument/benefactive/attribute (Arg2). This paper will use the propbank terminology. This means that the above utterance would be annotated as follows: “She(Arg0-NP) gave(FEE-V) Peter(Arg2-NP) a watch(Arg1-NP)”. In other words, the argument structure construction in which the roleset “give.01” is embedded is “Arg0-NP FEE-V Arg2-NP Arg1-NP”. This can be recognised as a ditransitive construction. This paper focusses broadly on ditransitive constructions in its various manifestations.</p>
+<p>The data set used for this analysis is a subset of the OntoNotes 5.0 corpus. This data set was extracted from the corpus using the <span class="citation" data-cites="CCxG">(<a href="#ref-CCxG" role="doc-biblioref"><strong>CCxG?</strong></a>)</span> Explorer <span class="citation" data-cites="VanEecke2018">(<a href="#ref-VanEecke2018" role="doc-biblioref"><strong>VanEecke2018?</strong></a>)</span>. The CCxG Explorer is a tool developed by the Evolutionary &amp; Hybrid AI (EHAI) research team at the VUB Artificial Intelligence Lab. Its goal was twofold. From a broad-coverage corpus, it wanted to, first, gain linguistic insights from large-scale construction grammar analyses regarding the English argument structure and, secondly, show the application potential of CCxG by operationalising it on a large scale (Beuls &amp; Van Eecke, 2021). As a result, the CCxG Explorer allows usage-based linguists to search for corpus examples that match a particular semantic structure. This is useful because it provides the option to find examples of morphosyntactic phenomena without the need to identify them explicitly (<span class="citation" data-cites="Beuls">(<a href="#ref-Beuls" role="doc-biblioref"><strong>Beuls?</strong></a>)</span> &amp; Van Eecke, submitted). The CCxG Explorer can be accessed on used on the web at https://ehai.ai.vub.ac.be/ccxg-explorer/. Its source code is publically available on Gitlab as part of the babel toolkit <span class="citation" data-cites="babelrepo">(<a href="#ref-babelrepo" role="doc-biblioref"><strong>babelrepo?</strong></a>)</span>. The method and accuracy of the CCxG Explorer has not yet been established. This is currently being investigated. This is why this present paper takes a cautious approach to the results.</p>
+<p>To extract the ditransitive constructions, the following schema was used in the CCxG Explorer: “Arg0-NP FEE-V Arg1-NP Arg2”. The precise order is not taken into account which means that, for example, the following constructions are also extracted: “Arg0-NP FEE-V Arg2-NP Arg1”, “Arg1-NP FEE-V Arg0-NP Arg2” and “Arg1-NP FEE-V Arg2-NP Arg0”. The reason for this is that the order of the arguments is not fixed in ditransitive constructions and this schema allows for a more broad exploration. Further, it should be noted that there is no part of speech specified in the Arg2 slot. This is because the Arg2 slot can be filled by not only a NP but also, for example, a PP which would result in the dative alternation of the ditransitive construction.</p>
+<p>The search results for this particular schema contained 9339 utterances. They were downloaded as a .json file. This .json file was the raw data for this analysis. It contains the string of the utterances and the roles that are defined in that utterance. The roles are further specified by roleType, part of speech (pos), string, indices, role set and lemma. In those 9339 utterances, there were 844 unique lemmas, 924 unique rolesets and 87 unique argument structure constructions which appeared in the previously mentioned schema.</p>
+<p>It is not this study’s aim to come to any definitive conclusions about the relationship between word sense and argument structure constructions. Instead, its goal is explore the possibilities of using propbank-annotated corpora and Computational Construction Grammar (CCxG) in a collostructional analysis.</p>
+<p>This paper consists of several sections. First, a short overview of the (theoretical) background regarding the CCxG Explorer is provided. In addition, the research methodology is presented, specifically on how the data set was analysed. This is followed by a presentation, analysis and discussion of the relevant data. The analysis section consists of two parts. First, the cleaned data is examined and second, the results from the Distinctive Collexeme Analysis (DCA) are presented and discussed.</p>
+</section>
+<section id="data-processing-and-methodology" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Data Processing and Methodology</h1>
+<p>The raw data was processed in R using the ‘jsonlite’ package <span class="citation" data-cites="jsonlite">(<a href="#ref-jsonlite" role="doc-biblioref"><strong>jsonlite?</strong></a>)</span>. The data was then converted to a data frame and the relevant columns were selected. The raw data file does not contain the full argument structure construction in one string. To identify and classify the argument structure construction from each utterance a function was used. The resulting data frame contains the argument structure construction, role set and lemma. This data frame contains all the data used for the analysis. This is shown in <a href="#tbl-raw-corpus-data">Table&nbsp;1</a>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="tbl-raw-corpus-data" class="anchored">
+
+<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; "><table class=" lightable-paper table" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;"><caption>Table&nbsp;1:  Raw corpus data used for the subsequent analyses (first 10 rows) </caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> arg_struc_cxn </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> roleset </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> lemma </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> arg0(np)-v(v)-arg1(np)-arg2(c("s", "vp")) </td>
+   <td style="text-align:left;"> invite.01 </td>
+   <td style="text-align:left;"> invite </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> arg0(np)-v(v)-arg1(np)-arg2(pp) </td>
+   <td style="text-align:left;"> force.01 </td>
+   <td style="text-align:left;"> force </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> arg0(np)-v(v)-arg1(np)-arg2(pp) </td>
+   <td style="text-align:left;"> connect.01 </td>
+   <td style="text-align:left;"> connect </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> arg0(np)-v(v)-arg1(np)-arg2(pp) </td>
+   <td style="text-align:left;"> receive.01 </td>
+   <td style="text-align:left;"> receive </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> arg0(np)-v(v)-arg1(np)-arg2(pp) </td>
+   <td style="text-align:left;"> draw.02 </td>
+   <td style="text-align:left;"> draw </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> arg0(np)-v(v)-arg1(np)-arg2(pp) </td>
+   <td style="text-align:left;"> lay.01 </td>
+   <td style="text-align:left;"> lay </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> arg0(np)-v(v)-arg1(np)-arg2(c("s", "vp")) </td>
+   <td style="text-align:left;"> order.01 </td>
+   <td style="text-align:left;"> order </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> arg0(np)-v(v)-arg1(np)-arg2(np) </td>
+   <td style="text-align:left;"> call.01 </td>
+   <td style="text-align:left;"> call </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> arg0(np)-v(v)-arg1(np)-arg2(pp) </td>
+   <td style="text-align:left;"> deal.02 </td>
+   <td style="text-align:left;"> deal </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> arg0(np)-v(v)-arg1(np)-arg2(adjp) </td>
+   <td style="text-align:left;"> turn.02 </td>
+   <td style="text-align:left;"> turn </td>
+  </tr>
+</tbody>
+</table></div>
+
+</div>
+</div>
+</div>
+<p><a href="#tbl-raw-corpus-data">Table&nbsp;1</a> shows a small sample of data used for subsequent analyses. The table contains three columns: arg_struc_cxn, roleset, and lemma. The arg_struc_cxn column lists the argument structure construction that the roleset occurs in. The roleset column lists the specific roleset that the lemma takes on. The lemma column lists the lemma of the verb.</p>
+<p>As previously mentioned, the type of analysis used for this paper is a collustructrional analysis. According to Stefanowitsch <span class="citation" data-cites="Steffi2013">(<a href="#ref-Steffi2013" role="doc-biblioref"><strong>Steffi2013?</strong></a>)</span>, there are several types of collustructrional analysis. There is a Simple Collexeme Analysis (SCA), Distinctive Collexeme Analysis (DCA) and Covarying Collexeme Analysis (CCA). The type of analysis used for this paper is the distinctive collexeme analysis. Since this is the only relevant type of analysis for this paper, the other types of analysis will not be discussed further.</p>
+<p>DCA <span class="citation" data-cites="GriesStef2004a">(<a href="#ref-GriesStef2004a" role="doc-biblioref"><strong>GriesStef2004a?</strong></a>)</span> compares all words that occur in a slot of two similar constructions. It is based on the frequency of the word and constructions it occurs in. <span class="citation" data-cites="StefGries2013">(<a href="#ref-StefGries2013" role="doc-biblioref"><strong>StefGries2013?</strong></a>)</span> presents the following <a href="#tbl-dca">Table&nbsp;2</a> to illustrate which frequency information is needed for a DCA.</p>
+<div id="tbl-dca" class="anchored">
+<table class="table">
+<caption>Table&nbsp;2: Frequency information needed for a distinctive collexeme analysis</caption>
+<colgroup>
+<col style="width: 21%">
+<col style="width: 28%">
+<col style="width: 28%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;"><strong>Word l of Class L</strong></th>
+<th style="text-align: center;"><strong>Other Words of Class L</strong></th>
+<th style="text-align: center;"><strong>Total</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Construction c1 of Class C</td>
+<td style="text-align: center;">Frequency of L(l) in C(c1)</td>
+<td style="text-align: center;">Frequency of L(-l) in C(c1)</td>
+<td style="text-align: center;">Total frequency of C(c1)</td>
+</tr>
+<tr class="even">
+<td>Construction c2 of Class C</td>
+<td style="text-align: center;">Frequency of L(l) in C(c2)</td>
+<td style="text-align: center;">Frequency of L(-l) in C(c2)</td>
+<td style="text-align: center;">Total frequency of C(c2)</td>
+</tr>
+<tr class="odd">
+<td>Total</td>
+<td style="text-align: center;">Total frequency of L(l) in C(c1,c2)</td>
+<td style="text-align: center;">Total frequency of L(-l) in C(c1,c2)</td>
+<td style="text-align: center;">Total frequency of C(c1,c2)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>In this table, the frequency of a word (l &amp; -l) and construction (c1 &amp; c2) are mapped to each other to create a contingency table containing the frequency of l in c1, l in c2, -l in c1, -l in c2. These are then combined to create a total frequency. Such a contingency table can then be used to perform a contingency test to return association measures like, for example, the Fisher-Yates p score. The Fisher-Yates p score is a measure of the strength of the association between a word and a construction. the p-value represents the probability of obtaining a test statistic as extreme or more extreme than the one observed. A small p-value (typically less than 0.05) suggests that the null hypothesis can be rejected, and that the difference in co-occurrence frequencies between the two words being compared is not due to chance. Conversely, a large p-value (typically greater than 0.05) suggests that there is not enough evidence to reject the null hypothesis and that the difference in co-occurrence frequencies may be due to chance. In other words, a small p-value means that the difference in co-occurrence frequencies between the two words is statistically significant and it is unlikely that the observed difference is due to chance <span class="citation" data-cites="levshina_2015">Levshina (<a href="#ref-levshina_2015" role="doc-biblioref">2015</a>)</span>. It is important to note that in DCA there is a focus on the differences between constructions. To uncover similarities between construction a SCA can be used <span class="citation" data-cites="GriesStef2004a">(<a href="#ref-GriesStef2004a" role="doc-biblioref"><strong>GriesStef2004a?</strong></a>)</span> but this is not done here given the limited scope of the present research.</p>
+<p>An extension of DCA is the possibility to perform it on a data set that has more than two types of constructions. This is referred to as Multiple Distinctive Collexeme Analysis (MDCA) <span class="citation" data-cites="StefGries2004a">(<a href="#ref-StefGries2004a" role="doc-biblioref"><strong>StefGries2004a?</strong></a>)</span>. MDCA is a method that can be used to compare the distinctive collexemes of multiple constructions. It is based on the same principles as DCA, but instead of comparing two constructions, it compares multiple constructions. In order to perform a MDCA on a data set a multidimensional contingency table is required. <span class="citation" data-cites="GriesStef2013">(<a href="#ref-GriesStef2013" role="doc-biblioref"><strong>GriesStef2013?</strong></a>)</span> gives the following example:</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:left;"> Word </th>
+   <th style="text-align:left;"> Class_L </th>
+   <th style="text-align:left;"> Construction_c </th>
+   <th style="text-align:left;"> Frequency_of_L_l_in_C_c </th>
+   <th style="text-align:left;"> Total_frequency_of_C_c </th>
+   <th style="text-align:left;"> Total_frequency_of_L_l_in_C_c_c </th>
+   <th style="text-align:left;"> Total_frequency_of_C_c_c </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Word l of Class L </td>
+   <td style="text-align:left;"> l </td>
+   <td style="text-align:left;"> Class L </td>
+   <td style="text-align:left;"> Construction c of Class C </td>
+   <td style="text-align:left;"> Frequency of L(l ) in C(c ) </td>
+   <td style="text-align:left;"> Total frequency of C(c ) </td>
+   <td style="text-align:left;"> Total frequency of L(l ) in C(c ,c ) </td>
+   <td style="text-align:left;"> Total frequency of C(c ,c ) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Total </td>
+   <td style="text-align:left;"> Other Words of Class L </td>
+   <td style="text-align:left;"> Class L </td>
+   <td style="text-align:left;"> Construction c of Class C </td>
+   <td style="text-align:left;"> Frequency of L(¬l ) in C(c ) </td>
+   <td style="text-align:left;"> Total frequency of C(c ) </td>
+   <td style="text-align:left;"> Total frequency of L(¬l ) in C(c ,c ) </td>
+   <td style="text-align:left;"> Total frequency of C(c ,c ) </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<p>As can be observed in the above table, the difference is that in the MDCA contingency table there is an n number of constructions represented in the columns. Due to the limited scope of this paper, only the DCA will be used. However, the MDCA was still performed and the results are available in the appendix because it could prove useful for future research.</p>
+<p>As already discussed, both the DCA and MDCA are used on the data set in this paper but only the DCA will be presented and discussed. The DCA is used to compare the distinctive collexemes of the two most frequent constructions in the data set. The MDCA can be used to compare the distinctive collexemes of all constructions in the data set. To perform both types of analyses, a R script developed by <span class="citation" data-cites="GriesStef2013">(<a href="#ref-GriesStef2013" role="doc-biblioref"><strong>GriesStef2013?</strong></a>)</span> was used and adapted to suit the data set in this paper.</p>
+<div class="cell">
+
+</div>
+</section>
+<section id="results-and-discussion" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Results and Discussion</h1>
+<p>In the following section, an exploratory analysis will be conducted on the data resulting from the DCA &amp; MDCA. The analysis will depart from the DCA lemma &amp; role set table, which contains all calculated association scores. The analysis starts with giving a general overview of the most frequent and distinctive collostructions found in the corpus. Then, it will proceed to examine the specific association measures in order to gain insight into the patterns and preferences in the data. Examples of the collostructions will be provided to assist in understanding the findings and interpreting the results. The full results of the analyses are available in the appendix. The results of the DCA are presented in <a href="#tbl-dca-roleset">Table&nbsp;3</a>:</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="tbl-dca-roleset" class="anchored">
+
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:600px; overflow-x: scroll; width:100%; "><table class=" lightable-paper table" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;"><caption>Table&nbsp;3:  Results DCA analysis. </caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;position: sticky; top:0; background-color: #FFFFFF;"> WORD </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg1(np)-arg2(pp) </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg2(np)-arg1(np) </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;position: sticky; top:0; background-color: #FFFFFF;"> PREFERENCE </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;position: sticky; top:0; background-color: #FFFFFF;"> LLR </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;position: sticky; top:0; background-color: #FFFFFF;"> PEARSONRESID </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;position: sticky; top:0; background-color: #FFFFFF;"> LOGODDSRATIO </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;position: sticky; top:0; background-color: #FFFFFF;"> MI </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;position: sticky; top:0; background-color: #FFFFFF;"> DELTAPC2W </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;position: sticky; top:0; background-color: #FFFFFF;"> DELTAPW2C </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;position: sticky; top:0; background-color: #FFFFFF;"> FYE </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> put.01 </td>
+   <td style="text-align:right;"> 355 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> arg0(np)-v(v)-arg1(np)-arg2(pp) </td>
+   <td style="text-align:right;"> 142 </td>
+   <td style="text-align:right;"> 3.7 </td>
+   <td style="text-align:right;"> 27 </td>
+   <td style="text-align:right;"> 0.28 </td>
+   <td style="text-align:right;"> 0.06 </td>
+   <td style="text-align:right;"> 0.19 </td>
+   <td style="text-align:right;"> 16.0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> take.01 </td>
+   <td style="text-align:right;"> 189 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> arg0(np)-v(v)-arg1(np)-arg2(pp) </td>
+   <td style="text-align:right;"> 75 </td>
+   <td style="text-align:right;"> 2.7 </td>
+   <td style="text-align:right;"> 26 </td>
+   <td style="text-align:right;"> 0.28 </td>
+   <td style="text-align:right;"> 0.03 </td>
+   <td style="text-align:right;"> 0.18 </td>
+   <td style="text-align:right;"> 8.6 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> accuse.01 </td>
+   <td style="text-align:right;"> 100 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> arg0(np)-v(v)-arg1(np)-arg2(pp) </td>
+   <td style="text-align:right;"> 39 </td>
+   <td style="text-align:right;"> 1.9 </td>
+   <td style="text-align:right;"> 26 </td>
+   <td style="text-align:right;"> 0.28 </td>
+   <td style="text-align:right;"> 0.02 </td>
+   <td style="text-align:right;"> 0.18 </td>
+   <td style="text-align:right;"> 5.1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> use.01 </td>
+   <td style="text-align:right;"> 76 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> arg0(np)-v(v)-arg1(np)-arg2(pp) </td>
+   <td style="text-align:right;"> 30 </td>
+   <td style="text-align:right;"> 1.7 </td>
+   <td style="text-align:right;"> 26 </td>
+   <td style="text-align:right;"> 0.28 </td>
+   <td style="text-align:right;"> 0.01 </td>
+   <td style="text-align:right;"> 0.18 </td>
+   <td style="text-align:right;"> 3.8 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> receive.01 </td>
+   <td style="text-align:right;"> 75 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> arg0(np)-v(v)-arg1(np)-arg2(pp) </td>
+   <td style="text-align:right;"> 29 </td>
+   <td style="text-align:right;"> 1.7 </td>
+   <td style="text-align:right;"> 26 </td>
+   <td style="text-align:right;"> 0.28 </td>
+   <td style="text-align:right;"> 0.01 </td>
+   <td style="text-align:right;"> 0.18 </td>
+   <td style="text-align:right;"> 4.0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> keep.04 </td>
+   <td style="text-align:right;"> 73 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> arg0(np)-v(v)-arg1(np)-arg2(pp) </td>
+   <td style="text-align:right;"> 29 </td>
+   <td style="text-align:right;"> 1.7 </td>
+   <td style="text-align:right;"> 25 </td>
+   <td style="text-align:right;"> 0.28 </td>
+   <td style="text-align:right;"> 0.01 </td>
+   <td style="text-align:right;"> 0.18 </td>
+   <td style="text-align:right;"> 3.8 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> get.01 </td>
+   <td style="text-align:right;"> 71 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> arg0(np)-v(v)-arg1(np)-arg2(pp) </td>
+   <td style="text-align:right;"> 28 </td>
+   <td style="text-align:right;"> 1.6 </td>
+   <td style="text-align:right;"> 25 </td>
+   <td style="text-align:right;"> 0.28 </td>
+   <td style="text-align:right;"> 0.01 </td>
+   <td style="text-align:right;"> 0.18 </td>
+   <td style="text-align:right;"> 4.0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> throw.01 </td>
+   <td style="text-align:right;"> 68 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> arg0(np)-v(v)-arg1(np)-arg2(pp) </td>
+   <td style="text-align:right;"> 27 </td>
+   <td style="text-align:right;"> 1.6 </td>
+   <td style="text-align:right;"> 25 </td>
+   <td style="text-align:right;"> 0.28 </td>
+   <td style="text-align:right;"> 0.01 </td>
+   <td style="text-align:right;"> 0.18 </td>
+   <td style="text-align:right;"> 3.9 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> thank.01 </td>
+   <td style="text-align:right;"> 57 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> arg0(np)-v(v)-arg1(np)-arg2(pp) </td>
+   <td style="text-align:right;"> 22 </td>
+   <td style="text-align:right;"> 1.5 </td>
+   <td style="text-align:right;"> 25 </td>
+   <td style="text-align:right;"> 0.28 </td>
+   <td style="text-align:right;"> 0.01 </td>
+   <td style="text-align:right;"> 0.18 </td>
+   <td style="text-align:right;"> 3.4 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> describe.01 </td>
+   <td style="text-align:right;"> 52 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> arg0(np)-v(v)-arg1(np)-arg2(pp) </td>
+   <td style="text-align:right;"> 20 </td>
+   <td style="text-align:right;"> 1.4 </td>
+   <td style="text-align:right;"> 25 </td>
+   <td style="text-align:right;"> 0.28 </td>
+   <td style="text-align:right;"> 0.01 </td>
+   <td style="text-align:right;"> 0.18 </td>
+   <td style="text-align:right;"> 3.0 </td>
+  </tr>
+</tbody>
+</table></div>
+
+</div>
+</div>
+</div>
+<p>In these tables, the first column “WORD” shows the lemma / roleset of the word. The next two columns show the frequency of the word in two different constructions: “arg0(np)-v(v)-arg1(np)-arg2(pp)” and “arg0(np)-v(v)-arg2(np)-arg1(np)”. The “PREFERENCE” column shows the construction that the word is more frequent in. The next columns “LLR”, “PEARSONRESID”, “LOGODDSRATIO”, “MI”, “DELTAPC2W”, “DELTAPW2C” and “FYE” are association measures that gives information on the strength of the association between the word and the construction it appears in. The LLR is likelihood ratio test statistics, PEARSONRESID is the Pearson residual, LOGODDSRATIO is log odds ratio, MI is mutual information, DELTAPC2W is delta probability of collocate to word, DELTAPW2C is delta probability of word to collocate, and FYE is the Fisher-Yates p value. The values of these measures are used to compare the strength of association between the word and the construction it appears in.</p>
+<p>A first observation that can be made is that the two most frequent argument structure constructions and were thus used for the DCA are the arg0(np)-v(v)-arg1(np)-arg2(pp) and arg0(np)-v(v)-arg2(np)-arg1(np). These could, in more traditional terms, be described as the propositional dative and ditransitive construction. Additionally, there are three categories on how the role sets / lemmas are related to the two constructions. They can appear exclusively in either arg0(np)-v(v)-arg1(np)-arg2(pp) or arg0(np)-v(v)-arg2(np)-arg1(np), or they appear in both.</p>
+<p>To interpret the results of the DCA they are compared to a study by <span class="citation" data-cites="GriesStef2004a">(<a href="#ref-GriesStef2004a" role="doc-biblioref"><strong>GriesStef2004a?</strong></a>)</span> where a DCA was used to compare collexemes in a ditransitive and to-dative construction. The results of this study are presented in the following table:</p>
+<p>———— results table stef gries 2004</p>
+<p>discussion DCA</p>
+<p>The results of the MDCA are presented in the following table. It shows</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>dataset <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(<span class="fu">here</span>(<span class="st">"register-analysis.tsv"</span>), <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>fa <span class="ot">&lt;-</span> dataset <span class="sc">%&gt;%</span> <span class="fu">data.frame</span>(<span class="at">row.names =</span> <span class="st">"filename"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.matrix</span>() <span class="sc">%&gt;%</span> <span class="fu">factanal</span>(<span class="at">factors =</span> <span class="dv">4</span>, <span class="at">scores =</span> <span class="st">"regression"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>To interpret the results of the MCA</p>
+</section>
+<section id="conclusion" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Conclusion</h1>
+<p>The conclusion should recap the paper, summarizing what was said in each section and how everything ties together. It might feel redundant, in particular in relation to the introduction, but that’s precisely the point: for someone who has not heard your ideas, redundancy is key to understand. Be clear about how each section contributes to your main point and what the take-home message is.</p>
+<p>Of course, the language of the paper should be formal and academic (I appreciate puns and jokes, but don’t lower the register too much). Coherence in the ideas, cohesion between the sentences and appropriate use of the technical vocabulary and of connectors (e.g.&nbsp;<em>however</em>, <em>in contrast</em>, <em>while</em>…) are important and <strong>will be evaluated</strong>. Not because of “language” evaluation but because these aspects are crucial for understanding, and if the reader needs to read a sentence many times and/or have previous knowledge of your process in order to understand the text, it’s not well written. I also recommend checking out the <code>{spelling}</code> package to run some spelling checks on your files!</p>
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-levshina_2015" class="csl-entry" role="doc-biblioentry">
+Levshina, Natalia. 2015. <em>How to do linguistics with <span>R</span>: Data exploration and statistical analysis</em>. <span>Amsterdam; Philadelphia</span>: <span>John Benjamins Publishing Company</span>.
+</div>
+</div></section></div></main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

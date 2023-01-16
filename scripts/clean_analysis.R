@@ -2,7 +2,7 @@
 analysis_fp <- file.path(project_dir, "results_analysis", "reproduced_analyses")
 
 # Load the roleset csv file
-results_roleset_cxnDT <- read.csv(file.path(analysis_fp, "cxn_roleset_distinctive_reproduced_analysis.csv"), header=TRUE, sep="\t", quote="", comment.char="")
+results_roleset_cxnDT <- read.table(file.path(analysis_fp, "cxn_roleset_distinctive_reproduced_analysis.csv"), header=TRUE, sep="\t", quote="", comment.char="")
 
 # Create an empty list to store the new dataframes
 cxn_roleset_preference_list = list()
@@ -10,12 +10,17 @@ cxn_roleset_preference_list = list()
 # Get the unique constructions in the "PREFERENCE" column
 constructions = unique(results_roleset_cxnDT$PREFERENCE)
 
+constructions_df = data.frame(constructions)
+
+cxn1 = constructions_df$constructions[1]
+cxn2 = constructions_df$constructions[2]
+
 # Iterate through each construction
 for (c in constructions) {
   # Subset the original dataframe to only include rows with the current construction
   subset_df = results_roleset_cxnDT[results_roleset_cxnDT$PREFERENCE == c, ]
   
-  # Sort the data frame based on the FYE column
+  # Sort the data frame based on the LOGODDSRATIO column
   subset_df = subset_df[order(-subset_df$LOGODDSRATIO), ]
   
   # Assign the subsetted dataframe to a new object named after the construction
@@ -25,9 +30,9 @@ for (c in constructions) {
   cxn_roleset_preference_list[[c]] <- subset_df
 }
 
-write.table(cxn_roleset_preference_list$`arg0(np)-v(v)-arg1(np)-arg2(pp)`, file = file.path(analysis_fp, "results_arg0(np)-v(v)-arg1(np)-arg2(pp)_roleset_distinctive_reproduced_analysis.csv"), row.names = FALSE, sep = "\t", col.names = TRUE, quote = FALSE)
+write.table(cxn_roleset_preference_list[[cxn1]], file = file.path(analysis_fp, str_glue("results_{cxn1}_roleset_distinctive_reproduced_analysis.csv")), row.names = FALSE, sep = "\t", col.names = TRUE, quote = FALSE)
 
-write.table(cxn_roleset_preference_list$`arg0(np)-v(v)-arg2(np)-arg1(np)`, file = file.path(analysis_fp, "results_arg0(np)-v(v)-arg2(np)-arg1(np)_roleset_distinctive_reproduced_analysis.csv"), row.names = FALSE, sep = "\t", col.names = TRUE, quote = FALSE)
+write.table(cxn_roleset_preference_list[[cxn2]], file = file.path(analysis_fp, str_glue("results_{cxn2}_roleset_distinctive_reproduced_analysis.csv")), row.names = FALSE, sep = "\t", col.names = TRUE, quote = FALSE)
 
 
 # Load the lemma csv file
@@ -39,12 +44,17 @@ cxn_lemma_preference_list = list()
 # Get the unique constructions in the "PREFERENCE" column
 constructions = unique(results_lemma_cxnDT$PREFERENCE)
 
+constructions_df = data.frame(constructions)
+
+cxn1 = constructions_df$constructions[1]
+cxn2 = constructions_df$constructions[2]
+
 # Iterate through each construction
 for (c in constructions) {
   # Subset the original dataframe to only include rows with the current construction
   subset_df = results_lemma_cxnDT[results_lemma_cxnDT$PREFERENCE == c, ]
   
-  # Sort the data frame based on the FYE column
+  # Sort the data frame based on the LOGODDSRATIO column
   subset_df = subset_df[order(-subset_df$LOGODDSRATIO), ]
   
   # Assign the subsetted dataframe to a new object named after the construction
@@ -54,7 +64,62 @@ for (c in constructions) {
   cxn_lemma_preference_list[[c]] <- subset_df
 }
 
-write.table(cxn_lemma_preference_list$`arg0(np)-v(v)-arg1(np)-arg2(pp)`, file = file.path(analysis_fp, "results_arg0(np)-v(v)-arg1(np)-arg2(pp)_lemma_distinctive_reproduced_analysis.csv"), row.names = FALSE, sep = "\t", col.names = TRUE, quote = FALSE)
+write.table(cxn_lemma_preference_list[[cxn1]], file = file.path(analysis_fp, str_glue("results_{cxn1}_lemma_distinctive_reproduced_analysis.csv")), row.names = FALSE, sep = "\t", col.names = TRUE, quote = FALSE)
 
-write.table(cxn_lemma_preference_list$`arg0(np)-v(v)-arg2(np)-arg1(np)`, file = file.path(analysis_fp, "results_arg0(np)-v(v)-arg2(np)-arg1(np)_lemma_distinctive_reproduced_analysis.csv"), row.names = FALSE, sep = "\t", col.names = TRUE, quote = FALSE)
+write.table(cxn_lemma_preference_list[[cxn2]], file = file.path(analysis_fp, str_glue("results_{cxn2}_lemma_distinctive_reproduced_analysis.csv")), row.names = FALSE, sep = "\t", col.names = TRUE, quote = FALSE)
+
+######
+
+# export the same lists but only with verbs that occur in both constructions
+
+# Load the roleset csv file
+mix_results_roleset <- read.table(file.path(analysis_fp, str_glue("results_{cxn1}_roleset_distinctive_reproduced_analysis.csv")), header=TRUE, sep="\t", quote="", comment.char="")
+
+cxn1_mixed <- colnames(mix_results_roleset)[2]
+cxn2_mixed <- colnames(mix_results_roleset)[3]
+
+mix_results_roleset <- data.frame(mix_results_roleset)
+
+# Filter to only larger than 0 in cxn column
+mix_results_roleset <- mix_results_roleset %>% 
+  filter(!!as.symbol(cxn1_mixed) > 0 & !!as.symbol(cxn2_mixed) > 0)
+
+write.table(mix_results_roleset[[cxn1]], file = file.path(analysis_fp, str_glue("results_{cxn1}_mixed_rolesets_reproduced_analysis.csv")), row.names = FALSE, sep = "\t", col.names = TRUE, quote = FALSE)
+
+# Load the roleset csv file
+mix_results_roleset <- read.table(file.path(analysis_fp, str_glue("results_{cxn2}_roleset_distinctive_reproduced_analysis.csv")), header=TRUE, sep="\t", quote="", comment.char="")
+
+mix_results_roleset <- data.frame(mix_results_roleset)
+
+# Filter to only larger than 0 in cxn column
+mix_results_roleset <- mix_results_roleset %>% 
+  filter(!!as.symbol(cxn1_mixed) > 0 & !!as.symbol(cxn2_mixed) > 0)
+
+write.table(mix_results_roleset[[cxn1]], file = file.path(analysis_fp, str_glue("results_{cxn2}_mixed_rolesets_reproduced_analysis.csv")), row.names = FALSE, sep = "\t", col.names = TRUE, quote = FALSE)
+
+# Load the lemma csv file
+mix_results_lemma <- read.table(file.path(analysis_fp, str_glue("results_{cxn1}_lemma_distinctive_reproduced_analysis.csv")), header=TRUE, sep="\t", quote="", comment.char="")
+
+mix_results_lemma <- data.frame(mix_results_lemma)
+
+# Filter to only larger than 0 in cxn column
+mix_results_roleset <- mix_results_roleset %>% 
+  filter(!!as.symbol(cxn1_mixed) > 0 & !!as.symbol(cxn2_mixed) > 0)
+
+write.table(mix_results_lemma[[cxn1]], file = file.path(analysis_fp, str_glue("results_{cxn1}_mixed_lemma_reproduced_analysis.csv")), row.names = FALSE, sep = "\t", col.names = TRUE, quote = FALSE)
+
+# Load the lemma csv file
+mix_results_lemma <- read.table(file.path(analysis_fp, str_glue("results_{cxn2}_lemma_distinctive_reproduced_analysis.csv")), header=TRUE, sep="\t", quote="", comment.char="")
+
+mix_results_lemma <- data.frame(mix_results_lemma)
+
+# Filter to only larger than 0 in cxn column
+mix_results_roleset <- mix_results_roleset %>% 
+  filter(!!as.symbol(cxn1_mixed) > 0 & !!as.symbol(cxn2_mixed) > 0)
+
+write.table(mix_results_lemma[[cxn1]], file = file.path(analysis_fp, str_glue("results_{cxn2}_mixed_lemma_reproduced_analysis.csv")), row.names = FALSE, sep = "\t", col.names = TRUE, quote = FALSE)
+
+
+
+
 

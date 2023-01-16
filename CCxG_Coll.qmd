@@ -6,7 +6,7 @@ format:
     theme: journal
     toc: true
     code-link: true
-    abstract-title: "INFO"
+    abstract-title: ""
   pdf:
     lof: true
     lot: true
@@ -31,7 +31,8 @@ library(tidyverse)
 library(kableExtra)
 library(here)
 library(xml2)
-library(glossr)
+
+project_dir <- here::here()
 plot_fonts <- if (!knitr::is_html_output()) "serif" else "sans"
 theme_set(theme_minimal(base_size = 16, base_family = plot_fonts))
 
@@ -40,12 +41,9 @@ knitr::write_bib(
   here("packages.bib")
 )
 
-numbers <- readRDS(here("numbers.rds"))
-dataset <- read_tsv(here("register-analysis.tsv"), show_col_types = FALSE)
-fa <- dataset %>% data.frame(row.names = "filename") %>% 
-  as.matrix() %>% factanal(factors = 4, scores = "regression")
+numbers <- read.csv(file.path(project_dir, "data", "corpus_cleaned", "numbers.csv"), header=TRUE, sep="\t", quote="", comment.char="")
+raw_corpus_data <- read_tsv(file.path(project_dir, "data", "raw_data", "raw_corpus_data.csv"), show_col_types = FALSE)
 
-use_glossr(styling = list("source" = "i"))
 ```
 
 # Introduction
@@ -56,7 +54,7 @@ Most studies using collostructional analysis have focused on the relationship be
 
 OntoNotes 5.0 @Weischedel2013 is a corpus consisting of a subset of English, Chinese and Arabic texts. It can be described as a broad-coverage corpus as it spans several genres including religious texts, telephone conversations, news articles and weblogs. In total it consists of 2.9 million words. The corpus is annotated with a number of different layers of information. These are presented in the corpus as follows:
 
-![](sample-paper_files/figure-html/example-ontonotes-annotation.png/) @VanEeckePPT
+# ![]#(sample-paper_files/figure-html/example-ontonotes-annotation.png/) @VanEeckePPT
 
 In the above example, the utterance "With their unique charm, these well-known cartoon images once again caused Hong Kong to be a focus of worldwide attention." is annotated with a treebank, propbank, word sense annotation, ontology, coreference and entity names annotation layer. A complete description of these annotations can be found in @Xue2012. For the purpose of the present study, the propbank annotation layer is of particular interest. The propbank layer (https://propbank.github.io/) annotates the argument structure of verbs. It does this by providing a list of possible roles for each verb. These roles are called arguments. The word sense annotation layer provides a list of possible word senses for each word. These word senses are also called role sets. The propbank layer is used to identify the argument structure. The word sense layer is used to identify the specific word sense of a verb. To illustrate how these annotations should be interpreted, consider the following utterance:
 
@@ -66,106 +64,94 @@ In this utterance, the verb "gave" would be annotated with the lemma "give" and 
 
 The data set used for this analysis is a subset of the OntoNotes 5.0 corpus. This data set was extracted from the corpus using the @CCxG Explorer @VanEecke2018. The CCxG Explorer is a tool developed by the Evolutionary & Hybrid AI (EHAI) research team at the VUB Artificial Intelligence Lab. Its goal was twofold. From a broad-coverage corpus, it wanted to, first, gain linguistic insights from large-scale construction grammar analyses regarding the English argument structure and, secondly, show the application potential of CCxG by operationalising it on a large scale (Beuls & Van Eecke, 2021). As a result, the CCxG Explorer allows usage-based linguists to search for corpus examples that match a particular semantic structure. This is useful because it provides the option to find examples of morphosyntactic phenomena without the need to identify them explicitly (@Beuls & Van Eecke, submitted). The CCxG Explorer can be accessed on used on the web at https://ehai.ai.vub.ac.be/ccxg-explorer/. Its source code is publically available on Gitlab as part of the babel toolkit @babelrepo. The method and accuracy of the CCxG Explorer has not yet been established. This is currently being investigated. This is why this present paper takes a cautious approach to the results.
 
-To extract the ditransitive constructions, the following schema was used in the CCxG Explorer: "Arg0-NP FEE-V Arg1-NP Arg2". The precise order is not taken into account which means that the following constructions are also extracted: "Arg0-NP FEE-V Arg2-NP Arg1", "Arg1-NP FEE-V Arg0-NP Arg2" and "Arg1-NP FEE-V Arg2-NP Arg0". The reason for this is that the order of the arguments is not fixed in ditransitive constructions. Further, it should be noted that there is no part of speech specified in the Arg2 slot. This is because the Arg2 slot can be filled by not only a NP but also, for example, a PP which would result in the dative alternation of the ditransitive construction.
+To extract the ditransitive constructions, the following schema was used in the CCxG Explorer: "Arg0-NP FEE-V Arg1-NP Arg2". The precise order is not taken into account which means that, for example, the following constructions are also extracted: "Arg0-NP FEE-V Arg2-NP Arg1", "Arg1-NP FEE-V Arg0-NP Arg2" and "Arg1-NP FEE-V Arg2-NP Arg0". The reason for this is that the order of the arguments is not fixed in ditransitive constructions and this schema allows for a more broad exploration. Further, it should be noted that there is no part of speech specified in the Arg2 slot. This is because the Arg2 slot can be filled by not only a NP but also, for example, a PP which would result in the dative alternation of the ditransitive construction.
 
-The search results for this particular schema contained `r numbers$registers` 9339 utterances (add basic information). It was downloaded as a .json file. This .json file was the raw data for this analysis. It contains the string of the utterances and the roles that are defined in that utterance. The roles are further specified by roleType, part of speech (pos), string, indices, role set and lemma. For example, the utterance "She gave Peter a watch." would be represented as follows:
-
-```{r}
-#add json
-
-```
+The search results for this particular schema contained 9339 utterances. They were downloaded as a .json file. This .json file was the raw data for this analysis. It contains the string of the utterances and the roles that are defined in that utterance. The roles are further specified by roleType, part of speech (pos), string, indices, role set and lemma. In those 9339 utterances, there were `r numbers$lemma` unique lemmas, `r numbers$roleset` unique rolesets and `r numbers$arg_struc_cxn` unique argument structure constructions which appeared in the previously mentioned schema.
 
 It is not this study's aim to come to any definitive conclusions about the relationship between word sense and argument structure constructions. Instead, its goal is explore the possibilities of using propbank-annotated corpora and Computational Construction Grammar (CCxG) in a collostructional analysis.
 
-This paper consists of several sections. First, a short overview of the (theoretical) background regarding the CCxG Explorer is provided. In addition, the research methodology is presented, specifically on how the data set was analysed. This is followed by a presentation, analysis and discussion of the relevant data.
+This paper consists of several sections. First, a short overview of the (theoretical) background regarding the CCxG Explorer is provided. In addition, the research methodology is presented, specifically on how the data set was analysed. This is followed by a presentation, analysis and discussion of the relevant data. The analysis section consists of two parts. First, the cleaned data is examined and second, the results from the Distinctive Collexeme Analysis (DCA) are presented and discussed.
 
 # Data Processing and Methodology
 
-The raw data was processed in R using the 'jsonlite' package @jsonlite. The data was then converted to a data frame and the relevant columns were selected. To identify and classify the argument structure construction from each utterance the following function was used:
+The raw data was processed in R using the 'jsonlite' package @jsonlite. The data was then converted to a data frame and the relevant columns were selected. The raw data file does not contain the full argument structure construction in one string. To identify and classify the argument structure construction from each utterance a function was used. The resulting data frame contains the argument structure construction, role set and lemma. This data frame contains all the data used for the analysis. This is shown in @tbl-raw-corpus-data.
 
 ```{r}
-#| label: show-arg-struct-function
-#| eval: false
-#| echo: true
+#| label: tbl-raw-corpus-data
+#| tbl-cap: Raw corpus data used for the subsequent analyses (first 10 rows)
 
-# Function that adds an additional column to a dataframe
-# The new column is called argument_structure_construction and is a combination of roleType and pos
-add_arg_struct <- function(data_frame) {
-  # Add a new column called 'argument_structure_construction' to the data frame
-  data_frame$argument_structure_construction <- sapply(data_frame$roles, function(x) {
-    # Concatenate the roleType and pos columns into a string like 'arg0(np)'
-    role_strings <- paste0(x$roleType, "(", x$pos, ")")
-    # Collapse the role strings into a single string separated by '-'
-    return(paste(role_strings, collapse = "-"))
-  })
-  # Return the modified data frame
-  return(data_frame)
-}
+# read the data set as tsv
+cxn_roleset_distinctive <- read_tsv(file = file.path(project_dir, "results_analysis", "results_cxn_roleset_distinctive.csv"), show_col_types = FALSE)
+
+# display the first five rows of the dataframe
+kbl(head(raw_corpus_data, 10, booktabs = TRUE)) %>% 
+  kable_paper() %>%
+  kable_styling(fixed_thead = T) %>%
+  scroll_box(width = "100%")
 ```
 
-The resulting data frame contains the argument structure construction, role set and lemma. This data frame contains all the data used for the analysis.
-
-```{r}
-# head(corpus_analysis_df)
-```
+@tbl-raw-corpus-data shows a small sample of data used for subsequent analyses. The table contains three columns: arg_struc_cxn, roleset, and lemma. The arg_struc_cxn column lists the argument structure construction that the roleset occurs in. The roleset column lists the specific roleset that the lemma takes on. The lemma column lists the lemma of the verb.
 
 As previously mentioned, the type of analysis used for this paper is a collustructrional analysis. According to Stefanowitsch @Steffi2013, there are several types of collustructrional analysis. There is a Simple Collexeme Analysis (SCA), Distinctive Collexeme Analysis (DCA) and Covarying Collexeme Analysis (CCA). The type of analysis used for this paper is the distinctive collexeme analysis. Since this is the only relevant type of analysis for this paper, the other types of analysis will not be discussed further.
 
-DCA @GriesStef2004a compares all words that occur in a slot of two similar constructions. It is based on the frequency of the word and constructions it occurs in. @StefGries2013 presents the following table to illustrate which frequency information is needed for a DCA:
+DCA @GriesStef2004a compares all words that occur in a slot of two similar constructions. It is based on the frequency of the word and constructions it occurs in. @StefGries2013 presents the following @tbl-dca to illustrate which frequency information is needed for a DCA.
 
-```{r}
-table <- data.frame(Word=c("l", "Other Words of Class L"),
-                    Class_L=c("Class L", "Class L"),
-                    Construction_c=c("Construction c of Class C", "Construction c of Class C"),
-                    Frequency_of_L_l_in_C_c=c("Frequency of L(l ) in C(c )", "Frequency of L(¬l ) in C(c )"),
-                    Total_frequency_of_C_c=c("Total frequency of C(c )", "Total frequency of C(c )"),
-                    row.names = c("Word l of Class L", "Total"),
-                    Total_frequency_of_L_l_in_C_c_c = c("Total frequency of L(l ) in C(c ,c )", "Total frequency of L(¬l ) in C(c ,c )"),
-                    Total_frequency_of_C_c_c = "Total frequency of C(c ,c )"
-                   )
+|                            |        **Word l of Class L**        |      **Other Words of Class L**      |          **Total**          |
+|----------------------------|:-----------------------------------:|:------------------------------------:|:---------------------------:|
+| Construction c1 of Class C | Frequency of L(l) in C(c1)          | Frequency of L(-l) in C(c1)          | Total frequency of C(c1)    |
+| Construction c2 of Class C | Frequency of L(l) in C(c2)          | Frequency of L(-l) in C(c2)          | Total frequency of C(c2)    |
+| Total                      | Total frequency of L(l) in C(c1,c2) | Total frequency of L(-l) in C(c1,c2) | Total frequency of C(c1,c2) |
 
-knitr::kable(table)
-```
+: Frequency information needed for a distinctive collexeme analysis {#tbl-dca}
 
-In this table, the frequency of a word (l & -l) and construction (c1 & c2) are mapped to each other to create a contingency table containing the frequency of l in c1, l in c2, -l in c1, -l in c2. These are then combined to create a total frequency. Such a contingency table can then be used to perform a contingency test to return association measures like, for example, the Fisher-Yates p score. The Fisher-Yates p score is a measure of the strength of the association between a word and a construction. the p-value represents the probability of obtaining a test statistic as extreme or more extreme than the one observed. A small p-value (typically less than 0.05) suggests that the null hypothesis can be rejected, and that the difference in co-occurrence frequencies between the two words being compared is not due to chance. Conversely, a large p-value (typically greater than 0.05) suggests that there is not enough evidence to reject the null hypothesis and that the difference in co-occurrence frequencies may be due to chance. In other words, a small p-value means that the difference in co-occurrence frequencies between the two words is statistically significant and it is unlikely that the observed difference is due to chance @levshina_2015. It is important to note that in DCA there is a focus on the differences between constructions. To uncover similarities between construction a SCA can be used @GriesStef2004a.
+In this table, the frequency of a word (l & -l) and construction (c1 & c2) are mapped to each other to create a contingency table containing the frequency of l in c1, l in c2, -l in c1, -l in c2. These are then combined to create a total frequency. Such a contingency table can then be used to perform a contingency test to return association measures like, for example, the Fisher-Yates p score. The Fisher-Yates p score is a measure of the strength of the association between a word and a construction. the p-value represents the probability of obtaining a test statistic as extreme or more extreme than the one observed. A small p-value (typically less than 0.05) suggests that the null hypothesis can be rejected, and that the difference in co-occurrence frequencies between the two words being compared is not due to chance. Conversely, a large p-value (typically greater than 0.05) suggests that there is not enough evidence to reject the null hypothesis and that the difference in co-occurrence frequencies may be due to chance. In other words, a small p-value means that the difference in co-occurrence frequencies between the two words is statistically significant and it is unlikely that the observed difference is due to chance @levshina_2015. It is important to note that in DCA there is a focus on the differences between constructions. To uncover similarities between construction a SCA can be used @GriesStef2004a but this is not done here given the limited scope of the present research.
 
-An extension of DCA is the possibility to perform it on a data set that has more than two types of constructions. This is referred to as Multiple Distinctive Collexeme Analysis (MDCA) @StefGries2004a. MDCA is a method that can be used to compare the distinctive collexemes of multiple constructions. It is based on the same principles as DCA, but instead of comparing two constructions, it compares multiple constructions. In order to perform a MDCA on a data set a multidimensional contingency table is required. @GriesStef2013 gives the following example:
+An extension of DCA is the possibility to perform it on a data set that has more than two types of constructions. This is referred to as Multiple Distinctive Collexeme Analysis (MDCA) @StefGries2004a. MDCA is a method that can be used to compare the distinctive collexemes of multiple constructions. It is based on the same principles as DCA, but instead of comparing two constructions, it compares multiple constructions. In order to perform a MDCA on a data set a multidimensional contingency table is required. @GriesStef2013 gives the following @tbl-mca to illustrate which frequency information is needed for a MDCA.:
 
-```{r}
-table <- data.frame(Word=c("l", "Other Words of Class L"),
-                    Class_L=c("Class L", "Class L"),
-                    Construction_c=c("Construction c of Class C", "Construction c of Class C"),
-                    Frequency_of_L_l_in_C_c=c("Frequency of L(l ) in C(c )", "Frequency of L(¬l ) in C(c )"),
-                    Total_frequency_of_C_c=c("Total frequency of C(c )", "Total frequency of C(c )"),
-                    row.names = c("Word l of Class L", "Total"),
-                    Total_frequency_of_L_l_in_C_c_c = c("Total frequency of L(l ) in C(c ,c )", "Total frequency of L(¬l ) in C(c ,c )"),
-                    Total_frequency_of_C_c_c = "Total frequency of C(c ,c )"
-                   )
+|                            |           **Word l of Class L**           |         **Other Words of Class L**         |             **Total**             |
+|----------------------------|:-----------------------------------------:|:------------------------------------------:|:---------------------------------:|
+| Construction c1 of Class C | Frequency of L(l) in C(c1)                | Frequency of L(-l) in C(c1)                | Total frequency of C(c1)          |
+| Construction c2 of Class C | Frequency of L(l) in C(c2)                | Frequency of L(-l) in C(c2)                | Total frequency of C(c2)          |
+| ...                        | ...                                       | ...                                        | ...                               |
+| Construction c(n)          | Freq. of L(l) in C(cn)                    | Freq. of L(-l) in C(cn)                    | Total frequency of C(cn)          |
+| Total                      | Total frequency of L(l) in C(c1,c2, ...n) | Total frequency of L(-l) in C(c1,c2, ...n) | Total frequency of C(c1,c2, ...n) |
 
-knitr::kable(table)
-```
+: Frequency information needed for a multiple distinctive collexeme analysis {#tbl-mca}
 
-As can be observed in the above table, the difference is that in the MDCA contingency table there is an n number of constructions represented in the columns. Calculating a Fisher-Yates p score based on this table would be too computationally expensive. That is why a Hiearchical Configural Frequency Analysis (HCFA) is opted for as association measure instead as suggested by @GriesStef2013. HCFA is a multivariate statistical method that is used to analyze complex frequency data. It is a form of cluster analysis that is used to identify patterns of co-occurrence among multiple variables in a data set @Gries2008. --------------\> CHANGE
+As can be observed in the above table, the difference is that in the MDCA contingency table there is an n number of constructions represented in the columns. Due to the limited scope of this paper, only the DCA will be used. However, the MDCA was still performed and the results are available in the appendix because it could prove useful for future research.
 
-Both the DCA and MDCA are used on the data set in this paper. The DCA is used to compare the distinctive collexemes of the two most frequent constructions in the data set. The MDCA is used to compare the distinctive collexemes of all constructions in the data set. This is done on a data set containing the argument structure constructions and word senses but also on a data set containing the argument structure constructions and lemmas. This was chosen to explore the differences between the two but also to further examine the potential of using a PropBank-annotated data set for a collostructional analysis. To perform both types of analyses, a R script developed by @GriesStef2013 was used and adapted to suit the data set in this paper. The results of both the DCA and MDCA are presented in the results section of this paper.
+As already discussed, both the DCA and MDCA are used on the data set in this paper but only the DCA will be presented and discussed. The DCA is used to compare the distinctive collexemes of the two most frequent constructions in the data set. The MDCA can be used to compare the distinctive collexemes of all constructions in the data set. To perform both types of analyses, a R script developed by @GriesStef2013 was used and adapted to suit the data set in this paper. This script calculates the association measures for all words (lemma / role set) in relation to the two most frequent argument structure constructions from the data set and returns a table containing the association measures for each of those word. In total, eightDE association measures are given. They are presented in @tbl-accosm. Not all of them are used in the analysis but they are presented for completeness and to give a general overview of the measures that are available when using DCA on a PropBank-annotated corpus. A comparison between these measures is not examined in this paper.
 
-```{r}
-```
+| Association Measure | Full Name                                         | Score Indication                                                                      |
+|---------------------|---------------------------------------------------|---------------------------------------------------------------------------------------|
+| LLR                 | Log-Likelihood Ratio                              | The higher the value, the stronger the association between the two variables.         |
+| PEARSONRESID        | Pearson Residual                                  | The closer the value is to 0, the stronger the association between the two variables. |
+| LOGODDSRATIO        | Log Odds Ratio                                    | The higher the value, the stronger the association between the two variables.         |
+| MI                  | Mutual Information                                | The higher the value, the stronger the association between the two variables.         |
+| DELTAPC2W           | Difference in Probability of Construction to Word | The higher the value, the stronger the association between the two variables.         |
+| DELTAPW2C           | Difference in Probability of Word to Construction | The higher the value, the stronger the association between the two variables.         |
+| FYE                 | Fisher-Yates Exact Test                           | The lower the value, the stronger the association between the two variables.          |
+
+: Association measures used in the DCA {#tbl-accosm}
 
 # Results and Discussion
 
-In the following section, an exploratory analysis will be conducted on the data resulting from the DCA & MDCA. The analysis will depart from the DCA lemma & role set table, which contains all calculated association scores. The analysis starts with giving a general overview of the most frequent and distinctive collostructions found in the corpus. Then, it will proceed to examine the specific association measures in order to gain insight into the patterns and preferences in the data. Examples of the collostructions will be provided to assist in understanding the findings and interpreting the results. The full results of the analyses are available in the appendix. The results of the DCA are presented in the following tables:
+In the following section, an exploratory analysis will be conducted on the cleaned corpus data and on the resulting data from the DCA. 
+
+The analysis will depart from the DCA lemma & role set table, which contains all calculated association scores. The analysis starts with giving a general overview of the most frequent and distinctive collostructions found in the corpus. Then, it will proceed to examine the specific association measures in order to gain insight into the patterns and preferences in the data. Examples of the collostructions will be provided to assist in understanding the findings and interpreting the results. The full results of the analyses are available in the appendix. The results of the DCA are presented in @tbl-dca-roleset:
 
 ```{r}
-#| label: show-dca-results-roleset-arg0np-vv-arg1np-arg2pp
-#| eval: true
-#| echo: false
+#| label: tbl-dca-roleset
+#| tbl-cap: Results DCA analysis.
 
-# load the csv file
-data <- read.csv("C:/Users/tommo/Documents/VS_Code/CCxG_Collostructional/results_analysis/results_arg0(np)-v(v)-arg1(np)-arg2(pp)_roleset_distinctive.csv", header=TRUE, sep="\t", quote="", comment.char="")
+# read the data set as tsv
+cxn_roleset_distinctive <- read_tsv(file = file.path(project_dir, "results_analysis", "results_cxn_roleset_distinctive.csv"), show_col_types = FALSE)
 
 # display the first five rows of the dataframe
-kable(head(data))
+kbl(head(cxn_roleset_distinctive, 10, booktabs = TRUE)) %>% 
+  kable_paper() %>%
+  kable_styling(fixed_thead = T) %>%
+  scroll_box(width = "100%", height = "600px")
 
 ```
 

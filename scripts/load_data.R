@@ -2,6 +2,9 @@
 library(jsonlite)
 library(dplyr)
 library(here)
+library(tidyr)
+library(stringr)
+library(rlang)
 
 # Get the path to the project root directory
 project_dir <- here::here()
@@ -64,4 +67,7 @@ combine_arg_struct_and_roleset <- function(corpus, rolesets, lemmas) {
 }
 
 corpus_analysis_df <- combine_arg_struct_and_roleset(corpus_df, roleset_df, lemma_df)
+
+write.table(corpus_analysis_df, file = file.path(project_dir, "data", "raw_data", "raw_corpus_data.csv"), row.names = FALSE, sep = "\t", col.names = TRUE, quote = FALSE)
+
 

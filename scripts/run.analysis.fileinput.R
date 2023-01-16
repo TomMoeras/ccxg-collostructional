@@ -40,7 +40,7 @@ dist.collexemes <- function(precbitsexponent = precbitsexponent) {
     colnames(input.matrix) <- temp
   }
   
-  # Get the name of the first construction
+  # Get the name of the first and second construction
   construction1.name <- colnames(input.matrix)[1]; construction2.name <- colnames(input.matrix)[2]
   
   # computation
@@ -85,11 +85,11 @@ dist.collexemes <- function(precbitsexponent = precbitsexponent) {
   
   # output
   output.table <- data.frame(WORD=rownames(input.matrix), CONSTRUCTION1=input.matrix[,1], CONSTRUCTION2=input.matrix[,2], row.names=NULL)
-  # This line creates a dataframe with three columns: WORD, CONSTRUCTION1 and CONSTRUCTION2. The values in the WORD column are the row names of the input.matrix dataframe. 
+  # This line creates a dataframe which, among others, includes these three columns: WORD, CONSTRUCTION1 and CONSTRUCTION2. The values in the WORD column are the row names of the input.matrix dataframe. 
+  # This line adds additional columns to the output.table dataframe: PREFERENCE, LLR, PEARSONRESID, LOGODDSRATIO, MI, DELTAPC2W, and DELTAPW2C.
   output.table <- data.frame(output.table, PREFERENCE=relations, LLR=log.likelihood.values, PEARSONRESID=pearson.residuals,
                              LOGODDSRATIO=log.odds.ratios, MI=mi.scores,
                              DELTAPC2W=delta.p.constr.cues.word, DELTAPW2C=delta.p.word.cues.constr, row.names=NULL)
-  # This line adds additional columns to the output.table dataframe: PREFERENCE, LLR, PEARSONRESID, LOGODDSRATIO, MI, DELTAPC2W, and DELTAPW2C.
   
   if (fye.mpfr=="yes") {
     output.table <- data.frame(output.table,
