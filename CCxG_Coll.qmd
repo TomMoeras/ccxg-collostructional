@@ -136,7 +136,49 @@ As already discussed, both the DCA and MDCA are used on the data set in this pap
 
 # Results and Discussion
 
-In the following section, an exploratory analysis will be conducted on the cleaned corpus data and on the resulting data from the DCA. 
+In the following section, an exploratory analysis will be conducted on the cleaned corpus data and on the resulting data from the DCA. The analysis departs from an overview of the frequency of the lemmas and rolesets in specific argument constructions. In @tbl-alph-summary, a random subset of an alphabetically sorted list is shown. The argument structure constructions are ordered based on the frequency in which they appear in the data set. 
+
+```{r}
+#| label: tbl-alph-summary
+#| tbl-cap: Alphabetical sorted summary of the data set (random 20 rows and 8 columns).
+
+# read the data set as tsv
+cxn_roleset_distinctive <- read_tsv(file = file.path(project_dir, "data", "corpus_cleaned", "alph_lemma_roleset_cxn.csv"), show_col_types = FALSE)
+
+# display the first five rows of the dataframe
+kbl(cxn_roleset_distinctive[108:128,1:8], booktabs = TRUE) %>% 
+  kable_paper() %>%
+  kable_styling(fixed_thead = T) %>%
+  scroll_box(width = "100%")
+
+```
+
+What @tbl-alph-summary shows is that a lemma manifests itself in different rolesets in different constructions. For example, the lemma "catch" appears in role sets "catch.02" and "catch.03" and the lemma "charge" appears in the role sets "charge.01", "charge.04" and "charge.05". @tbl-sense-utterance illustrates these role sets with their semantic meaning and an example utterance from the corpus.
+
+-> insert table here
+
+: Example of the role sets and their semantic meaning {#tbl-sense-utterance}
+
+-> insert table explanation here
+
+The next @tbl-freq-summary shows a similar list but now no longer alphabetically sorted but sorted based on the frequency of the lemmas and rolesets in the data set. The argument structure constructions are still ordered based on the frequency in which they appear in the data set. 
+
+```{r}
+#| label: tbl-freq-summary
+#| tbl-cap: Frequency ordered overview of the data set (first 10 rows and 8 columns).
+
+# read the data set as tsv
+cxn_roleset_distinctive <- read_tsv(file = file.path(project_dir, "data", "corpus_cleaned", "corpus_cleaned_summary.csv"), show_col_types = FALSE)
+
+# display the first five rows of the dataframe
+kbl(cxn_roleset_distinctive[1:10,1:8], booktabs = TRUE) %>% 
+  kable_paper() %>%
+  kable_styling(fixed_thead = T) %>%
+  scroll_box(width = "100%")
+
+```
+
+
 
 The analysis will depart from the DCA lemma & role set table, which contains all calculated association scores. The analysis starts with giving a general overview of the most frequent and distinctive collostructions found in the corpus. Then, it will proceed to examine the specific association measures in order to gain insight into the patterns and preferences in the data. Examples of the collostructions will be provided to assist in understanding the findings and interpreting the results. The full results of the analyses are available in the appendix. The results of the DCA are presented in @tbl-dca-roleset:
 

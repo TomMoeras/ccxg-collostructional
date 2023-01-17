@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.1.251">
+<meta name="generator" content="quarto-1.2.313">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -157,6 +157,7 @@ div.csl-indent {
           </div>
   </div>
     
+  
     
   </div>
   
@@ -303,63 +304,491 @@ div.csl-indent {
 </table>
 </div>
 <p>In this table, the frequency of a word (l &amp; -l) and construction (c1 &amp; c2) are mapped to each other to create a contingency table containing the frequency of l in c1, l in c2, -l in c1, -l in c2. These are then combined to create a total frequency. Such a contingency table can then be used to perform a contingency test to return association measures like, for example, the Fisher-Yates p score. The Fisher-Yates p score is a measure of the strength of the association between a word and a construction. the p-value represents the probability of obtaining a test statistic as extreme or more extreme than the one observed. A small p-value (typically less than 0.05) suggests that the null hypothesis can be rejected, and that the difference in co-occurrence frequencies between the two words being compared is not due to chance. Conversely, a large p-value (typically greater than 0.05) suggests that there is not enough evidence to reject the null hypothesis and that the difference in co-occurrence frequencies may be due to chance. In other words, a small p-value means that the difference in co-occurrence frequencies between the two words is statistically significant and it is unlikely that the observed difference is due to chance <span class="citation" data-cites="levshina_2015">Levshina (<a href="#ref-levshina_2015" role="doc-biblioref">2015</a>)</span>. It is important to note that in DCA there is a focus on the differences between constructions. To uncover similarities between construction a SCA can be used <span class="citation" data-cites="GriesStef2004a">(<a href="#ref-GriesStef2004a" role="doc-biblioref"><strong>GriesStef2004a?</strong></a>)</span> but this is not done here given the limited scope of the present research.</p>
-<p>An extension of DCA is the possibility to perform it on a data set that has more than two types of constructions. This is referred to as Multiple Distinctive Collexeme Analysis (MDCA) <span class="citation" data-cites="StefGries2004a">(<a href="#ref-StefGries2004a" role="doc-biblioref"><strong>StefGries2004a?</strong></a>)</span>. MDCA is a method that can be used to compare the distinctive collexemes of multiple constructions. It is based on the same principles as DCA, but instead of comparing two constructions, it compares multiple constructions. In order to perform a MDCA on a data set a multidimensional contingency table is required. <span class="citation" data-cites="GriesStef2013">(<a href="#ref-GriesStef2013" role="doc-biblioref"><strong>GriesStef2013?</strong></a>)</span> gives the following example:</p>
-<div class="cell">
-<div class="cell-output-display">
-
-<table>
- <thead>
-  <tr>
-   <th style="text-align:left;">   </th>
-   <th style="text-align:left;"> Word </th>
-   <th style="text-align:left;"> Class_L </th>
-   <th style="text-align:left;"> Construction_c </th>
-   <th style="text-align:left;"> Frequency_of_L_l_in_C_c </th>
-   <th style="text-align:left;"> Total_frequency_of_C_c </th>
-   <th style="text-align:left;"> Total_frequency_of_L_l_in_C_c_c </th>
-   <th style="text-align:left;"> Total_frequency_of_C_c_c </th>
-  </tr>
- </thead>
+<p>An extension of DCA is the possibility to perform it on a data set that has more than two types of constructions. This is referred to as Multiple Distinctive Collexeme Analysis (MDCA) <span class="citation" data-cites="StefGries2004a">(<a href="#ref-StefGries2004a" role="doc-biblioref"><strong>StefGries2004a?</strong></a>)</span>. MDCA is a method that can be used to compare the distinctive collexemes of multiple constructions. It is based on the same principles as DCA, but instead of comparing two constructions, it compares multiple constructions. In order to perform a MDCA on a data set a multidimensional contingency table is required. <span class="citation" data-cites="GriesStef2013">(<a href="#ref-GriesStef2013" role="doc-biblioref"><strong>GriesStef2013?</strong></a>)</span> gives the following <a href="#tbl-mca">Table&nbsp;3</a> to illustrate which frequency information is needed for a MDCA.:</p>
+<div id="tbl-mca" class="anchored">
+<table class="table">
+<caption>Table&nbsp;3: Frequency information needed for a multiple distinctive collexeme analysis</caption>
+<colgroup>
+<col style="width: 18%">
+<col style="width: 28%">
+<col style="width: 29%">
+<col style="width: 23%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;"><strong>Word l of Class L</strong></th>
+<th style="text-align: center;"><strong>Other Words of Class L</strong></th>
+<th style="text-align: center;"><strong>Total</strong></th>
+</tr>
+</thead>
 <tbody>
-  <tr>
-   <td style="text-align:left;"> Word l of Class L </td>
-   <td style="text-align:left;"> l </td>
-   <td style="text-align:left;"> Class L </td>
-   <td style="text-align:left;"> Construction c of Class C </td>
-   <td style="text-align:left;"> Frequency of L(l ) in C(c ) </td>
-   <td style="text-align:left;"> Total frequency of C(c ) </td>
-   <td style="text-align:left;"> Total frequency of L(l ) in C(c ,c ) </td>
-   <td style="text-align:left;"> Total frequency of C(c ,c ) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Total </td>
-   <td style="text-align:left;"> Other Words of Class L </td>
-   <td style="text-align:left;"> Class L </td>
-   <td style="text-align:left;"> Construction c of Class C </td>
-   <td style="text-align:left;"> Frequency of L(¬l ) in C(c ) </td>
-   <td style="text-align:left;"> Total frequency of C(c ) </td>
-   <td style="text-align:left;"> Total frequency of L(¬l ) in C(c ,c ) </td>
-   <td style="text-align:left;"> Total frequency of C(c ,c ) </td>
-  </tr>
+<tr class="odd">
+<td>Construction c1 of Class C</td>
+<td style="text-align: center;">Frequency of L(l) in C(c1)</td>
+<td style="text-align: center;">Frequency of L(-l) in C(c1)</td>
+<td style="text-align: center;">Total frequency of C(c1)</td>
+</tr>
+<tr class="even">
+<td>Construction c2 of Class C</td>
+<td style="text-align: center;">Frequency of L(l) in C(c2)</td>
+<td style="text-align: center;">Frequency of L(-l) in C(c2)</td>
+<td style="text-align: center;">Total frequency of C(c2)</td>
+</tr>
+<tr class="odd">
+<td>…</td>
+<td style="text-align: center;">…</td>
+<td style="text-align: center;">…</td>
+<td style="text-align: center;">…</td>
+</tr>
+<tr class="even">
+<td>Construction c(n)</td>
+<td style="text-align: center;">Freq. of L(l) in C(cn)</td>
+<td style="text-align: center;">Freq. of L(-l) in C(cn)</td>
+<td style="text-align: center;">Total frequency of C(cn)</td>
+</tr>
+<tr class="odd">
+<td>Total</td>
+<td style="text-align: center;">Total frequency of L(l) in C(c1,c2, …n)</td>
+<td style="text-align: center;">Total frequency of L(-l) in C(c1,c2, …n)</td>
+<td style="text-align: center;">Total frequency of C(c1,c2, …n)</td>
+</tr>
 </tbody>
 </table>
-
-</div>
 </div>
 <p>As can be observed in the above table, the difference is that in the MDCA contingency table there is an n number of constructions represented in the columns. Due to the limited scope of this paper, only the DCA will be used. However, the MDCA was still performed and the results are available in the appendix because it could prove useful for future research.</p>
-<p>As already discussed, both the DCA and MDCA are used on the data set in this paper but only the DCA will be presented and discussed. The DCA is used to compare the distinctive collexemes of the two most frequent constructions in the data set. The MDCA can be used to compare the distinctive collexemes of all constructions in the data set. To perform both types of analyses, a R script developed by <span class="citation" data-cites="GriesStef2013">(<a href="#ref-GriesStef2013" role="doc-biblioref"><strong>GriesStef2013?</strong></a>)</span> was used and adapted to suit the data set in this paper.</p>
-<div class="cell">
-
+<p>As already discussed, both the DCA and MDCA are used on the data set in this paper but only the DCA will be presented and discussed. The DCA is used to compare the distinctive collexemes of the two most frequent constructions in the data set. The MDCA can be used to compare the distinctive collexemes of all constructions in the data set. To perform both types of analyses, a R script developed by <span class="citation" data-cites="GriesStef2013">(<a href="#ref-GriesStef2013" role="doc-biblioref"><strong>GriesStef2013?</strong></a>)</span> was used and adapted to suit the data set in this paper. This script calculates the association measures for all words (lemma / role set) in relation to the two most frequent argument structure constructions from the data set and returns a table containing the association measures for each of those word. In total, eightDE association measures are given. They are presented in <a href="#tbl-accosm">Table&nbsp;4</a>. Not all of them are used in the analysis but they are presented for completeness and to give a general overview of the measures that are available when using DCA on a PropBank-annotated corpus. A comparison between these measures is not examined in this paper.</p>
+<div id="tbl-accosm" class="anchored">
+<table class="table">
+<caption>Table&nbsp;4: Association measures used in the DCA</caption>
+<colgroup>
+<col style="width: 13%">
+<col style="width: 32%">
+<col style="width: 54%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Association Measure</th>
+<th>Full Name</th>
+<th>Score Indication</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>LLR</td>
+<td>Log-Likelihood Ratio</td>
+<td>The higher the value, the stronger the association between the two variables.</td>
+</tr>
+<tr class="even">
+<td>PEARSONRESID</td>
+<td>Pearson Residual</td>
+<td>The closer the value is to 0, the stronger the association between the two variables.</td>
+</tr>
+<tr class="odd">
+<td>LOGODDSRATIO</td>
+<td>Log Odds Ratio</td>
+<td>The higher the value, the stronger the association between the two variables.</td>
+</tr>
+<tr class="even">
+<td>MI</td>
+<td>Mutual Information</td>
+<td>The higher the value, the stronger the association between the two variables.</td>
+</tr>
+<tr class="odd">
+<td>DELTAPC2W</td>
+<td>Difference in Probability of Construction to Word</td>
+<td>The higher the value, the stronger the association between the two variables.</td>
+</tr>
+<tr class="even">
+<td>DELTAPW2C</td>
+<td>Difference in Probability of Word to Construction</td>
+<td>The higher the value, the stronger the association between the two variables.</td>
+</tr>
+<tr class="odd">
+<td>FYE</td>
+<td>Fisher-Yates Exact Test</td>
+<td>The lower the value, the stronger the association between the two variables.</td>
+</tr>
+</tbody>
+</table>
 </div>
 </section>
 <section id="results-and-discussion" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Results and Discussion</h1>
-<p>In the following section, an exploratory analysis will be conducted on the data resulting from the DCA &amp; MDCA. The analysis will depart from the DCA lemma &amp; role set table, which contains all calculated association scores. The analysis starts with giving a general overview of the most frequent and distinctive collostructions found in the corpus. Then, it will proceed to examine the specific association measures in order to gain insight into the patterns and preferences in the data. Examples of the collostructions will be provided to assist in understanding the findings and interpreting the results. The full results of the analyses are available in the appendix. The results of the DCA are presented in <a href="#tbl-dca-roleset">Table&nbsp;3</a>:</p>
+<p>In the following section, an exploratory analysis will be conducted on the cleaned corpus data and on the resulting data from the DCA. The analysis departs from an overview of the frequency of the lemmas and rolesets in specific argument constructions. In <a href="#tbl-alph-summary">Table&nbsp;5</a>, a random subset of an alphabetically sorted list is shown. The argument structure constructions are ordered based on the frequency in which they appear in the data set.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="tbl-alph-summary" class="anchored">
+
+<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; "><table class=" lightable-paper table" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;"><caption>Table&nbsp;5:  Alphabetical sorted summary of the data set (random 20 rows and 8 columns). </caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> lemma </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> roleset </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> total </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg1(np)-arg2(pp) </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg2(np)-arg1(np) </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg1(np)-arg2(c("s", "vp")) </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg1(np)-arg2(vp) </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg1(np)-arg2(np) </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> cast </td>
+   <td style="text-align:left;"> cast.02 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> castigate </td>
+   <td style="text-align:left;"> castigate.01 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> catapult </td>
+   <td style="text-align:left;"> catapult.01 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> catch </td>
+   <td style="text-align:left;"> catch.02 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> catch </td>
+   <td style="text-align:left;"> catch.03 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> cede </td>
+   <td style="text-align:left;"> cede.01 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> challenge </td>
+   <td style="text-align:left;"> challenge.01 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> change </td>
+   <td style="text-align:left;"> change.01 </td>
+   <td style="text-align:right;"> 22 </td>
+   <td style="text-align:right;"> 21 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> channel </td>
+   <td style="text-align:left;"> channel.01 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> characterize </td>
+   <td style="text-align:left;"> characterize.01 </td>
+   <td style="text-align:right;"> 8 </td>
+   <td style="text-align:right;"> 6 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> charge </td>
+   <td style="text-align:left;"> charge.01 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> charge </td>
+   <td style="text-align:left;"> charge.04 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> charge </td>
+   <td style="text-align:left;"> charge.05 </td>
+   <td style="text-align:right;"> 21 </td>
+   <td style="text-align:right;"> 21 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> charter </td>
+   <td style="text-align:left;"> charter.01 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> chastise </td>
+   <td style="text-align:left;"> chastise.01 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> chide </td>
+   <td style="text-align:left;"> chide.01 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> choose </td>
+   <td style="text-align:left;"> choose.01 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> cite </td>
+   <td style="text-align:left;"> cite.01 </td>
+   <td style="text-align:right;"> 12 </td>
+   <td style="text-align:right;"> 11 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> cite </td>
+   <td style="text-align:left;"> cite.02 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> claim </td>
+   <td style="text-align:left;"> claim.01 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> clean </td>
+   <td style="text-align:left;"> clean.01 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+</tbody>
+</table></div>
+
+</div>
+</div>
+</div>
+<p>What <a href="#tbl-alph-summary">Table&nbsp;5</a> shows is that a lemma manifests itself in different rolesets in different constructions. For example, the lemma “catch” appears in role sets “catch.02” and “catch.03” and the lemma “charge” appears in the role sets “charge.01”, “charge.04” and “charge.05”. <strong>?@tbl-sense-utterance</strong> illustrates these role sets with their semantic meaning and an example utterance from the corpus.</p>
+<dl>
+<dt>-&gt; insert table here</dt>
+<dd>
+<p>Example of the role sets and their semantic meaning {#tbl-sense-utterance}</p>
+</dd>
+</dl>
+<p>-&gt; insert table explanation here</p>
+<p>The next <a href="#tbl-freq-summary">Table&nbsp;6</a> shows a similar list but now no longer alphabetically sorted but sorted based on the frequency of the lemmas and rolesets in the data set. The argument structure constructions are still ordered based on the frequency in which they appear in the data set.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="tbl-freq-summary" class="anchored">
+
+<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; "><table class=" lightable-paper table" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;"><caption>Table&nbsp;6:  Frequency ordered overview of the data set (first 10 rows and 8 columns). </caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> lemma </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> roleset </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> total </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg1(np)-arg2(pp) </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg2(np)-arg1(np) </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg1(np)-arg2(c("s", "vp")) </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg1(np)-arg2(vp) </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg1(np)-arg2(np) </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> give </td>
+   <td style="text-align:left;"> give.01 </td>
+   <td style="text-align:right;"> 976 </td>
+   <td style="text-align:right;"> 224 </td>
+   <td style="text-align:right;"> 662 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> put </td>
+   <td style="text-align:left;"> put.01 </td>
+   <td style="text-align:right;"> 443 </td>
+   <td style="text-align:right;"> 355 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> 2 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> use </td>
+   <td style="text-align:left;"> use.01 </td>
+   <td style="text-align:right;"> 381 </td>
+   <td style="text-align:right;"> 76 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> 284 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> bring </td>
+   <td style="text-align:left;"> bring.01 </td>
+   <td style="text-align:right;"> 243 </td>
+   <td style="text-align:right;"> 175 </td>
+   <td style="text-align:right;"> 27 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> 4 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> take </td>
+   <td style="text-align:left;"> take.01 </td>
+   <td style="text-align:right;"> 225 </td>
+   <td style="text-align:right;"> 189 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> call </td>
+   <td style="text-align:left;"> call.01 </td>
+   <td style="text-align:right;"> 195 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 130 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> tell </td>
+   <td style="text-align:left;"> tell.01 </td>
+   <td style="text-align:right;"> 192 </td>
+   <td style="text-align:right;"> 19 </td>
+   <td style="text-align:right;"> 150 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> send </td>
+   <td style="text-align:left;"> send.01 </td>
+   <td style="text-align:right;"> 188 </td>
+   <td style="text-align:right;"> 111 </td>
+   <td style="text-align:right;"> 49 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 3 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> spend </td>
+   <td style="text-align:left;"> spend.02 </td>
+   <td style="text-align:right;"> 134 </td>
+   <td style="text-align:right;"> 49 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> 74 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> force </td>
+   <td style="text-align:left;"> force.01 </td>
+   <td style="text-align:right;"> 118 </td>
+   <td style="text-align:right;"> 22 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 80 </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+</tbody>
+</table></div>
+
+</div>
+</div>
+</div>
+<p>The analysis will depart from the DCA lemma &amp; role set table, which contains all calculated association scores. The analysis starts with giving a general overview of the most frequent and distinctive collostructions found in the corpus. Then, it will proceed to examine the specific association measures in order to gain insight into the patterns and preferences in the data. Examples of the collostructions will be provided to assist in understanding the findings and interpreting the results. The full results of the analyses are available in the appendix. The results of the DCA are presented in <a href="#tbl-dca-roleset">Table&nbsp;7</a>:</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="tbl-dca-roleset" class="anchored">
 
-<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:600px; overflow-x: scroll; width:100%; "><table class=" lightable-paper table" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;"><caption>Table&nbsp;3:  Results DCA analysis. </caption>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:600px; overflow-x: scroll; width:100%; "><table class=" lightable-paper table" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;"><caption>Table&nbsp;7:  Results DCA analysis. </caption>
  <thead>
   <tr>
    <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;position: sticky; top:0; background-color: #FFFFFF;"> WORD </th>
@@ -426,7 +855,7 @@ div.csl-indent {
    <td style="text-align:right;"> 0.28 </td>
    <td style="text-align:right;"> 0.01 </td>
    <td style="text-align:right;"> 0.18 </td>
-   <td style="text-align:right;"> 3.8 </td>
+   <td style="text-align:right;"> 3.9 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> receive.01 </td>
@@ -579,7 +1008,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -615,24 +1061,42 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script>
