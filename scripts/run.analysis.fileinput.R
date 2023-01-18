@@ -98,7 +98,7 @@ dist.collexemes <- function(precbitsexponent = precbitsexponent) {
   }
   # If fye.mpfr is set to "yes" then this will add FYE column to output.table dataframe.
   
-  colnames(output.table)[2:3] <- c(construction2.name, construction1.name)
+  colnames(output.table)[2:3] <- c(construction1.name, construction2.name)
   # This line changes the column names of CONSTRUCTION1 and CONSTRUCTION2 to the values of construction2.name and construction1.name respectively.
   
   output.table <- output.table[order(output.table$PREFERENCE, -output.table$LOGODDSRATIO),]

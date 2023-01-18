@@ -23,3 +23,4 @@ source(file.path(project_dir, "scripts", "coll.analysis.r")) # Loads functions n
 ##########################################################################################################################################
 source(file.path(project_dir, "scripts", "run.analysis.auto.R")) # Runs the DCA
 source(file.path(project_dir, "scripts", "clean_analysis.R"))
+

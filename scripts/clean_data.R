@@ -53,10 +53,12 @@ df_summary_corpus <- pivot_wider(construction_counts, names_from = arg_struc_cxn
 
 df_summary_corpus$total <- rowSums(df_summary_corpus[,3:ncol(df_summary_corpus)], na.rm = TRUE)
 
-cxn_freq_table <- data.frame(sort(freq_table[[1]], decreasing = TRUE, by = "value"))
-cxn_freq_df <- data.frame(cxn_freq_table$Var1)
+cxn_freq_table <- data.frame(sort(freq_list[[1]], decreasing = TRUE, by = "value"))
+colnames(cxn_freq_table)[1]<-"arg_struc_cxn"
 
-col_order <- c(cxn_freq_df$cxn_freq_table.Var1)
+cxn_freq_df <- data.frame(cxn_freq_table$arg_struc_cxn)
+
+col_order <- c(cxn_freq_df$cxn_freq_table.arg_struc_cxn)
 
 alph_lemma_df <- select(df_summary_corpus, "lemma", "roleset", "total", c(col_order))
 
@@ -68,6 +70,6 @@ df_summary_corpus <- df_summary_corpus %>%
 corpus_cleaned_overview <- select(df_summary_corpus, "lemma", "roleset", "total", c(col_order))
 
 write.table(corpus_cleaned_overview, file = file.path(corpus_cleaned_fp, "corpus_cleaned_summary.csv"), row.names = FALSE, sep = "\t", col.names = TRUE, quote = FALSE)
-
+write.table(cxn_freq_table, file = file.path(corpus_cleaned_fp, "cxn_frequency_table.csv"), row.names = FALSE, sep = "\t", col.names = TRUE, quote = FALSE)
 
 

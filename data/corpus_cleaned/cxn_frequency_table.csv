@@ -1,0 +1,88 @@
+arg_struc_cxn	Freq
+arg0(np)-v(v)-arg1(np)-arg2(pp)	5497
+arg0(np)-v(v)-arg2(np)-arg1(np)	1180
+arg0(np)-v(v)-arg1(np)-arg2(c("s", "vp"))	741
+arg0(np)-v(v)-arg1(np)-arg2(vp)	315
+arg0(np)-v(v)-arg1(np)-arg2(np)	226
+arg0(np)-v(v)-arg2(pp)-arg1(np)	142
+arg1(np)-arg0(np)-v(v)-arg2(np)	119
+arg0(np)-v(v)-arg2(rp)-arg1(np)	113
+arg0(np)-v(v)-arg1(np)-arg2(sbar)	111
+arg1(np)-arg0(np)-v(v)-arg2(pp)	110
+arg0(np)-v(v)-arg1(np)-arg2(rb)	105
+arg0(np)-v(v)-arg1(np)-arg2(advp)	92
+v(v)-arg1(np)-arg2(pp)-arg0(np)	44
+arg0(np)-arg2(rb)-v(v)-arg1(np)	43
+arg0(np)-v(v)-arg1(np)-arg2(rp)	41
+arg0(np)-v(v)-arg1(c("np", "qp"))-arg2(pp)	40
+arg0(np)-v(v)-arg1(np)-arg2(s)	37
+arg2(pp)-arg0(np)-v(v)-arg1(np)	37
+arg0(np)-v(v)-arg2(rb)-arg1(np)	32
+arg0(np)-v(v)-arg1(np)-arg2(jj)	28
+arg0(np)-v(v)-arg1(np)-arg2(c("sbar", "s", "vp"))	27
+arg2(wrb)-arg0(np)-v(v)-arg1(np)	24
+arg0(np)-v(v)-arg1(np)-arg2(c("sbar", "s"))	20
+arg0(np)-v(v)-arg1(np)-arg2(adjp)	18
+arg0(np)-v(v)-arg1(np)-arg2(v)	14
+arg2(wp)-arg0(np)-v(v)-arg1(np)	13
+arg2(np)-arg0(np)-v(v)-arg1(np)	12
+arg0(np)-v(v)-arg1(np)-arg2(in)	10
+arg0(np)-v(v)-arg1(c("np", "np"))-arg2(pp)	9
+arg0(np)-arg1(np)-v(v)-arg2(pp)	8
+arg0(np)-v(v)-arg2(in)-arg1(np)	8
+arg0(np)-v(v)-arg1(np)-arg2(dt)	7
+arg1(np)-arg0(np)-v(v)-arg2(c("s", "vp"))	7
+arg2(c("s", "vp"))-arg0(np)-v(v)-arg1(np)	7
+arg0(np)-arg2(pp)-v(v)-arg1(np)	6
+arg0(np)-v(v)-arg2(np)-arg1(c("np", "qp"))	6
+arg0(c("np", "np"))-v(v)-arg1(np)-arg2(pp)	5
+arg0(np)-v(v)-arg2(prp)-arg1(np)	5
+arg1(np)-arg0(np)-v(v)-arg2(c("s", "np"))	5
+v(v)-arg2(np)-arg1(np)-arg0(np)	5
+arg0(np)-v(v)-arg1(np)-arg2(rbr)	4
+arg2(wdt)-arg0(np)-v(v)-arg1(np)	4
+arg0(np)-arg2(np)-v(v)-arg1(np)	3
+arg0(np)-arg2(wrb)-v(v)-arg1(np)	3
+arg0(np)-v(v)-arg1(np)-arg2(to)	3
+arg0(np)-v(v)-arg2(rp)-arg1(c("np", "qp"))	3
+arg2(wp)-arg0(np)-v(v)-arg1(c("s", "np"))	3
+v(v)-arg1(np)-arg2(c("s", "vp"))-arg0(np)	3
+arg0(np)-v(v)-arg1(np)-arg2(jjr)	2
+arg0(np)-v(v)-arg1(np)-arg2(ucp)	2
+arg0(np)-v(v)-arg2(jj)-arg1(np)	2
+arg1(np)-arg0(np)-v(v)-arg2(s)	2
+arg2(np)-v(v)-arg0(np)-arg1(np)	2
+arg0(c("np", "np"))-v(v)-arg1(np)-arg2(c("s", "vp"))	1
+arg0(c("np", "np"))-v(v)-arg1(np)-arg2(np)	1
+arg0(c("np", "np"))-v(v)-arg1(np)-arg2(vp)	1
+arg0(c("np", "np"))-v(v)-arg2(pp)-arg1(np)	1
+arg0(c("np", "np", "qp"))-v(v)-arg1(np)-arg2(pp)	1
+arg0(np)-arg1(c("np", "np", "qp"))-v(v)-arg2(pp)	1
+arg0(np)-arg1(c("np", "qp"))-v(v)-arg2(pp)	1
+arg0(np)-arg1(np)-v(v)-arg2(np)	1
+arg0(np)-arg2(rbr)-v(v)-arg1(np)	1
+arg0(np)-arg2(whadvp)-v(v)-arg1(np)	1
+arg0(np)-v(v)-arg1(c("np", "np"))-arg2(rb)	1
+arg0(np)-v(v)-arg1(c("np", "qp"))-arg2(c("s", "vp"))	1
+arg0(np)-v(v)-arg1(np)-arg2(c("np", "qp"))	1
+arg0(np)-v(v)-arg1(np)-arg2(cd)	1
+arg0(np)-v(v)-arg1(np)-arg2(nn)	1
+arg0(np)-v(v)-arg1(np)-arg2(wdt)	1
+arg0(np)-v(v)-arg2(c("np", "np"))-arg1(np)	1
+arg0(np)-v(v)-arg2(nnp)-arg1(np)	1
+arg0(np)-v(v)-arg2(pp)-arg1(c("np", "qp"))	1
+arg0(np)-v(v)-arg2(to)-arg1(np)	1
+arg0(np)-v(v)-arg2(v)-arg1(np)	1
+arg1(c("np", "np"))-arg0(np)-v(v)-arg2(pp)	1
+arg1(np)-arg0(np)-v(v)-arg2(advp)	1
+arg1(np)-arg0(np)-v(v)-arg2(prp)	1
+arg1(np)-arg0(np)-v(v)-arg2(rb)	1
+arg1(np)-arg0(np)-v(v)-arg2(rp)	1
+arg2(adjp)-arg0(np)-v(v)-arg1(np)	1
+arg2(advp)-arg0(np)-v(v)-arg1(np)	1
+arg2(nn)-arg0(np)-v(v)-arg1(np)	1
+arg2(pp)-v(v)-arg0(np)-arg1(np)	1
+arg2(whnp)-arg0(np)-v(v)-arg1(np)	1
+v(v)-arg1(c("np", "qp"))-arg2(pp)-arg0(np)	1
+v(v)-arg1(np)-arg2(rb)-arg0(np)	1
+v(v)-arg2(rp)-arg1(np)-arg0(np)	1

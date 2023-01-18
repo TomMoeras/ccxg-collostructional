@@ -80,9 +80,9 @@ dist.collexemes <- function(precbitsexponent = precbitsexponent) {
   # output
   output.table <- data.frame(WORD=rownames(input.matrix), CONSTRUCTION1=input.matrix[,1], CONSTRUCTION2=input.matrix[,2], row.names=NULL)
   # This line creates a dataframe with three columns: WORD, CONSTRUCTION1 and CONSTRUCTION2. The values in the WORD column are the row names of the input.matrix dataframe. 
-  output.table <- data.frame(output.table, PREFERENCE=relations, LLR=log.likelihood.values, PEARSONRESID=pearson.residuals,
-                             LOGODDSRATIO=log.odds.ratios, MI=mi.scores,
-                             DELTAPC2W=delta.p.constr.cues.word, DELTAPW2C=delta.p.word.cues.constr, row.names=NULL)
+  output.table <- data.frame(output.table, PREF=relations, LLR=log.likelihood.values, PRES=pearson.residuals,
+                             LOR=log.odds.ratios, MI=mi.scores,
+                             DPC2W=delta.p.constr.cues.word, DPW2C=delta.p.word.cues.constr, row.names=NULL)
   # This line adds additional columns to the output.table dataframe: PREFERENCE, LLR, PEARSONRESID, LOGODDSRATIO, MI, DELTAPC2W, and DELTAPW2C.
   
   if (fye.mpfr=="yes") {
@@ -92,21 +92,21 @@ dist.collexemes <- function(precbitsexponent = precbitsexponent) {
   }
   # If fye.mpfr is set to "yes" then this will add FYE column to output.table dataframe.
   
-  colnames(output.table)[2:3] <- c(construction2.name, construction1.name)
+  colnames(output.table)[2:3] <- c(construction1.name, construction2.name)
   # This line changes the column names of CONSTRUCTION1 and CONSTRUCTION2 to the values of construction2.name and construction1.name respectively.
   
-  output.table <- output.table[order(output.table$PREFERENCE, -output.table$LOGODDSRATIO),]
+  output.table <- output.table[order(output.table$PREF, -output.table$LOR),]
   # This line orders the output.table dataframe by the values in PREFERENCE column in ascending order and LOGODDSRATIO in descending order.
   
   write.table(output.table, file=file.path(file_output), sep="\t", row.names=FALSE, col.names=TRUE, quote=FALSE)
   # This line saves the output.table dataframe to a tab-separated file in file_output path with the row names and column names in the file.
   
-  cat("\n\nThe results are in the file called ", basename(file_output), "and can be found in: ", project_dir, ".\n")
+  cat("\n\nThe results are in the file called ", basename(file_output), "and can be found in: ", file_output, ".\n")
   
-  plot(log2(output.table[,2]+output.table[,3]), output.table$LOGODDSRATIO, type="n",
+  plot(log2(output.table[,2]+output.table[,3]), output.table$LOR, type="n",
        xlab="Logged co-occurrence frequency", ylab="Association (log odds ratio)")
   grid(); abline(h=0, lty=2); abline(v=0, lty=2)
-  text(log2(output.table[,2]+output.table[,3]), output.table$LOGODDSRATIO, output.table$WORD, font=1)
+  text(log2(output.table[,2]+output.table[,3]), output.table$LOR, output.table$WORD, font=1)
   
 }   
 

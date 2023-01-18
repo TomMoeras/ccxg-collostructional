@@ -2,10 +2,10 @@
 get_utterances_by_roleset <- function(data_frame, roleset) {
   # Use sapply to check if any of the roles in the roles column of the data frame have the input roleset
   # and select the corresponding utterance
-  utterances <- data_frame$utterance[sapply(data_frame$roles, function(x) any(x$roleset == roleset))]
+  utterances <- data_frame[sapply(data_frame$roles, function(x) any(x$roleset == roleset)), c("utterance", "argument_structure_construction")]
   # remove NAs from the resulting utterances dataframe
-  utterances <- utterances[!is.na(utterances)]
-  return(utterances)
+  selected_rows <- utterances[!is.na(utterances)]
+  return(selected_rows)
 }
 
 # Function to extract utterances from data frame that have a specific argument structure construction
