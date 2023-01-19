@@ -13,15 +13,17 @@ numbers_df <- numbers_df %>% add_row(lemma = length(freq_list[[3]]), roleset = l
 
 rownames(numbers_df) <- c("#types")
 
+#
+
 write.table(numbers_df, file = file.path(corpus_cleaned_fp, "numbers.csv"), row.names = FALSE, sep = "\t", col.names = TRUE, quote = FALSE)
 
 df_cxn_lemma_multiple <- combine_columns(corpus_analysis_df, corpus_analysis_df, "arg_struc_cxn", "lemma")
 
 write.table(df_cxn_lemma_multiple, file = file.path(corpus_cleaned_fp, "cxn_lemma_multiple.csv"), row.names = FALSE, sep = "\t", col.names = TRUE, quote = FALSE)
 
-df_roleset_cxn_multiple <- combine_columns(corpus_analysis_df, corpus_analysis_df, "arg_struc_cxn", "roleset")
+df_cxn_roleset_multiple <- combine_columns(corpus_analysis_df, corpus_analysis_df, "arg_struc_cxn", "roleset")
 
-write.table(df_cxn_lemma_multiple, file = file.path(corpus_cleaned_fp, "cxn_roleset_multiple.csv"), row.names = FALSE, sep = "\t", col.names = TRUE, quote = FALSE)
+write.table(df_cxn_roleset_multiple, file = file.path(corpus_cleaned_fp, "cxn_roleset_multiple.csv"), row.names = FALSE, sep = "\t", col.names = TRUE, quote = FALSE)
 
 #
 

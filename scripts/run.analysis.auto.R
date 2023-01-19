@@ -5,7 +5,7 @@ dist.collexemes <- function(precbitsexponent = precbitsexponent) {
   # Initialize variables
   dists <- 1
   input.dc <- 1
-  fye.mpfr <- "no" # change input to "yes" if you want the FYE calculated as well. Warning: this takes a long time!
+  fye.mpfr <- "yes" # change input to "yes" if you want the FYE calculated as well. Warning: this takes a long time!
   # Get the base name of the file (without the file extension)
   file_input_base <- basename(file_input)
   # Create the filepath for the output file 
@@ -84,11 +84,14 @@ dist.collexemes <- function(precbitsexponent = precbitsexponent) {
                              LOR=log.odds.ratios, MI=mi.scores,
                              DPC2W=delta.p.constr.cues.word, DPW2C=delta.p.word.cues.constr, row.names=NULL)
   # This line adds additional columns to the output.table dataframe: PREFERENCE, LLR, PEARSONRESID, LOGODDSRATIO, MI, DELTAPC2W, and DELTAPW2C.
+  assoc <- cbind(log.likelihood.values, pearson.residuals, log.odds.ratios, mi.scores, delta.p.constr.cues.word, delta.p.word.cues.constr)
   
   if (fye.mpfr=="yes") {
     output.table <- data.frame(output.table,
                                # FYE=sapply(FYE.values, formatMpfr, digits=12))
                                FYE=sapply(sapply(FYE.values, \(af) -log10(af)), asNumeric))
+    fisher.scores <- sapply(sapply(FYE.values, \(af) -log10(af)), asNumeric)
+    assoc <- cbind(log.likelihood.values, pearson.residuals, log.odds.ratios, mi.scores, delta.p.constr.cues.word, delta.p.word.cues.constr, fisher.scores)
   }
   # If fye.mpfr is set to "yes" then this will add FYE column to output.table dataframe.
   
@@ -108,6 +111,12 @@ dist.collexemes <- function(precbitsexponent = precbitsexponent) {
   grid(); abline(h=0, lty=2); abline(v=0, lty=2)
   text(log2(output.table[,2]+output.table[,3]), output.table$LOR, output.table$WORD, font=1)
   
+  assoc.cor <- cor(assoc, method="kendall")
+  assoc.cor <- round(assoc.cor, 3)
+  write.table(assoc.cor, file=file.path(project_dir, "results_analysis", str_glue("assoc_cor_{basename(file_output)}.csv")), sep="\t", row.names=TRUE, col.names=NA, quote=FALSE)
+  # corrgram(assoc, order = TRUE, lower.panel = panel.shade, upper.panel = panel.pie)
+  # corrgram(assoc, order = TRUE, lower.panel = panel.ellipse, upper.panel = panel.pts)
+  
 }   
 
 file_input = file.path(project_dir, "data", "corpus_cleaned", "cxn_lemma_distinctive.csv")
@@ -115,3 +124,4 @@ dist.collexemes()
 
 file_input = file.path(project_dir, "data", "corpus_cleaned", "cxn_roleset_distinctive.csv")
 dist.collexemes()
+
