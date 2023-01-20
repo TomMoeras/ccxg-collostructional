@@ -32,6 +32,7 @@ library(kableExtra)
 library(here)
 library(xml2)
 library(ggplot2)
+library(diagram)
 
 project_dir <- here::here()
 plot_fonts <- if (!knitr::is_html_output()) "serif" else "sans"
@@ -49,6 +50,45 @@ mixed_cxn2_roleset <- read_tsv(file = file.path(project_dir, "results_analysis",
 mixed_cxn1_lemma <- read_tsv(file = file.path(project_dir, "results_analysis", "ordered_analysis_cxn", "results_arg0(np)-v(v)-arg1(np)-arg2(pp)_mixed_lemma.csv"), show_col_types = FALSE)
 mixed_cxn2_lemma <- read_tsv(file = file.path(project_dir, "results_analysis", "ordered_analysis_cxn", "results_arg0(np)-v(v)-arg2(np)-arg1(np)_mixed_lemma.csv"), show_col_types = FALSE)
 ```
+
+```{r}
+
+# Create a flowchart
+library(DiagrammeR)
+
+# Create a flowchart
+grViz(diagram = "
+digraph flowchart {
+  node [fontname = arial, shape = rectangle, style = filled, fillcolor = palegreen]
+  tab1 [label = 'Corpus']
+  tab2 [label = 'Filtered corpus on schema arg0(np)-v(v)-arg1(np)-arg2']
+  tab3 [label = '89 different arg-struc-cxn']
+  tab4 [label = 'arg0(np)-v(v)-arg1(np)-arg2(pp)']
+  tab5 [label = 'arg0(np)-v(v)-arg2(np)-arg1(np)']
+  tab6 [label = 'Words in both cxn1 & cxn2']
+  tab7 [label = 'Words exclusively in cxn1', fillcolor = lightcoral]
+  tab8 [label = 'Words exclusively in cxn2', fillcolor = lightcoral]
+  tab9 [label = 'Words that prefer cxn1 but also appear in cxn2']
+  tab10 [label = 'Words that prefer cxn2 but also appear in cxn1']
+
+  tab1 -> tab2
+  tab2 -> tab3
+  tab3 -> tab4
+  tab3 -> tab5
+  tab4 -> tab7
+  tab5 -> tab8
+  tab4 -> tab6
+  tab5 -> tab6
+  tab6 -> tab9
+  tab6 -> tab10
+}
+")
+
+
+
+```
+
+
 
 # Introduction
 
@@ -411,15 +451,15 @@ To aid the interpretation of the results of the DCA they are compared to a study
 Distinctive collexemes in the Ditransitive and the Prepositional Dative construction in the ICE-GB presented in @Griesstef2004
 :::
 
-The Fisher-Yates score was not log10-transformed in the original table but was tranformed here to make for an easier comparison to the data presented in the current study. Before interpreting the role sets with the data in @tbl-gries2004, it is useful to compare lemmas to lemmas. @tbl-cxn1-lemma-lemma shows the data from @Griesstef2004 and the current study for the lemmas that are distinctive for the ditransative / arg0(np)-v(v)-arg1(np)-arg2(pp).
+The Fisher-Yates scores were not -log10-transformed in the original table but were tranformed here to make for an easier comparison to the data presented in the current study. Before interpreting the role sets with the data in @tbl-gries2004, it is useful to compare lemmas to lemmas. @tbl-cxn1-lemma-lemma-FYE shows the data from @Griesstef2004 and the current study for the lemmas that are distinctive for the ditransative / arg0(np)-v(v)-arg1(np)-arg2(pp).
 ```{r}
 #| layout-ncol: 2
-#| label: tbl-cxn1-lemma-lemma
+#| label: tbl-cxn1-lemma-lemma-FYE
 #| tbl-cap: Comparison lemmas distinctive for arg0(np)-v(v)-arg1(np)-arg2(pp).
 #| tbl-subcap: ["Gries and Stefanowitsch (2013)", "Current study"]
 
 # Order by LLR
-mixed_cxn1_lemma <- mixed_cxn1_lemma[order(-mixed_cxn1_roleset$FYE), ]
+mixed_cxn1_lemma <- mixed_cxn1_lemma[order(-mixed_cxn1_lemma$FYE), ]
 
 # Create a dataframe with the provided data
 gries_cxn1 <- data.frame(Collexeme = c("Bring", "Play", "Take", "Pass", "Make", "Sell", "Do", "Supply"), 
@@ -441,6 +481,171 @@ kbl(mixed_cxn1_lemma[, c(1, 2, 3, 11)], booktabs = TRUE) %>%
 
 ```
 
+```{r}
+#| layout-ncol: 2
+#| label: tbl-cxn2-lemma-lemma-FYE
+#| tbl-cap: Comparison lemmas distinctive for arg0(np)-v(v)-arg2(np)-arg1(np).
+#| tbl-subcap: ["Gries and Stefanowitsch (2013)", "Current study"]
+
+# Order by LLR
+mixed_cxn2_lemma <- mixed_cxn2_lemma[order(-mixed_cxn2_lemma$FYE), ]
+
+# Create a dataframe with the provided data
+gries_cxn2 <- data.frame(Collexeme = c("Give", "Tell", "Show", "Offer", "Cost", "Teach", "Wish", "Ask", "Promise", "Deny", "Award"),
+                 Prep.Dative = c(146, 2, 15, 15, 1, 1, 1, 4, 1, 3, 3),
+                 Ditransitive = c(461, 128, 49, 43, 20, 15, 9, 12, 7, 8, 7),
+                 FYE = c(119.74, 57.95, 11.07, 9.99, 8.99, 5.83, 3.30, 2.88, 3.44, 1.92, 1.58))
+
+# display
+kbl(gries_cxn2, booktabs = TRUE) %>% 
+  kable_paper() %>%
+  kable_styling(fixed_thead = T, latex_options = c("striped", "scale_down"), full_width = TRUE) %>%
+  scroll_box(width = "100%")
+
+# display
+kbl(mixed_cxn2_lemma[, c(1, 2, 3, 11)], booktabs = TRUE) %>% 
+  kable_paper() %>%
+  kable_styling(fixed_thead = T, latex_options = c("striped", "scale_down"), full_width = TRUE) %>%
+  scroll_box(width = "100%")
+
+```
+
+The threshold of -log10(0.05) can be employed as a benchmark to distinguish between collexemes that are significantly attracted to or repelled from the ditransitive construction. Collexemes with log-values greater than 1.3 are considered to be attracted to the construction, while those with scores less than -1.3 are considered to be repelled from it. This is the cut-off point used in the @Griesstef2004 data. Nevertheless, the distinction between central and peripheral collexemes is not clear-cut and instead represents a continuum. The selection of any benchmark should be considered with caution. Furthermore, it should be noted that the p-values are dependent on the sample size. This means that a larger corpus will typically yield lower p-values and larger log-transformed scores @levshina_2015.
+
+```{r}
+#| label: tbl-cor-assoc
+#| tbl-cap: Correlation analysis of the different association measures.
+
+# read the data set as tsv
+cor_assoc <- read_tsv(file = file.path(project_dir, "results_analysis", "assoc_cor_cxn_roleset_distinctive.csv"), show_col_types = FALSE)
+
+# display the first five rows of the dataframe
+kbl(cor_assoc, booktabs = TRUE) %>% 
+  kable_paper() %>%
+  kable_styling(fixed_thead = T, latex_options = c("striped", "scale_down"), full_width = TRUE) %>%
+  scroll_box(width = "100%")
+
+```
+
+```{r}
+#| layout-ncol: 2
+#| label: tbl-cxn1-lemma-lemma-LOR
+#| tbl-cap: Comparison lemmas distinctive for arg0(np)-v(v)-arg1(np)-arg2(pp).
+#| tbl-subcap: ["Gries and Stefanowitsch (2013)", "Current study"]
+
+# Order by LLR
+mixed_cxn1_lemma <- mixed_cxn1_lemma[order(-mixed_cxn1_lemma$LLR), ]
+
+# Create a dataframe with the provided data
+gries_cxn1 <- data.frame(Collexeme = c("Bring", "Play", "Take", "Pass", "Make", "Sell", "Do", "Supply"), 
+                 Prep.Dative = c(82, 37, 63, 29, 23, 14, 40, 12), 
+                 Ditransitive = c(7, 1, 12, 2, 3, 1, 10, 1), 
+                 FYE = c(8.83, 5.82, 3.70, 3.70, 2.17, 1.15, 1.08, 1.54))
+
+# display
+kbl(gries_cxn1, booktabs = TRUE) %>% 
+  kable_paper() %>%
+  kable_styling(fixed_thead = T, latex_options = c("striped", "scale_down"), full_width = TRUE) %>%
+  scroll_box(width = "100%")
+
+# display
+kbl(mixed_cxn1_lemma[, c(1, 2, 3, 5)], booktabs = TRUE) %>% 
+  kable_paper() %>%
+  kable_styling(fixed_thead = T, latex_options = c("striped", "scale_down"), full_width = TRUE) %>%
+  scroll_box(width = "100%")
+
+```
+
+```{r}
+#| layout-ncol: 2
+#| label: tbl-cxn1-lemma-roleset-FYE
+#| tbl-cap: Comparison lemma & roleset distinctive for arg0(np)-v(v)-arg1(np)-arg2(pp).
+#| tbl-subcap: ["Gries and Stefanowitsch (2013)", "Current study"]
+
+# Order by LLR
+mixed_cxn1_roleset <- mixed_cxn1_roleset[order(-mixed_cxn1_roleset$FYE), ]
+
+# display
+kbl(gries_cxn1, booktabs = TRUE) %>% 
+  kable_paper() %>%
+  kable_styling(fixed_thead = T, latex_options = c("striped", "scale_down"), full_width = TRUE) %>%
+  scroll_box(width = "100%")
+
+# display
+kbl(mixed_cxn1_roleset[, c(1, 2, 3, 11)], booktabs = TRUE) %>% 
+  kable_paper() %>%
+  kable_styling(fixed_thead = T, latex_options = c("striped", "scale_down"), full_width = TRUE) %>%
+  scroll_box(width = "100%")
+
+```
+```{r}
+#| layout-ncol: 2
+#| label: tbl-cxn2-lemma-roleset-FYE
+#| tbl-cap: Comparison lemma & roleset distinctive for arg0(np)-v(v)-arg2(np)-arg1(np).
+#| tbl-subcap: ["Gries and Stefanowitsch (2013)", "Current study"]
+
+# Order by LLR
+mixed_cxn2_roleset <- mixed_cxn2_roleset[order(-mixed_cxn2_roleset$FYE), ]
+
+# display
+kbl(gries_cxn2, booktabs = TRUE) %>% 
+  kable_paper() %>%
+  kable_styling(fixed_thead = T, latex_options = c("striped", "scale_down"), full_width = TRUE) %>%
+  scroll_box(width = "100%")
+
+# display
+kbl(mixed_cxn2_roleset[, c(1, 2, 3, 11)], booktabs = TRUE) %>% 
+  kable_paper() %>%
+  kable_styling(fixed_thead = T, latex_options = c("striped", "scale_down"), full_width = TRUE) %>%
+  scroll_box(width = "100%")
+
+```
+```{r}
+#| layout-ncol: 2
+#| label: tbl-cxn1-lemma-roleset-FYE-current
+#| tbl-cap: Comparison lemma & roleset distinctive for arg0(np)-v(v)-arg1(np)-arg2(pp).
+#| tbl-subcap: ["Lemmas cxn1 current study", "Role sets cxn1 current study"]
+
+# Order by FYE
+mixed_cxn1_lemma <- mixed_cxn1_lemma[order(-mixed_cxn1_roleset$FYE), ]
+mixed_cxn1_roleset <- mixed_cxn1_roleset[order(-mixed_cxn1_roleset$FYE), ]
+
+# display
+kbl(mixed_cxn1_lemma[, c(1, 2, 3, 11)], booktabs = TRUE) %>% 
+  kable_paper() %>%
+  kable_styling(fixed_thead = T, latex_options = c("striped", "scale_down"), full_width = TRUE) %>%
+  scroll_box(width = "100%")
+
+# display
+kbl(mixed_cxn1_roleset[, c(1, 2, 3, 11)], booktabs = TRUE) %>% 
+  kable_paper() %>%
+  kable_styling(fixed_thead = T, latex_options = c("striped", "scale_down"), full_width = TRUE) %>%
+  scroll_box(width = "100%")
+
+```
+```{r}
+#| layout-ncol: 2
+#| label: tbl-cxn2-lemma-roleset-FYE-current
+#| tbl-cap: Comparison lemma & roleset distinctive for arg0(np)-v(v)-arg2(np)-arg1(np).
+#| tbl-subcap: ["Lemmas cxn2 current study", "Role sets cxn2 current study"]
+
+# Order by FYE
+mixed_cxn2_lemma <- mixed_cxn2_lemma[order(-mixed_cxn2_roleset$FYE), ]
+mixed_cxn2_roleset <- mixed_cxn2_roleset[order(-mixed_cxn2_roleset$FYE), ]
+
+# display
+kbl(mixed_cxn2_lemma[, c(1, 2, 3, 11)], booktabs = TRUE) %>% 
+  kable_paper() %>%
+  kable_styling(fixed_thead = T, latex_options = c("striped", "scale_down"), full_width = TRUE) %>%
+  scroll_box(width = "100%")
+
+# display
+kbl(mixed_cxn2_roleset[, c(1, 2, 3, 11)], booktabs = TRUE) %>% 
+  kable_paper() %>%
+  kable_styling(fixed_thead = T, latex_options = c("striped", "scale_down"), full_width = TRUE) %>%
+  scroll_box(width = "100%")
+
+```
 
 # Conclusion
 
