@@ -5,7 +5,7 @@ dist.collexemes <- function(precbitsexponent = precbitsexponent) {
   # Initialize variables
   dists <- 1
   input.dc <- 1
-  fye.mpfr <- "yes" # change input to "yes" if you want the FYE calculated as well. Warning: this takes a long time!
+  fye.mpfr <- "no" # change input to "yes" if you want the FYE calculated as well. Warning: this takes a long time!
   # Get the base name of the file (without the file extension)
   file_input_base <- basename(file_input)
   # Create the filepath for the output file 

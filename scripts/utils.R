@@ -12,8 +12,8 @@ get_utterances_by_roleset <- function(data_frame, roleset) {
 get_utterances_by_arg_struc_cxn <- function(data_frame, arg_struc_cxn) {
   # Use sapply to check if any of the rows in the arg_struct column of the data frame have the input arg_struc_cxn
   # and select the corresponding utterance, roles and arg_struct
-  selected_rows <- data_frame[sapply(data_frame$argument_structure_construction, function(x) any(x == arg_struc_cxn)), c("utterance", "roles", "argument_structure_construction")]
-  row.names(selected_rows) <- 1:nrow(selected_rows)
+  utterances <- data_frame[sapply(data_frame$argument_structure_construction, function(x) any(x == arg_struc_cxn)), c("utterance", "roles", "argument_structure_construction")]
+  selected_rows <- utterances[!is.na(utterances)]
   return(selected_rows)
 }
 

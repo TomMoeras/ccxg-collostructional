@@ -15,6 +15,7 @@ format:
     reference-doc: template.docx
 number-sections: true
 echo: false
+warning: false
 abstract: "This paper uses a Computational Construction Grammar (CCG) approach and collostructional analysis on a PropBank-annotated corpus. It was written during an internship at the VUB AI-Lab. The corpus and dataset were accessed through this internship."
 bibliography:
   - bibliography.bib
@@ -32,7 +33,10 @@ library(kableExtra)
 library(here)
 library(xml2)
 library(ggplot2)
-library(diagram)
+library(compareDF)
+library(htmlTable)
+library(arsenal)
+
 
 project_dir <- here::here()
 plot_fonts <- if (!knitr::is_html_output()) "serif" else "sans"
@@ -49,10 +53,52 @@ mixed_cxn1_roleset <- read_tsv(file = file.path(project_dir, "results_analysis",
 mixed_cxn2_roleset <- read_tsv(file = file.path(project_dir, "results_analysis", "ordered_analysis_cxn", "results_arg0(np)-v(v)-arg2(np)-arg1(np)_mixed_rolesets.csv"), show_col_types = FALSE)
 mixed_cxn1_lemma <- read_tsv(file = file.path(project_dir, "results_analysis", "ordered_analysis_cxn", "results_arg0(np)-v(v)-arg1(np)-arg2(pp)_mixed_lemma.csv"), show_col_types = FALSE)
 mixed_cxn2_lemma <- read_tsv(file = file.path(project_dir, "results_analysis", "ordered_analysis_cxn", "results_arg0(np)-v(v)-arg2(np)-arg1(np)_mixed_lemma.csv"), show_col_types = FALSE)
+mixed_cxn12_lemma <- read_tsv(file = file.path(project_dir, "results_analysis", "ordered_analysis_cxn", "results_cxn12_mixed_lemma.csv"), show_col_types = FALSE)
+mixed_cxn12_roleset <- read_tsv(file = file.path(project_dir, "results_analysis", "ordered_analysis_cxn", "results_cxn12_mixed_roleset.csv"), show_col_types = FALSE)
+
+compare_word_column_df <- function(df1, df2) {
+  # Extract the WORD column from both dataframes
+  words1 <- df1$WORD
+  words2 <- df2$WORD
+  
+  # Find the same words in both columns
+  same_words <- intersect(words1, words2)
+  
+  # Find the different words in both columns
+  different_words <- setdiff(c(words1, words2), same_words)
+
+  different_words_list <- list()
+  
+  for (word in different_words) {
+    if (word %in% words1) {
+    different_words_list[[word]] <- paste(word, "found in df1")
+    } else {
+    different_words_list[[word]] <- paste(word, "found in df2")
+    }
+    }
+  
+  # Return the lists of same and different words
+  return(list(same_words = same_words, different_words = different_words_list))
+}
+
+compare_word_column <- function(df1, df2) {
+  # Extract the WORD column from both dataframes
+  words1 <- df1$WORD
+  words2 <- df2$WORD
+  
+  # Find the same words in both columns
+  same_words <- intersect(words1, words2)
+  
+  # Find the different words in both columns
+  different_words <- setdiff(c(words1, words2), same_words)
+
+  
+  # Return the lists of same and different words
+  return(list(same_words = same_words, different_words = different_words))
+}
 ```
 
 ```{r}
-
 # Create a flowchart
 library(DiagrammeR)
 
@@ -83,12 +129,7 @@ digraph flowchart {
   tab6 -> tab10
 }
 ")
-
-
-
 ```
-
-
 
 # Introduction
 
@@ -184,7 +225,7 @@ An extension of DCA is the possibility to perform it on a data set that has more
 
 As can be observed in the above table, the difference is that in the MDCA contingency table there is an n number of constructions represented in the columns. Due to the limited scope of this paper, only the DCA will be discussed in the analysis section. However, the MDCA was still performed and the results are available in the appendix because it could prove useful for future research.
 
-To perform both types of analyses, a R script developed by @GriesStef2013 was used and adapted to suit the data set in this paper. With regards to the DCA, this script calculates the association measures for all words (lemma / role set) in relation to the two most frequent argument structure constructions from the data set and returns a table containing the association measures for each of those words. In total, eight association measures are given. They are presented in @tbl-accosm. Not all of them are as extensively used in the analysis but they are presented for completeness and to give a general overview of the measures that are available when using DCA on a PropBank-annotated corpus. A comparison between these measures is briefly discussed in the analysis section on the basis of a correlation analysis. This type of analysis is a method used to evaluate the strength and direction of a relationship between two variables. It can be used to determine if there is a relationship between variables, and if so, how strong that relationship is. Correlation coefficients range from -1 to 1, with -1 indicating a perfect negative correlation, 0 indicating no correlation, and 1 indicating a perfect positive correlation. In this case, the variables are the different scores from the association measures. The closer the value is to 1, the stronger the association between the two variables. The closer the value is to -1, the stronger the negative association between the two variables. The closer the value is to 0, the weaker the association between the two variables.
+To perform both types of analyses, a R script developed by @GriesStef2013 was used and adapted to suit the data set in this paper. With regards to the DCA, this script calculates the association measures for all words (lemma / role set) in relation to the two most frequent argument structure constructions from the data set and returns a table containing the association measures for each of those words. In total, eight association measures are given. They are presented in @tbl-accosm. Not all of them are as extensively used in the analysis but they are presented for completeness and to give a general overview of the measures that are available when using DCA on a PropBank-annotated corpus. A comparison between these measures is briefly discussed here on the basis of a correlation analysis. This type of analysis is a method used to evaluate the strength and direction of a relationship between two variables. It can be used to determine if there is a relationship between variables, and if so, how strong that relationship is. Correlation coefficients range from -1 to 1, with -1 indicating a perfect negative correlation, 0 indicating no correlation, and 1 indicating a perfect positive correlation. In this case, the variables are the different scores from the association measures. The closer the value is to 1, the stronger the association between the two variables. The closer the value is to -1, the stronger the negative association between the two variables. The closer the value is to 0, the weaker the association between the two variables.
 
 | Association Measure | Full Name                                         |
 |---------------------|---------------------------------------------------|
@@ -197,6 +238,24 @@ To perform both types of analyses, a R script developed by @GriesStef2013 was us
 | FYE                 | Log-transformed Fisher-Yates Exact Test           |
 
 : Association measures used in the DCA {#tbl-accosm}
+
+```{r}
+#| label: tbl-cor-assoc
+#| tbl-cap: Correlation analysis of the different association measures.
+
+# read the data set as tsv
+cor_assoc <- read_tsv(file = file.path(project_dir, "results_analysis", "assoc_cor_cxn_roleset_distinctive.csv"), show_col_types = FALSE)
+
+colnames(cor_assoc) <- c("LLR", "PRES", "LOR", "MI", "DPC2W", "DPW2C", "FYE")
+rownames(cor_assoc) <- c("LLR", "PRES", "LOR", "MI", "DPC2W", "DPW2C", "FYE")
+
+# display the first five rows of the dataframe
+kbl(cor_assoc, booktabs = TRUE) %>% 
+  kable_paper() %>%
+  kable_styling(fixed_thead = T, latex_options = c("striped", "scale_down"), full_width = TRUE) %>%
+  scroll_box(width = "100%")
+
+```
 
 # Results and Discussion
 
@@ -275,7 +334,7 @@ kbl(data[1:10,1:2], booktabs = TRUE) %>%
 
 ```
 
-@tbl-cxn-freq-summary shows the distribution of different argument structures (arg_struc_cxn) in the data set. Each row in the table represents a different argument structure and the "Freq" column shows the number of times that argument structure was found. It shows the ten most frequent argument structure constructions. The three most frequent argument structure in the data set are "arg0(np)-v(v)-arg1(np)-arg2(pp)" (5497 occurances), "arg0(np)-v(v)-arg2(np)-arg1(np)" (1180 occurances) and "arg0(np)-v(v)-arg1(np)-arg2(c("s", "vp"))" (741 occurances). These frequencies are important to keep in mind when interpreting the results of the DCA analysis. This analyis was performed on the two most frequent type of argument structure construction occuring in the data set. As can be seen in @tbl-cxn-freq-summary there is a significiant differnce in frequency between the two most frequent constructions. The "arg0(np)-v(v)-arg2(np)-arg1(np)" is the construction in which "give.01" was most frequent with 662 occurances. In other words, roughly 56% of the times "arg0(np)-v(v)-arg2(np)-arg1(np)" appeared it was in context of "give.01". This has to be taken into account when performing a correlation analysis. In these situations, it is considered better to use a non-parametric correlation test instead of the usual Pearson product-moment correlation coefficient @levshina_2015. In this case, Kendall's τ will be used for the correlation analysis.
+@tbl-cxn-freq-summary shows the distribution of different argument structures (arg_struc_cxn) in the data set. Each row in the table represents a different argument structure and the "Freq" column shows the number of times that argument structure was found. It shows the ten most frequent argument structure constructions. The three most frequent argument structure in the data set are "arg0(np)-v(v)-arg1(np)-arg2(pp)" (5497 occurances), "arg0(np)-v(v)-arg2(np)-arg1(np)" (1180 occurances) and "arg0(np)-v(v)-arg1(np)-arg2(c("s", "vp"))" (741 occurances). These frequencies are important to keep in mind when interpreting the results of the DCA analysis. This analyis was performed on the two most frequent type of argument structure construction occuring in the data set. As can be seen in @tbl-cxn-freq-summary there is a significiant difference in frequency between the two most frequent constructions. The "arg0(np)-v(v)-arg2(np)-arg1(np)" is the construction in which "give.01" was most frequent with 662 occurances. In other words, roughly 56% of the times "arg0(np)-v(v)-arg2(np)-arg1(np)" appeared it was in context of "give.01". This has to be taken into account when performing a correlation analysis. In these situations, it is considered better to use a non-parametric correlation test instead of the usual Pearson product-moment correlation coefficient @levshina_2015. In this case, Kendall's τ will be used for the correlation analysis.
 
 The next part of the analysis section will depart from the DCA lemma and role set table (@tbl-dca-roleset), which contains all calculated association scores. The analysis starts with giving a general overview of the most frequent and distinctive collostructions found in the corpus. Then, it will proceed to examine the specific role sets and association measures in order to gain insight into the patterns and preferences of the data. Examples of the collostructions will be provided to assist in understanding the findings and interpreting the results. The full results of the analyses are available in the appendix. The results of the DCA are presented in @tbl-dca-roleset:
 
@@ -356,6 +415,7 @@ kbl(data, booktabs = TRUE) %>%
   scroll_box(width = "100%")
 
 ```
+
 ```{r}
 #| label: tbl-cxn2
 #| tbl-cap: Role sets that appear exclusively in arg0(np)-v(v)-arg2(np)-arg1(np) (ordered by LLR).
@@ -442,7 +502,17 @@ To aid the interpretation of the results of the DCA they are compared to a study
 | Sell | 14 | 1 | 1.15 |
 | Do | 40 | 10 | 1.08 |
 | Supply | 12 | 1 | 1.54 |
-
+| Read | 10 | 1 | 1.22 |
+| Hand | 21 | 5 | 1.20 |
+| Feed | 9 | 1 | 1.07 |
+| Leave | 20 | 6 | 0.85 |
+| Keep | 7 | 1 | 0.77 |
+| Pay | 34 | 13 | 0.74 |
+| Assign | 8 | 3 | 0.37 |
+| Set | 6 | 2 | 0.37 |
+| Write | 9 | 4 | 0.30 |
+| Cut | 5 | 2 | 0.27 |
+| Lend | 13 | 7 | 0.22 |
 : Distinctive collexemes in the Prepositional Dative {#tbl-1-gries2004}
 
 | Collexeme | Prep. Dative | Ditransitive | FYE | 
@@ -458,6 +528,15 @@ To aid the interpretation of the results of the DCA they are compared to a study
 | Promise | 1 | 7 | 3.44 |
 | Deny | 3 | 8 | 1.92 |
 | Award | 3 | 7 | 1.58 |
+| Grant | 2 | 5 | 1.25 |
+| Cause | 9 | 8 | 0.67 |
+| Drop | 2 | 3 | 0.62 |
+| Charge | 4 | 4 | 0.53 |
+| Get | 32 | 20 | 0.46 |
+| Allocate | 5 | 4 | 0.41 |
+| Send | 113 | 64 | 0.39 |
+| Owe | 9 | 6 | 0.35 |
+| Lose | 3 | 2 | 0.24 |
 
 : Distinctive collexemes in the Ditransitive construction {#tbl-2-gries2004}
 
@@ -466,11 +545,8 @@ Distinctive collexemes in the Ditransitive and the Prepositional Dative construc
 
 @tbl-gries2004 presents two subtables of distinctive collexemes in the Prepositional Dative (@tbl-1-gries2004) and Ditransitive constructions (@tbl-2-gries2004). The tables show the collexeme, the frequency in which it appears in the constructions, and the -log10-transformed Fisher-Yates p-value for each collexeme. The Fisher-Yates scores were not -log10-transformed in the original table but were tranformed here to make for an easier comparison to the data presented in the current study. 
 
+Before interpreting the role sets, it is perhaps useful to compare lemmas to lemmas. @tbl-cxn1-lemma-lemma-FYE shows the data from @Griesstef2004 and the current study for the lemmas that are distinctive for the ditransative / arg0(np)-v(v)-arg1(np)-arg2(pp).
 
-
-
-
-Before interpreting the role sets with the data in @tbl-gries2004, it is useful to compare lemmas to lemmas. @tbl-cxn1-lemma-lemma-FYE shows the data from @Griesstef2004 and the current study for the lemmas that are distinctive for the ditransative / arg0(np)-v(v)-arg1(np)-arg2(pp).
 ```{r}
 #| layout-ncol: 2
 #| label: tbl-cxn1-lemma-lemma-FYE
@@ -481,11 +557,10 @@ Before interpreting the role sets with the data in @tbl-gries2004, it is useful 
 mixed_cxn1_lemma <- mixed_cxn1_lemma[order(-mixed_cxn1_lemma$FYE), ]
 
 # Create a dataframe with the provided data
-gries_cxn1 <- data.frame(Collexeme = c("Bring", "Play", "Take", "Pass", "Make", "Sell", "Do", "Supply"), 
-                 Prep.Dative = c(82, 37, 63, 29, 23, 14, 40, 12), 
-                 Ditransitive = c(7, 1, 12, 2, 3, 1, 10, 1), 
-                 FYE = c(8.83, 5.82, 3.70, 3.70, 2.17, 1.15, 1.08, 1.54))
-
+gries_cxn1 <- data.frame(WORD = c("bring", "play", "take", "pass", "make", "sell", "do", "supply", "read", "hand", "feed", "leave", "keep", "pay", "assign", "set", "write", "cut", "lend"),
+                 Prep.Dative = c(82, 37, 63, 29, 23, 14, 40, 12, 10, 21, 9, 20, 7, 34, 8, 6, 9, 5, 13),
+                 Ditransitive = c(7, 1, 12, 2, 3, 1, 10, 1, 1, 5, 1, 6, 1, 13, 3, 2, 4, 2, 7),
+                 FYE = c(8.83, 5.82, 3.70, 3.70, 2.17, 1.15, 1.08, 1.54, 1.22, 1.20, 1.07, 0.85, 0.77, 0.74, 0.37, 0.37, 0.30, 0.27, 0.22))
 # display
 kbl(gries_cxn1, booktabs = TRUE) %>% 
   kable_paper() %>%
@@ -501,6 +576,12 @@ kbl(mixed_cxn1_lemma[, c(1, 2, 3, 11)], booktabs = TRUE) %>%
 ```
 
 ```{r}
+compared_words_lemma_cxn1 <- compare_word_column(mixed_cxn1_lemma, gries_cxn1)
+```
+
+@tbl-cxn2-lemma-lemma-FYE shows the data from @Griesstef2004 and the current study for the lemmas that are distinctive for the ditransative / arg0(np)-v(v)-arg1(np)-arg2(pp).
+
+```{r}
 #| layout-ncol: 2
 #| label: tbl-cxn2-lemma-lemma-FYE
 #| tbl-cap: Comparison lemmas distinctive for arg0(np)-v(v)-arg2(np)-arg1(np).
@@ -510,10 +591,10 @@ kbl(mixed_cxn1_lemma[, c(1, 2, 3, 11)], booktabs = TRUE) %>%
 mixed_cxn2_lemma <- mixed_cxn2_lemma[order(-mixed_cxn2_lemma$FYE), ]
 
 # Create a dataframe with the provided data
-gries_cxn2 <- data.frame(Collexeme = c("Give", "Tell", "Show", "Offer", "Cost", "Teach", "Wish", "Ask", "Promise", "Deny", "Award"),
-                 Prep.Dative = c(146, 2, 15, 15, 1, 1, 1, 4, 1, 3, 3),
-                 Ditransitive = c(461, 128, 49, 43, 20, 15, 9, 12, 7, 8, 7),
-                 FYE = c(119.74, 57.95, 11.07, 9.99, 8.99, 5.83, 3.30, 2.88, 3.44, 1.92, 1.58))
+gries_cxn2 <- data.frame(Collexeme = c("Give", "Tell", "Show", "Offer", "Cost", "Teach", "Wish", "Ask", "Promise", "Deny", "Award", "Grant", "Cause", "Drop", "Charge", "Get", "Allocate", "Send", "Owe", "Lose"),
+                    Prep.Dative = c(146, 2, 15, 15, 1, 1, 1, 4, 1, 3, 3, 2, 9, 2, 4, 32, 5, 113, 9, 3),
+                    Ditransitive = c(461, 128, 49, 43, 20, 15, 9, 12, 7, 8, 7, 5, 8, 3, 4, 20, 4, 64, 6, 2),
+                    FYE = c(119.74, 57.95, 11.07, 9.99, 8.99, 5.83, 3.30, 2.88, 3.44, 1.92, 1.58, 1.25, 0.67, 0.62, 0.53, 0.46, 0.41, 0.39, 0.35, 0.24))
 
 # display
 kbl(gries_cxn2, booktabs = TRUE) %>% 
@@ -529,96 +610,16 @@ kbl(mixed_cxn2_lemma[, c(1, 2, 3, 11)], booktabs = TRUE) %>%
 
 ```
 
+```{r}
+compared_words_lemma_cxn2 <- compare_word_column(mixed_cxn2_lemma, gries_cxn2)
+```
+
 The threshold of -log10(0.05) can be employed as a benchmark to distinguish between collexemes that are significantly attracted to or repelled from the ditransitive construction. Collexemes with log-values greater than 1.3 are considered to be attracted to the construction, while those with scores less than -1.3 are considered to be repelled from it. This is the cut-off point used in the @Griesstef2004 data. Nevertheless, the distinction between central and peripheral collexemes is not clear-cut and instead represents a continuum. The selection of any benchmark should be considered with caution. Furthermore, it should be noted that the p-values are dependent on the sample size. This means that a larger corpus will typically yield lower p-values and larger log-transformed scores @levshina_2015.
 
-```{r}
-#| label: tbl-cor-assoc
-#| tbl-cap: Correlation analysis of the different association measures.
+It is not possible to do an exact one-one comparison because they are a couple of key differences between the data in @griesstef2004 and the current study. The @griesstef2004 study examines "to" dative alternations exclusively which means that alternations that have another preposition are not accounted for in the data. The current study, on the other hand, examines all instances where a arg2(pp) is present. For example, constructions that include "for" or "with" are also counted as arg0(np)-v(v)-arg1(np)-arg2(pp). The current study counts 5497 occurances of the schema matching with the prepositional dative, including all the prepositions. The @griesstef2004 study only counts 1919 occoruances of the "to"-dative. This means that they essentially examine different phenomena. Consequently, the verbs that are extracted from the corpus only overlap a small amount. The same words for the collexemes distinctive for the arg0(np)-v(v)-arg1(np)-arg2(pp) cosntruction are "`r compared_words_lemma_cxn1$same_words`" and the different words are "`r compared_words_lemma_cxn1$different_words`". The same words for the collexemes distinctive for the arg0(np)-v(v)-arg2(np)-arg1(np) cosntruction are `r compared_words_lemma_cxn2$same_words`" and the different words are "`r compared_words_lemma_cxn2$different_words`". Due to the limited scope of this research it is not possible to analyse the differences more thoroughly but it could prove useful for further research. Nevertheless, the similarities and difference can be used as a starting point for the comparison of lemmas and role sets.
 
-# read the data set as tsv
-cor_assoc <- read_tsv(file = file.path(project_dir, "results_analysis", "assoc_cor_cxn_roleset_distinctive.csv"), show_col_types = FALSE)
+This final analysis section examines the results from the DCA on the lemmas and role sets from the current study. @tbl-cxn1-lemma-roleset-FYE-current shows the collexemes distinctive for arg0(np)-v(v)-arg1(np)-arg2(pp) and @tbl-cxn2-lemma-roleset-FYE-current shows the collexemes distinctive for arg0(np)-v(v)-arg2(np)-arg1(np).
 
-# display the first five rows of the dataframe
-kbl(cor_assoc, booktabs = TRUE) %>% 
-  kable_paper() %>%
-  kable_styling(fixed_thead = T, latex_options = c("striped", "scale_down"), full_width = TRUE) %>%
-  scroll_box(width = "100%")
-
-```
-
-```{r}
-#| layout-ncol: 2
-#| label: tbl-cxn1-lemma-lemma-LOR
-#| tbl-cap: Comparison lemmas distinctive for arg0(np)-v(v)-arg1(np)-arg2(pp).
-#| tbl-subcap: ["Gries and Stefanowitsch (2013)", "Current study"]
-
-# Order by LLR
-mixed_cxn1_lemma <- mixed_cxn1_lemma[order(-mixed_cxn1_lemma$LLR), ]
-
-# Create a dataframe with the provided data
-gries_cxn1 <- data.frame(Collexeme = c("Bring", "Play", "Take", "Pass", "Make", "Sell", "Do", "Supply"), 
-                 Prep.Dative = c(82, 37, 63, 29, 23, 14, 40, 12), 
-                 Ditransitive = c(7, 1, 12, 2, 3, 1, 10, 1), 
-                 FYE = c(8.83, 5.82, 3.70, 3.70, 2.17, 1.15, 1.08, 1.54))
-
-# display
-kbl(gries_cxn1, booktabs = TRUE) %>% 
-  kable_paper() %>%
-  kable_styling(fixed_thead = T, latex_options = c("striped", "scale_down"), full_width = TRUE) %>%
-  scroll_box(width = "100%")
-
-# display
-kbl(mixed_cxn1_lemma[, c(1, 2, 3, 5)], booktabs = TRUE) %>% 
-  kable_paper() %>%
-  kable_styling(fixed_thead = T, latex_options = c("striped", "scale_down"), full_width = TRUE) %>%
-  scroll_box(width = "100%")
-
-```
-
-```{r}
-#| layout-ncol: 2
-#| label: tbl-cxn1-lemma-roleset-FYE
-#| tbl-cap: Comparison lemma & roleset distinctive for arg0(np)-v(v)-arg1(np)-arg2(pp).
-#| tbl-subcap: ["Gries and Stefanowitsch (2013)", "Current study"]
-
-# Order by LLR
-mixed_cxn1_roleset <- mixed_cxn1_roleset[order(-mixed_cxn1_roleset$FYE), ]
-
-# display
-kbl(gries_cxn1, booktabs = TRUE) %>% 
-  kable_paper() %>%
-  kable_styling(fixed_thead = T, latex_options = c("striped", "scale_down"), full_width = TRUE) %>%
-  scroll_box(width = "100%")
-
-# display
-kbl(mixed_cxn1_roleset[, c(1, 2, 3, 11)], booktabs = TRUE) %>% 
-  kable_paper() %>%
-  kable_styling(fixed_thead = T, latex_options = c("striped", "scale_down"), full_width = TRUE) %>%
-  scroll_box(width = "100%")
-
-```
-```{r}
-#| layout-ncol: 2
-#| label: tbl-cxn2-lemma-roleset-FYE
-#| tbl-cap: Comparison lemma & roleset distinctive for arg0(np)-v(v)-arg2(np)-arg1(np).
-#| tbl-subcap: ["Gries and Stefanowitsch (2013)", "Current study"]
-
-# Order by LLR
-mixed_cxn2_roleset <- mixed_cxn2_roleset[order(-mixed_cxn2_roleset$FYE), ]
-
-# display
-kbl(gries_cxn2, booktabs = TRUE) %>% 
-  kable_paper() %>%
-  kable_styling(fixed_thead = T, latex_options = c("striped", "scale_down"), full_width = TRUE) %>%
-  scroll_box(width = "100%")
-
-# display
-kbl(mixed_cxn2_roleset[, c(1, 2, 3, 11)], booktabs = TRUE) %>% 
-  kable_paper() %>%
-  kable_styling(fixed_thead = T, latex_options = c("striped", "scale_down"), full_width = TRUE) %>%
-  scroll_box(width = "100%")
-
-```
 ```{r}
 #| layout-ncol: 2
 #| label: tbl-cxn1-lemma-roleset-FYE-current
@@ -642,6 +643,7 @@ kbl(mixed_cxn1_roleset[, c(1, 2, 3, 11)], booktabs = TRUE) %>%
   scroll_box(width = "100%")
 
 ```
+
 ```{r}
 #| layout-ncol: 2
 #| label: tbl-cxn2-lemma-roleset-FYE-current
@@ -713,5 +715,19 @@ kbl(data, booktabs = TRUE) %>%
   kable_paper() %>%
   kable_styling(fixed_thead = T, latex_options = c("striped", "scale_down"), full_width = TRUE) %>%
   scroll_box(width = "100%")
+
+```
+
+```{r}
+#| label: tbl-comp-cxn12
+#| tbl-cap: Comparison lemmas distinctive for arg0(np)-v(v)-arg1(np)-arg2(pp).
+
+gries_cxn12 <- data.frame(WORD = c("bring", "play", "take", "pass", "make", "sell", "do", "supply", "read", "hand", "feed", "leave", "keep", "pay", "assign", "set", "write", "cut", "lend", "give", "tell", "show", "offer", "cost", "teach", "wish", "ask", "promise", "deny", "award", "grant", "cause", "drop", "charge", "get", "allocate", "send", "owe", "lose"),
+                 Prep.Dative = c(82, 37, 63, 29, 23, 14, 40, 12, 10, 21, 9, 20, 7, 34, 8, 6, 9, 5, 13, 146, 2, 15, 15, 1, 1, 1, 4, 1, 3, 3, 2, 9, 2, 4, 32, 5, 113, 9, 3),
+                 Ditransitive = c(7, 1, 12, 2, 3, 1, 10, 1, 1, 5, 1, 6, 1, 13, 3, 2, 4, 2, 7, 461, 128, 49, 43, 20, 15, 9, 12, 7, 8, 7, 5, 8, 3, 4, 20, 4, 64, 6, 2),
+                 FYE = c(8.83, 5.82, 3.70, 3.70, 2.17, 1.15, 1.08, 1.54, 1.22, 1.20, 1.07, 0.85, 0.77, 0.74, 0.37, 0.37, 0.30, 0.27, 0.22, 119.74, 57.95, 11.07, 9.99, 8.99, 5.83, 3.30, 2.88, 3.44, 1.92, 1.58, 1.25, 0.67, 0.62, 0.53, 0.46, 0.41, 0.39, 0.35, 0.24))
+compared_words_lemma_cxn12 <- compare_word_column(mixed_cxn12_lemma, gries_cxn12)
+compared_words_lemma_cxn12$same_words
+compared_words_lemma_cxn12$different_words
 
 ```

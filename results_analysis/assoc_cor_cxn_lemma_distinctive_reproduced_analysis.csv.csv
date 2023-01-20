@@ -1,0 +1,7 @@
+	log.likelihood.values	pearson.residuals	log.odds.ratios	mi.scores	delta.p.constr.cues.word	delta.p.word.cues.constr
+log.likelihood.values	1	0.833	0.778	-0.241	0.828	0.778
+pearson.residuals	0.833	1	0.934	0.185	0.994	0.934
+log.odds.ratios	0.778	0.934	1	0.365	0.929	1
+mi.scores	-0.241	0.185	0.365	1	0.169	0.365
+delta.p.constr.cues.word	0.828	0.994	0.929	0.169	1	0.929
+delta.p.word.cues.constr	0.778	0.934	1	0.365	0.929	1
