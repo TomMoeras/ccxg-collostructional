@@ -33,10 +33,7 @@ library(kableExtra)
 library(here)
 library(xml2)
 library(ggplot2)
-library(compareDF)
-library(htmlTable)
-library(arsenal)
-
+library(DiagrammeR)
 
 project_dir <- here::here()
 plot_fonts <- if (!knitr::is_html_output()) "serif" else "sans"
@@ -100,10 +97,7 @@ compare_word_column <- function(df1, df2) {
 
 ```{r}
 # Create a flowchart
-library(DiagrammeR)
-
-# Create a flowchart
-grViz(diagram = "
+corpus_flowchart <- grViz(diagram = "
 digraph flowchart {
   node [fontname = arial, shape = rectangle, style = filled, fillcolor = palegreen]
   tab1 [label = 'Corpus']
@@ -158,18 +152,7 @@ The data set used for this analysis is a subset of the OntoNotes 5.0 corpus. Thi
 
 To extract the ditransitive constructions, the following schema was used in the CCxG Explorer: "Arg0-NP FEE-V Arg1-NP Arg2". The precise order is not taken into account which means that, for example, the following constructions are also extracted: "Arg0-NP FEE-V Arg2-NP Arg1", "Arg1-NP FEE-V Arg0-NP Arg2" and "Arg1-NP FEE-V Arg2-NP Arg0". The reason for this is that the order of the arguments is not fixed in ditransitive constructions and this schema allows for a more broad exploration. Further, it should be noted that there is no part of speech specified in the Arg2 slot. This is because the Arg2 slot can be filled by not only a NP but also, for example, a PP which would result in the dative alternation of the ditransitive construction: "She gave a watch to Peter" (arg0(np)-FEE(v)-arg1(np)-arg2(pp)). Note that in CxG approaches, this alternation is seen as a construction in its own right @goldberg2002.
 
-------- paraphhrase this
-In construction-based approaches, the question whether a given verb/noun
-may occur in one or both members of an alternating pair is seen in terms of semantic compatibility. A word may occur in a given construction if its meaning
-is compatible with the meaning of the construction; it may ‘alternate’ between
-two constructions if (or to the degree that) the word’s meaning is compatible
-with the meanings of both constructions. In the context of alternating pairs,
-a focus on constructional semantics and semantic compatibility raises several
-questions: first, what exactly are the (often seemingly tenuous) semantic differences between the members of such a pair; second, how productive is the
-‘alternation’ in actual usage, i.e. which verbs/nouns occur freely in both constructions, and which have strong biases towards one of them; and third, is a
-constructional, non-derivative approach plausible given the answers to the first
-two questions.
-------
+Construction-based approaches consider whether a verb can be used in one or both members of an alternating pair based on semantic compatibility. A word can be used in a particular construction if its meaning aligns with the meaning of the construction. It can also alternate between two constructions if its meaning aligns with both. When it comes to alternating pairs, this approach raises questions about the semantic differences between the members of the pair, the degree of productivity in actual usage, and whether a constructional approach can be taken given the answers to these questions @griesstef2004.
 
 The search results for this particular schema contained 9339 utterances. They were downloaded as a .json file. This .json file was the raw data for this analysis. It contains the string of the utterances and the roles that are defined in that utterance. The roles are further specified by roleType, part of speech (pos), string, indices, role set and lemma. In those 9339 utterances, there were `r numbers$lemma` unique lemmas, `r numbers$roleset` unique rolesets and `r numbers$arg_struc_cxn` unique argument structure constructions which appeared in the previously mentioned schema.
 
@@ -178,6 +161,20 @@ It is not this study's aim to come to any definitive conclusions about the relat
 This paper consists of several sections. First, the research methodology is presented, specifically on how the data set was analysed. This is followed by a presentation, analysis and discussion of the relevant data. The analysis section consists of two parts. First, the cleaned data is examined and second, the results from the Distinctive Collexeme Analysis (DCA) are presented and discussed.
 
 # Data Processing and Methodology
+
+The entire data processing and analysis was done in R using the following packages: 
+
+---- insert packages here ----
+
+The data cleaning process can be visualised by the following @fig-flowchart:
+
+```{r}
+#| label: fig-flowchart
+#| fig-cap: "Flowchart of the data cleaning process" 
+corpus_flowchart
+```
+
+This flowchart is showing a step by step process of cleaning the corpus and narrowing down the focus to specific constructions. The top level is the corpus itself, which is filtered to focus on a specific schema, in this case arg0(np)-v(v)-arg1(np)-arg2. From there, the filtered corpus shows 89 different argument structure constructions. The first construction is arg0(np)-v(v)-arg1(np)-arg2(pp) and the second construction is arg0(np)-v(v)-arg2(np)-arg1(np). These are then further divided into role sets that appear exclusively in one of them (marked in red and not analysed in the present paper) and role sets that appear in both constructions (marked in green and analysed).
 
 The raw data was processed in R using the 'jsonlite' package @jsonlite. The data was then converted to a data frame and the relevant columns were selected. The raw data file does not contain the full argument structure construction in one string. To identify and classify the argument structure construction from each utterance a function was used. The resulting data frame contains the argument structure construction, role set and lemma. This data frame contains all the data used for the analysis. This is shown in @tbl-raw-corpus-data.
 
@@ -373,19 +370,9 @@ In @tbl-dca-roleset, the first column "WORD" shows the lemma / roleset of the wo
 A first observation that can be made is that the two most frequent argument structure constructions and used for the DCA are the arg0(np)-v(v)-arg1(np)-arg2(pp) and arg0(np)-v(v)-arg2(np)-arg1(np). These could, in more traditional terms, be described as the prepositional dative and ditransitive construction. Additionally, there are three categories on how the role sets / lemmas are related to the two constructions. They can appear exclusively in either arg0(np)-v(v)-arg1(np)-arg2(pp) or arg0(np)-v(v)-arg2(np)-arg1(np), or they appear in both. These categories can be distinquised in @fig-plots.
 ```{r}
 #| label: fig-plots
-#| fig-cap: "Plots" 
-#| fig-subcap:
-#|   - "Plot 1"
-#|   - "Plot 2" 
-#| layout-ncol: 2
+#| fig-cap: Figure showing the distribution of the role sets. 
 
 ggplot(data = cxn_roleset_distinctive, aes(x = log2(cxn_roleset_distinctive[,2] + cxn_roleset_distinctive[,3]), y = LOR)) +
-    geom_text(aes(label = WORD), size = 3) +
-    xlab("Logged co-occurrence frequency") + ylab("Association (log odds ratio)") +
-    geom_hline(yintercept = 0, linetype = "dashed") +
-    geom_vline(xintercept = 0, linetype = "dashed")
-
-ggplot(data = cxn_lemma_distinctive, aes(x = log2(cxn_lemma_distinctive[,2] + cxn_lemma_distinctive[,3]), y = LOR)) +
     geom_text(aes(label = WORD), size = 3) +
     xlab("Logged co-occurrence frequency") + ylab("Association (log odds ratio)") +
     geom_hline(yintercept = 0, linetype = "dashed") +
@@ -676,48 +663,6 @@ Of course, the language of the paper should be formal and academic (I appreciate
 
 `r if (!knitr::is_html_output()) "# References {.unnumbered}"`
 
-
-```{r}
-#| label: tbl-mixed-cxn1-lemma
-#| tbl-cap: Lemmas that have PREF in arg0(np)-v(v)-arg1(np)-arg2(pp) but also appear in arg0(np)-v(v)-arg2(np)-arg1(np) (ordered by FYE).
-
-# read the data set as tsv
-data <- read_tsv(file = file.path(project_dir, "results_analysis", "ordered_analysis_cxn", "results_arg0(np)-v(v)-arg1(np)-arg2(pp)_mixed_lemma.csv"), show_col_types = FALSE)
-
-# Order by LLR
-data <- data[order(-data$FYE), ]
-
-# select what to show
-data <- data[1:20, c(1, 2, 3, 6, 11)]
-
-# display the first five rows of the dataframe
-kbl(data, booktabs = TRUE) %>% 
-  kable_paper() %>%
-  kable_styling(fixed_thead = T, latex_options = c("striped", "scale_down"), full_width = TRUE) %>%
-  scroll_box(width = "100%")
-
-```
-```{r}
-#| label: tbl-mixed-cxn2-lemma
-#| tbl-cap: Lemmas that have PREF in arg0(np)-v(v)-arg2(np)-arg1(np) but also appear in arg0(np)-v(v)-arg1(np)-arg2(pp) (ordered by FYE).
-
-# read the data set as tsv
-data <- read_tsv(file = file.path(project_dir, "results_analysis", "ordered_analysis_cxn", "results_arg0(np)-v(v)-arg2(np)-arg1(np)_mixed_lemma.csv"), show_col_types = FALSE)
-
-# Order by LLR
-data <- data[order(-data$FYE), ]
-
-# select what to show
-data <- data[1:30, c(1, 2, 3, 6, 11)]
-
-# display the first five rows of the dataframe
-kbl(data, booktabs = TRUE) %>% 
-  kable_paper() %>%
-  kable_styling(fixed_thead = T, latex_options = c("striped", "scale_down"), full_width = TRUE) %>%
-  scroll_box(width = "100%")
-
-```
-
 ```{r}
 #| label: tbl-comp-cxn12
 #| tbl-cap: Comparison lemmas distinctive for arg0(np)-v(v)-arg1(np)-arg2(pp).
@@ -726,8 +671,5 @@ gries_cxn12 <- data.frame(WORD = c("bring", "play", "take", "pass", "make", "sel
                  Prep.Dative = c(82, 37, 63, 29, 23, 14, 40, 12, 10, 21, 9, 20, 7, 34, 8, 6, 9, 5, 13, 146, 2, 15, 15, 1, 1, 1, 4, 1, 3, 3, 2, 9, 2, 4, 32, 5, 113, 9, 3),
                  Ditransitive = c(7, 1, 12, 2, 3, 1, 10, 1, 1, 5, 1, 6, 1, 13, 3, 2, 4, 2, 7, 461, 128, 49, 43, 20, 15, 9, 12, 7, 8, 7, 5, 8, 3, 4, 20, 4, 64, 6, 2),
                  FYE = c(8.83, 5.82, 3.70, 3.70, 2.17, 1.15, 1.08, 1.54, 1.22, 1.20, 1.07, 0.85, 0.77, 0.74, 0.37, 0.37, 0.30, 0.27, 0.22, 119.74, 57.95, 11.07, 9.99, 8.99, 5.83, 3.30, 2.88, 3.44, 1.92, 1.58, 1.25, 0.67, 0.62, 0.53, 0.46, 0.41, 0.39, 0.35, 0.24))
-compared_words_lemma_cxn12 <- compare_word_column(mixed_cxn12_lemma, gries_cxn12)
-compared_words_lemma_cxn12$same_words
-compared_words_lemma_cxn12$different_words
 
 ```

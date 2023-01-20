@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.1.251">
+<meta name="generator" content="quarto-1.2.313">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -54,7 +54,7 @@ div.csl-indent {
 <link href="CCxG_Coll_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="CCxG_Coll_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
-<script src="CCxG_Coll_files/libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="CCxG_Coll_files/libs/htmlwidgets-1.6.1/htmlwidgets.js"></script>
 <script src="CCxG_Coll_files/libs/viz-1.8.2/viz.js"></script>
 <link href="CCxG_Coll_files/libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
 <script src="CCxG_Coll_files/libs/grViz-binding-1.0.9/grViz.js"></script>
@@ -97,6 +97,7 @@ div.csl-indent {
           </div>
   </div>
     
+  
     
   </div>
   
@@ -110,10 +111,7 @@ div.csl-indent {
 </header>
 
 <div class="cell">
-<div class="cell-output-display">
-<div id="htmlwidget-8c5c48d25a377d03f9af" style="width:100%;height:464px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-8c5c48d25a377d03f9af">{"x":{"diagram":"\ndigraph flowchart {\n  node [fontname = arial, shape = rectangle, style = filled, fillcolor = palegreen]\n  tab1 [label = \"Corpus\"]\n  tab2 [label = \"Filtered corpus on schema arg0(np)-v(v)-arg1(np)-arg2\"]\n  tab3 [label = \"87 unique arg-struc-cxn\"]\n  tab4 [label = \"arg0(np)-v(v)-arg1(np)-arg2(pp)\"]\n  tab5 [label = \"arg0(np)-v(v)-arg2(np)-arg1(np)\"]\n  tab6 [label = \"Role sets in both cxn1 & cxn2\"]\n  tab7 [label = \"Role sets exclusively in cxn1\", fillcolor = lightcoral]\n  tab8 [label = \"Role sets exclusively in cxn2\", fillcolor = lightcoral]\n  tab9 [label = \"Role sets that prefer cxn1 but also appear in cxn2\"]\n  tab10 [label = \"Role sets that prefer cxn2 but also appear in cxn1\"]\n\n  tab1 -> tab2\n  tab2 -> tab3\n  tab3 -> tab4\n  tab3 -> tab5\n  tab4 -> tab7\n  tab5 -> tab8\n  tab4 -> tab6\n  tab5 -> tab6\n  tab6 -> tab9\n  tab6 -> tab10\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
-</div>
+
 </div>
 <section id="introduction" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
@@ -182,13 +180,26 @@ div.csl-indent {
 <p>In this utterance, the verb “gave” would be annotated with the lemma “give” and the role set “give.01” which is described as “transfer” in https://propbank.github.io/v3.4.0/frames/. The verb here is the frame evoking element (FEE). The role set “give.01” has three arguments: “Arg0”, “Arg1” and “Arg2”. In propbank annotation this means that “Arg0” is the giver, “Arg1” is the thing given and “Arg2” is the entity given to. In traditional grammar, these arguments would be described as the agent (Arg0), patient (Arg1) and instrument/benefactive/attribute (Arg2). This paper will use the propbank terminology. This means that the above utterance would be annotated as follows: “She(Arg0-NP) gave(FEE-V) Peter(Arg2-NP) a watch(Arg1-NP)”. In other words, the argument structure construction in which the roleset “give.01” is embedded is “Arg0-NP FEE-V Arg2-NP Arg1-NP”. This can be recognised as a ditransitive construction. This paper focusses broadly on ditransitive constructions in its various manifestations.</p>
 <p>The data set used for this analysis is a subset of the OntoNotes 5.0 corpus. This data set was extracted from the corpus using the <span class="citation" data-cites="CCxG">(<a href="#ref-CCxG" role="doc-biblioref"><strong>CCxG?</strong></a>)</span> Explorer <span class="citation" data-cites="VanEecke2018">(<a href="#ref-VanEecke2018" role="doc-biblioref"><strong>VanEecke2018?</strong></a>)</span>. The CCxG Explorer is a tool developed by the Evolutionary &amp; Hybrid AI (EHAI) research team at the VUB Artificial Intelligence Lab. Its goal was twofold. From a broad-coverage corpus, it wanted to, first, gain linguistic insights from large-scale construction grammar analyses regarding the English argument structure and, secondly, show the application potential of CCxG by operationalising it on a large scale (Beuls &amp; Van Eecke, 2021). As a result, the CCxG Explorer allows usage-based linguists to search for corpus examples that match a particular semantic structure. This is useful because it provides the option to find examples of morphosyntactic phenomena without the need to identify them explicitly (<span class="citation" data-cites="Beuls">(<a href="#ref-Beuls" role="doc-biblioref"><strong>Beuls?</strong></a>)</span> &amp; Van Eecke, submitted). The CCxG Explorer can be accessed and used on the web at https://ehai.ai.vub.ac.be/ccxg-explorer/. Its source code is publically available on Gitlab as part of the babel toolkit <span class="citation" data-cites="babelrepo">(<a href="#ref-babelrepo" role="doc-biblioref"><strong>babelrepo?</strong></a>)</span>. The method and accuracy of the CCxG Explorer has not yet been established. This is currently being investigated. This is why this present paper takes a cautious approach to the results.</p>
 <p>To extract the ditransitive constructions, the following schema was used in the CCxG Explorer: “Arg0-NP FEE-V Arg1-NP Arg2”. The precise order is not taken into account which means that, for example, the following constructions are also extracted: “Arg0-NP FEE-V Arg2-NP Arg1”, “Arg1-NP FEE-V Arg0-NP Arg2” and “Arg1-NP FEE-V Arg2-NP Arg0”. The reason for this is that the order of the arguments is not fixed in ditransitive constructions and this schema allows for a more broad exploration. Further, it should be noted that there is no part of speech specified in the Arg2 slot. This is because the Arg2 slot can be filled by not only a NP but also, for example, a PP which would result in the dative alternation of the ditransitive construction: “She gave a watch to Peter” (arg0(np)-FEE(v)-arg1(np)-arg2(pp)). Note that in CxG approaches, this alternation is seen as a construction in its own right <span class="citation" data-cites="goldberg2002">(<a href="#ref-goldberg2002" role="doc-biblioref"><strong>goldberg2002?</strong></a>)</span>.</p>
-<p>——- paraphhrase this In construction-based approaches, the question whether a given verb/noun may occur in one or both members of an alternating pair is seen in terms of semantic compatibility. A word may occur in a given construction if its meaning is compatible with the meaning of the construction; it may ‘alternate’ between two constructions if (or to the degree that) the word’s meaning is compatible with the meanings of both constructions. In the context of alternating pairs, a focus on constructional semantics and semantic compatibility raises several questions: first, what exactly are the (often seemingly tenuous) semantic differences between the members of such a pair; second, how productive is the ‘alternation’ in actual usage, i.e.&nbsp;which verbs/nouns occur freely in both constructions, and which have strong biases towards one of them; and third, is a constructional, non-derivative approach plausible given the answers to the first two questions. ——</p>
+<p>Construction-based approaches consider whether a verb can be used in one or both members of an alternating pair based on semantic compatibility. A word can be used in a particular construction if its meaning aligns with the meaning of the construction. It can also alternate between two constructions if its meaning aligns with both. When it comes to alternating pairs, this approach raises questions about the semantic differences between the members of the pair, the degree of productivity in actual usage, and whether a constructional approach can be taken given the answers to these questions <span class="citation" data-cites="griesstef2004">(<a href="#ref-griesstef2004" role="doc-biblioref"><strong>griesstef2004?</strong></a>)</span>.</p>
 <p>The search results for this particular schema contained 9339 utterances. They were downloaded as a .json file. This .json file was the raw data for this analysis. It contains the string of the utterances and the roles that are defined in that utterance. The roles are further specified by roleType, part of speech (pos), string, indices, role set and lemma. In those 9339 utterances, there were 844 unique lemmas, 924 unique rolesets and 87 unique argument structure constructions which appeared in the previously mentioned schema.</p>
 <p>It is not this study’s aim to come to any definitive conclusions about the relationship between word sense and argument structure constructions. Instead, its goal is explore the possibilities of using propbank-annotated corpora and Computational Construction Grammar (CCxG) in a collostructional analysis.</p>
 <p>This paper consists of several sections. First, the research methodology is presented, specifically on how the data set was analysed. This is followed by a presentation, analysis and discussion of the relevant data. The analysis section consists of two parts. First, the cleaned data is examined and second, the results from the Distinctive Collexeme Analysis (DCA) are presented and discussed.</p>
 </section>
 <section id="data-processing-and-methodology" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Data Processing and Methodology</h1>
+<p>The entire data processing and analysis was done in R using the following packages:</p>
+<p>—- insert packages here —-</p>
+<p>The data cleaning process can be visualised by the following <a href="#fig-flowchart">Figure&nbsp;1</a>:</p>
+<div class="cell">
+<div id="fig-flowchart" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<div class="grViz html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-0e143e5d4a22e27c0cc6" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-0e143e5d4a22e27c0cc6">{"x":{"diagram":"\ndigraph flowchart {\n  node [fontname = arial, shape = rectangle, style = filled, fillcolor = palegreen]\n  tab1 [label = \"Corpus\"]\n  tab2 [label = \"Filtered corpus on schema arg0(np)-v(v)-arg1(np)-arg2\"]\n  tab3 [label = \"87 unique arg-struc-cxn\"]\n  tab4 [label = \"arg0(np)-v(v)-arg1(np)-arg2(pp)\"]\n  tab5 [label = \"arg0(np)-v(v)-arg2(np)-arg1(np)\"]\n  tab6 [label = \"Role sets in both cxn1 & cxn2\"]\n  tab7 [label = \"Role sets exclusively in cxn1\", fillcolor = lightcoral]\n  tab8 [label = \"Role sets exclusively in cxn2\", fillcolor = lightcoral]\n  tab9 [label = \"Role sets that prefer cxn1 but also appear in cxn2\"]\n  tab10 [label = \"Role sets that prefer cxn2 but also appear in cxn1\"]\n\n  tab1 -> tab2\n  tab2 -> tab3\n  tab3 -> tab4\n  tab3 -> tab5\n  tab4 -> tab7\n  tab5 -> tab8\n  tab4 -> tab6\n  tab5 -> tab6\n  tab6 -> tab9\n  tab6 -> tab10\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1: Flowchart of the cleaning process</figcaption><p></p>
+</figure>
+</div>
+</div>
+<p>This flowchart is showing a step by step process of cleaning the corpus and narrowing down the focus to specific constructions. The top level is the corpus itself, which is filtered to focus on a specific schema, in this case arg0(np)-v(v)-arg1(np)-arg2. From there, the filtered corpus shows 89 different argument structure constructions. The first construction is arg0(np)-v(v)-arg1(np)-arg2(pp) and the second construction is arg0(np)-v(v)-arg2(np)-arg1(np). These are then further divided into role sets that appear exclusively in one of them (marked in red and not analysed in the present paper) and role sets that appear in both constructions (marked in green and analysed).</p>
 <p>The raw data was processed in R using the ‘jsonlite’ package <span class="citation" data-cites="jsonlite">(<a href="#ref-jsonlite" role="doc-biblioref"><strong>jsonlite?</strong></a>)</span>. The data was then converted to a data frame and the relevant columns were selected. The raw data file does not contain the full argument structure construction in one string. To identify and classify the argument structure construction from each utterance a function was used. The resulting data frame contains the argument structure construction, role set and lemma. This data frame contains all the data used for the analysis. This is shown in <a href="#tbl-raw-corpus-data">Table&nbsp;2</a>.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -1108,7 +1119,7 @@ div.csl-indent {
    <td style="text-align:right;"> 0.28 </td>
    <td style="text-align:right;"> 0.01 </td>
    <td style="text-align:right;"> 0.18 </td>
-   <td style="text-align:right;"> 3.8 </td>
+   <td style="text-align:right;"> 3.9 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> receive.01 </td>
@@ -1130,29 +1141,16 @@ div.csl-indent {
 </div>
 </div>
 <p>In <a href="#tbl-dca-roleset">Table&nbsp;12</a>, the first column “WORD” shows the lemma / roleset of the word. The next two columns show the frequency of the word in the two different constructions: “arg0(np)-v(v)-arg1(np)-arg2(pp)” and “arg0(np)-v(v)-arg2(np)-arg1(np)”. The next columns “LLR”, “PRESID”, “LOR”, “MI”, “DPC2W”, “DPW2C” and “FYE” are the association measures that give information on the strength of the association between the word and the construction it appears in.</p>
-<p>A first observation that can be made is that the two most frequent argument structure constructions and used for the DCA are the arg0(np)-v(v)-arg1(np)-arg2(pp) and arg0(np)-v(v)-arg2(np)-arg1(np). These could, in more traditional terms, be described as the prepositional dative and ditransitive construction. Additionally, there are three categories on how the role sets / lemmas are related to the two constructions. They can appear exclusively in either arg0(np)-v(v)-arg1(np)-arg2(pp) or arg0(np)-v(v)-arg2(np)-arg1(np), or they appear in both. These categories can be distinquised in <a href="#fig-plots">Figure&nbsp;1</a>.</p>
-<div id="fig-plots" class="cell quarto-layout-panel">
+<p>A first observation that can be made is that the two most frequent argument structure constructions and used for the DCA are the arg0(np)-v(v)-arg1(np)-arg2(pp) and arg0(np)-v(v)-arg2(np)-arg1(np). These could, in more traditional terms, be described as the prepositional dative and ditransitive construction. Additionally, there are three categories on how the role sets / lemmas are related to the two constructions. They can appear exclusively in either arg0(np)-v(v)-arg1(np)-arg2(pp) or arg0(np)-v(v)-arg2(np)-arg1(np), or they appear in both. These categories can be distinquised in <a href="#fig-plots">Figure&nbsp;2</a>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-plots" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
-<div id="fig-plots-1" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="CCxG_Coll_files/figure-html/fig-plots-1.png" class="img-fluid figure-img" data-ref-parent="fig-plots" width="672"></p>
-<p></p><figcaption class="figure-caption">(a) Plot 1</figcaption><p></p>
+<p><img src="CCxG_Coll_files/figure-html/fig-plots-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;2: Figure showing the distribution of the role sets.</figcaption><p></p>
 </figure>
 </div>
 </div>
-<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
-<div id="fig-plots-2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="CCxG_Coll_files/figure-html/fig-plots-2.png" class="img-fluid figure-img" data-ref-parent="fig-plots" width="672"></p>
-<p></p><figcaption class="figure-caption">(b) Plot 2</figcaption><p></p>
-</figure>
-</div>
-</div>
-</div>
-<p></p><figcaption class="figure-caption">Figure&nbsp;1: Plots</figcaption><p></p>
-</figure>
 </div>
 <p>The following tables (<a href="#tbl-cxn1">Table&nbsp;13</a>, <a href="#tbl-cxn2">Table&nbsp;14</a> and <a href="#tbl-mixed-roleset">Table&nbsp;15</a>) show the top five role sets in each of these categories.</p>
 <div class="cell">
@@ -1196,7 +1194,7 @@ div.csl-indent {
    <td style="text-align:right;"> 76 </td>
    <td style="text-align:right;"> 0 </td>
    <td style="text-align:right;"> 30 </td>
-   <td style="text-align:right;"> 3.8 </td>
+   <td style="text-align:right;"> 3.9 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> receive.01 </td>
@@ -2814,398 +2812,6 @@ div.csl-indent {
 <h1 data-number="4"><span class="header-section-number">4</span> Conclusion</h1>
 <p>The conclusion should recap the paper, summarizing what was said in each section and how everything ties together. It might feel redundant, in particular in relation to the introduction, but that’s precisely the point: for someone who has not heard your ideas, redundancy is key to understand. Be clear about how each section contributes to your main point and what the take-home message is.</p>
 <p>Of course, the language of the paper should be formal and academic (I appreciate puns and jokes, but don’t lower the register too much). Coherence in the ideas, cohesion between the sentences and appropriate use of the technical vocabulary and of connectors (e.g.&nbsp;<em>however</em>, <em>in contrast</em>, <em>while</em>…) are important and <strong>will be evaluated</strong>. Not because of “language” evaluation but because these aspects are crucial for understanding, and if the reader needs to read a sentence many times and/or have previous knowledge of your process in order to understand the text, it’s not well written. I also recommend checking out the <code>{spelling}</code> package to run some spelling checks on your files!</p>
-<div class="cell">
-<div class="cell-output-display">
-<div id="tbl-mixed-cxn1-lemma" class="anchored">
-
-<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; "><table class=" lightable-paper table" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;"><caption>Table&nbsp;23:  Lemmas that have PREF in arg0(np)-v(v)-arg1(np)-arg2(pp) but also appear in arg0(np)-v(v)-arg2(np)-arg1(np) (ordered by FYE). </caption>
- <thead>
-  <tr>
-   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> WORD </th>
-   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg1(np)-arg2(pp) </th>
-   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg2(np)-arg1(np) </th>
-   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> PRES </th>
-   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> FYE </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> take </td>
-   <td style="text-align:right;"> 213 </td>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 2.71 </td>
-   <td style="text-align:right;"> 8.82 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> sell </td>
-   <td style="text-align:right;"> 82 </td>
-   <td style="text-align:right;"> 5 </td>
-   <td style="text-align:right;"> 1.23 </td>
-   <td style="text-align:right;"> 2.36 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> extend </td>
-   <td style="text-align:right;"> 32 </td>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 0.76 </td>
-   <td style="text-align:right;"> 1.14 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> bring </td>
-   <td style="text-align:right;"> 175 </td>
-   <td style="text-align:right;"> 27 </td>
-   <td style="text-align:right;"> 0.67 </td>
-   <td style="text-align:right;"> 0.95 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> leave </td>
-   <td style="text-align:right;"> 41 </td>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 0.65 </td>
-   <td style="text-align:right;"> 0.78 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> do </td>
-   <td style="text-align:right;"> 60 </td>
-   <td style="text-align:right;"> 8 </td>
-   <td style="text-align:right;"> 0.54 </td>
-   <td style="text-align:right;"> 0.68 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> drive </td>
-   <td style="text-align:right;"> 17 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 0.57 </td>
-   <td style="text-align:right;"> 0.64 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> name </td>
-   <td style="text-align:right;"> 16 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 0.54 </td>
-   <td style="text-align:right;"> 0.63 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> provide </td>
-   <td style="text-align:right;"> 91 </td>
-   <td style="text-align:right;"> 14 </td>
-   <td style="text-align:right;"> 0.49 </td>
-   <td style="text-align:right;"> 0.60 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> charge </td>
-   <td style="text-align:right;"> 23 </td>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 0.53 </td>
-   <td style="text-align:right;"> 0.53 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> deliver </td>
-   <td style="text-align:right;"> 19 </td>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 0.41 </td>
-   <td style="text-align:right;"> 0.39 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> hear </td>
-   <td style="text-align:right;"> 13 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 0.43 </td>
-   <td style="text-align:right;"> 0.31 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> deal </td>
-   <td style="text-align:right;"> 5 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 0.03 </td>
-   <td style="text-align:right;"> 0.00 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-  </tr>
-</tbody>
-</table></div>
-
-</div>
-</div>
-</div>
-<div class="cell">
-<div class="cell-output-display">
-<div id="tbl-mixed-cxn2-lemma" class="anchored">
-
-<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; "><table class=" lightable-paper table" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;"><caption>Table&nbsp;24:  Lemmas that have PREF in arg0(np)-v(v)-arg2(np)-arg1(np) but also appear in arg0(np)-v(v)-arg1(np)-arg2(pp) (ordered by FYE). </caption>
- <thead>
-  <tr>
-   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> WORD </th>
-   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg1(np)-arg2(pp) </th>
-   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg2(np)-arg1(np) </th>
-   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> PRES </th>
-   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> FYE </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> give </td>
-   <td style="text-align:right;"> 225 </td>
-   <td style="text-align:right;"> 662 </td>
-   <td style="text-align:right;"> -18.70 </td>
-   <td style="text-align:right;"> 377.99 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> tell </td>
-   <td style="text-align:right;"> 21 </td>
-   <td style="text-align:right;"> 150 </td>
-   <td style="text-align:right;"> -10.10 </td>
-   <td style="text-align:right;"> 91.40 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> ask </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 36 </td>
-   <td style="text-align:right;"> -5.34 </td>
-   <td style="text-align:right;"> 25.80 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> show </td>
-   <td style="text-align:right;"> 29 </td>
-   <td style="text-align:right;"> 61 </td>
-   <td style="text-align:right;"> -5.24 </td>
-   <td style="text-align:right;"> 25.26 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> grant </td>
-   <td style="text-align:right;"> 9 </td>
-   <td style="text-align:right;"> 25 </td>
-   <td style="text-align:right;"> -3.59 </td>
-   <td style="text-align:right;"> 11.90 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> teach </td>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 15 </td>
-   <td style="text-align:right;"> -2.94 </td>
-   <td style="text-align:right;"> 8.04 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> owe </td>
-   <td style="text-align:right;"> 9 </td>
-   <td style="text-align:right;"> 14 </td>
-   <td style="text-align:right;"> -2.28 </td>
-   <td style="text-align:right;"> 5.35 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> deny </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> -1.98 </td>
-   <td style="text-align:right;"> 3.75 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> pay </td>
-   <td style="text-align:right;"> 61 </td>
-   <td style="text-align:right;"> 27 </td>
-   <td style="text-align:right;"> -1.34 </td>
-   <td style="text-align:right;"> 2.67 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> earn </td>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 5 </td>
-   <td style="text-align:right;"> -1.57 </td>
-   <td style="text-align:right;"> 2.58 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> write </td>
-   <td style="text-align:right;"> 13 </td>
-   <td style="text-align:right;"> 10 </td>
-   <td style="text-align:right;"> -1.36 </td>
-   <td style="text-align:right;"> 2.45 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> send </td>
-   <td style="text-align:right;"> 143 </td>
-   <td style="text-align:right;"> 49 </td>
-   <td style="text-align:right;"> -1.20 </td>
-   <td style="text-align:right;"> 2.36 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> hand </td>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 5 </td>
-   <td style="text-align:right;"> -1.40 </td>
-   <td style="text-align:right;"> 2.22 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> award </td>
-   <td style="text-align:right;"> 13 </td>
-   <td style="text-align:right;"> 7 </td>
-   <td style="text-align:right;"> -0.85 </td>
-   <td style="text-align:right;"> 1.16 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> feed </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> -0.94 </td>
-   <td style="text-align:right;"> 1.08 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> find </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> -0.94 </td>
-   <td style="text-align:right;"> 1.08 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> serve </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> -0.50 </td>
-   <td style="text-align:right;"> 0.49 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> singe </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> -0.50 </td>
-   <td style="text-align:right;"> 0.49 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> lend </td>
-   <td style="text-align:right;"> 18 </td>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> -0.40 </td>
-   <td style="text-align:right;"> 0.38 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> save </td>
-   <td style="text-align:right;"> 18 </td>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> -0.03 </td>
-   <td style="text-align:right;"> 0.00 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-  </tr>
-</tbody>
-</table></div>
-
-</div>
-</div>
-</div>
 <div id="tbl-comp-cxn12" class="cell tbl-parent quarto-layout-panel anchored" data-tbl-cap="Comparison lemmas distinctive for arg0(np)-v(v)-arg1(np)-arg2(pp).">
 <div class="panel-caption table-caption">
 <p><strong>?(caption)</strong></p>
@@ -3277,7 +2883,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -3313,24 +2936,42 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script>
