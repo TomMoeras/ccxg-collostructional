@@ -127,44 +127,42 @@ digraph flowchart {
 
 # Introduction
 
-Construction Grammar (CxG) is a general term for a family of theories used for describing and interpreting language. It emphasises the importance of regular patterns of language use, known as constructions. It argues that these constructions capture all linguistic knowledge in the shape of form-meaning pairs. In other words, in CxG the traditional concepts of lexicon and grammar are combined into one. There is no distinction between the two as form is inherently connected to meaning @allthecxgboysandgirls. Collostructional analysis, developed by @griesstefall, is a combination of several quantative (statistical) methods for examining the relationship between words (lemmas) and structures. The term collostruction, a blend of the words collocation and construction, describes the method of measuring the level of attraction or repulsion that words have towards specific syntactic constructions.
+Construction Grammar (CxG) is a general term for a family of theories used for describing and interpreting language. It emphasises the importance of regular patterns of language use, known as constructions. It argues that these constructions capture all linguistic knowledge in the shape of form-meaning pairs. In other words, in CxG the traditional concepts of lexicon and grammar are combined into one. There is no distinction between the two as form is inherently connected to meaning (@beuls_construction_toappear, @fillmore_mechanisms_1988, @fillmore_regularity_1988, @goldberg_constructions_1995, @beuls_computational_2021). Collostructional analysis, developed by A. Stefanowitsch and S.T. Gries (@stefanowitsch_channel_2008, @stefanowitsch_collostructional_2014, @gries_cluster_2010 @gries_collostructional_2013, @gries_extending_2004), is a combination of several quantitative (statistical) methods for examining the relationship between words (lemmas) and structures. The term collostruction, a blend of the words collocation and construction, describes the method of measuring the level of attraction or repulsion that words have towards specific syntactic constructions.
 
-Most studies using collostructional analysis have focused on the relationship between verbs and constructions that convey information about argument structure (@gries2013). This present paper follows in those footsteps but will take a slightly different approach. It still studies the patterns of co-occurrence between verbs and specific English argument constructions. However, instead of only examining the lemma, this paper focuses on the role-set or word sense of a specific lemma in relation to its place in an argument structure construction. It does this by performing collustructional analysis @specifywhichones on a data set taken from the propbank-annotated OntoNotes 5.0 corpus. What follows is a brief description of the corpus and data set used.
+Most studies using collostructional analysis have focused on the relationship between verbs and constructions that convey information about argument structure (@gries_collostructional_2013, @gries_extending_2004). This present paper follows in those footsteps but will take a slightly different approach. It still studies the patterns of co-occurrence between verbs and specific English argument constructions. However, instead of only examining the lemma, this paper focuses on the role-set or word sense of a specific lemma in relation to its place in an argument structure construction. It does this by performing collustructional analysis on a data set taken from the PropBank-annotated OntoNotes 5.0 corpus. What follows is a brief description of the corpus and data set used.
 
-OntoNotes 5.0 @Weischedel2013 is a corpus consisting of a subset of English, Chinese and Arabic texts. It can be described as a broad-coverage corpus as it spans several genres including religious texts, telephone conversations, news articles and weblogs. In total it consists of 2.9 million words. The corpus is annotated with a number of different layers of information. These are presented in the corpus as follows:
+OntoNotes 5.0 (@weischedel_ontonotes_2013) is a corpus consisting of a subset of English, Chinese and Arabic texts. It can be described as a broad-coverage corpus as it spans several genres including religious texts, telephone conversations, news articles and weblogs. In total it consists of 2.9 million words. The corpus is annotated with a number of different layers of information. These are presented in the corpus as follows (see @fig-ontonotes-annotation-example):
 
--> sample-paper_files/figure-html/example-ontonotes-annotation.png/) @VanEeckePPT
+![Example of a sentence annotation in OntoNotes 5.0 (@beuls_operationalising_2021)](CCxG_Coll_files/PropBank-annotation-example.png){#fig-ontonotes-annotation-example}
 
-In the above example, the utterance "With their unique charm, these well-known cartoon images once again caused Hong Kong to be a focus of worldwide attention." is annotated with a treebank, propbank, word sense annotation, ontology, coreference and entity names annotation layer. A complete description of these annotations can be found in @Xue2012. For the purpose of the present study, the propbank annotation layer is of particular interest. The propbank layer (https://propbank.github.io/) annotates the argument structure of verbs. It does this by providing a list of possible roles for each verb. These roles are called arguments. The word sense annotation layer provides a list of possible word senses for each word. These word senses are also called role sets. The propbank layer is used to identify the argument structure. The word sense layer is used to identify the specific word sense of a verb. To illustrate how these annotations should be interpreted, consider the following utterance "She gave Peter a watch." as shown in @tbl-give01-example:
+In the above example, the utterance "With their unique charm, these well-known cartoon images once again caused Hong Kong to be a focus of worldwide attention." is annotated with a treebank, PropBank, word sense annotation, ontology, coreference and entity names annotation layer. A complete description of these annotations can be found in @bonial_english_2012. For the purpose of the present study, the PropBank annotation layer is of particular interest. The PropBank layer (https://PropBank.github.io/) annotates the argument structure of verbs. It does this by providing a list of possible roles for each verb. These roles are called arguments. The word sense annotation layer provides a list of possible word senses for each word. These word senses are also called role sets. The PropBank layer is used to identify the argument structure. The word sense layer is used to identify the specific word sense of a verb. To illustrate how these annotations should be interpreted, consider the following utterance "She gave Peter a watch." as shown in @tbl-give01-example:
 
 | **roleType** | **pos** | **string** | **indices** | **roleset** | **lemma** |
 |--------------|---------|------------|-------------|-------------|-----------|
-|     arg0     |    np   |     She    |      0      |             |           |
-|       v      |    v    |    gave    |      1      |   give.01   |    give   |
-|     arg2     |    np   |    Peter   |      2      |             |           |
-|     arg1     |    np   |   a watch  |      3      |             |           |
+| arg0         | np      | She        | 0           |             |           |
+| v            | v       | gave       | 1           | give.01     | give      |
+| arg2         | np      | Peter      | 2           |             |           |
+| arg1         | np      | a watch    | 3           |             |           |
 
 : Example of the PropBank annotation for the verb "give.01" in the utterance "She gave Peter a watch." {#tbl-give01-example}
 
-In this utterance, the verb "gave" would be annotated with the lemma "give" and the role set "give.01" which is described as "transfer" in https://propbank.github.io/v3.4.0/frames/. The verb here is the frame evoking element (FEE). The role set "give.01" has three arguments: "Arg0", "Arg1" and "Arg2". In propbank annotation this means that "Arg0" is the giver, "Arg1" is the thing given and "Arg2" is the entity given to. In traditional grammar, these arguments would be described as the agent (Arg0), patient (Arg1) and instrument/benefactive/attribute (Arg2). This paper will use the propbank terminology. This means that the above utterance would be annotated as follows: "She(Arg0-NP) gave(FEE-V) Peter(Arg2-NP) a watch(Arg1-NP)". In other words, the argument structure construction in which the roleset "give.01" is embedded is "Arg0-NP FEE-V Arg2-NP Arg1-NP". This can be recognised as a ditransitive construction. This paper focusses broadly on ditransitive constructions in its various manifestations.
+In this utterance, the verb "gave" would be annotated with the lemma "give" and the role set "give.01" which is described as "transfer" in https://PropBank.github.io/v3.4.0/frames/. The verb here is the frame evoking element (FEE). The role set "give.01" has three arguments: "Arg0", "Arg1" and "Arg2". In PropBank annotation this means that "Arg0" is the giver, "Arg1" is the thing given and "Arg2" is the entity given to. In traditional grammar, these arguments would be described as the agent (Arg0), patient (Arg1) and instrument/benefactive/attribute (Arg2). This paper will use the PropBank terminology. This means that the above utterance would be annotated as follows: "She(Arg0-NP) gave(FEE-V) Peter(Arg2-NP) a watch(Arg1-NP)". In other words, the argument structure construction in which the roleset "give.01" is embedded is "Arg0-NP FEE-V Arg2-NP Arg1-NP". This can be recognised as a ditransitive construction. This paper focusses broadly on ditransitive constructions in its various manifestations.
 
-The data set used for this analysis is a subset of the OntoNotes 5.0 corpus. This data set was extracted from the corpus using the @CCxG Explorer @VanEecke2018. The CCxG Explorer is a tool developed by the Evolutionary & Hybrid AI (EHAI) research team at the VUB Artificial Intelligence Lab. Its goal was twofold. From a broad-coverage corpus, it wanted to, first, gain linguistic insights from large-scale construction grammar analyses regarding the English argument structure and, secondly, show the application potential of CCxG by operationalising it on a large scale (Beuls & Van Eecke, 2021). As a result, the CCxG Explorer allows usage-based linguists to search for corpus examples that match a particular semantic structure. This is useful because it provides the option to find examples of morphosyntactic phenomena without the need to identify them explicitly (@Beuls & Van Eecke, submitted). The CCxG Explorer can be accessed and used on the web at https://ehai.ai.vub.ac.be/ccxg-explorer/. Its source code is publically available on Gitlab as part of the babel toolkit @babelrepo. The method and accuracy of the CCxG Explorer has not yet been established. This is currently being investigated. This is why this present paper takes a cautious approach to the results.
+The data set used for this analysis is a subset of the OntoNotes 5.0 corpus. This data set was extracted from the corpus using the CCxG Explorer (@beuls_operationalising_2021). The CCxG Explorer is a tool developed by the Evolutionary & Hybrid AI (EHAI) research team at the VUB Artificial Intelligence Lab. Its goal was twofold. From a broad-coverage corpus, it wanted to, first, gain linguistic insights from large-scale construction grammar analyses regarding the English argument structure and, secondly, show the application potential of CCxG by operationalising it on a large scale (Beuls & Van Eecke, 2021). As a result, the CCxG Explorer allows usage-based linguists to search for corpus examples that match a particular semantic structure. This is useful because it provides the option to find examples of morphosyntactic phenomena without the need to identify them explicitly (@beuls_construction_toappear). The CCxG Explorer can be accessed and used on the web at https://ehai.ai.vub.ac.be/ccxg-explorer/. Its source code is publicly available on Gitlab as part of the babel toolkit (@ehai_babel). The method and accuracy of the CCxG Explorer has not yet been established. This is currently being investigated. This is why this present paper takes a cautious approach to the results.
 
-To extract the ditransitive constructions, the following schema was used in the CCxG Explorer: "Arg0-NP FEE-V Arg1-NP Arg2". The precise order is not taken into account which means that, for example, the following constructions are also extracted: "Arg0-NP FEE-V Arg2-NP Arg1", "Arg1-NP FEE-V Arg0-NP Arg2" and "Arg1-NP FEE-V Arg2-NP Arg0". The reason for this is that the order of the arguments is not fixed in ditransitive constructions and this schema allows for a more broad exploration. Further, it should be noted that there is no part of speech specified in the Arg2 slot. This is because the Arg2 slot can be filled by not only a NP but also, for example, a PP which would result in the dative alternation of the ditransitive construction: "She gave a watch to Peter" (arg0(np)-FEE(v)-arg1(np)-arg2(pp)). Note that in CxG approaches, this alternation is seen as a construction in its own right @goldberg2002.
+To extract the ditransitive constructions, the following schema was used in the CCxG Explorer: "Arg0-NP FEE-V Arg1-NP Arg2". The precise order is not taken into account which means that, for example, the following constructions are also extracted: "Arg0-NP FEE-V Arg2-NP Arg1", "Arg1-NP FEE-V Arg0-NP Arg2" and "Arg1-NP FEE-V Arg2-NP Arg0". The reason for this is that the order of the arguments is not fixed in ditransitive constructions and this schema allows for a more broad exploration. Further, it should be noted that there is no part of speech specified in the Arg2 slot. This is because the Arg2 slot can be filled by not only a NP but also, for example, a PP which would result in the dative alternation of the ditransitive construction: "She gave a watch to Peter" (arg0(np)-FEE(v)-arg1(np)-arg2(pp)). Note that in CxG approaches, this alternation is seen as a construction in its own right (@goldberg_surface_2002).
 
-Construction-based approaches consider whether a verb can be used in one or both members of an alternating pair based on semantic compatibility. A word can be used in a particular construction if its meaning aligns with the meaning of the construction. It can also alternate between two constructions if its meaning aligns with both. When it comes to alternating pairs, this approach raises questions about the semantic differences between the members of the pair, the degree of productivity in actual usage, and whether a constructional approach can be taken given the answers to these questions @griesstef2004.
+Construction-based approaches consider whether a verb can be used in one or both members of an alternating pair based on semantic compatibility. A word can be used in a particular construction if its meaning aligns with the meaning of the construction. It can also alternate between two constructions if its meaning aligns with both. When it comes to alternating pairs, this approach raises questions about the semantic differences between the members of the pair, the degree of productivity in actual usage, and whether a constructional approach can be taken given the answers to these questions() @gries_extending_2004).
 
-The search results for this particular schema contained 9339 utterances. They were downloaded as a .json file. This .json file was the raw data for this analysis. It contains the string of the utterances and the roles that are defined in that utterance. The roles are further specified by roleType, part of speech (pos), string, indices, role set and lemma. In those 9339 utterances, there were `r numbers$lemma` unique lemmas, `r numbers$roleset` unique rolesets and `r numbers$arg_struc_cxn` unique argument structure constructions which appeared in the previously mentioned schema.
+The search results for this particular schema contained 9339 utterances. They were downloaded as a .json file. This .json file was the raw data for this analysis. It contains the string of the utterances and the roles that are defined in that utterance. The roles are further specified by roleType, part of speech (pos), string, indices, role set and lemma. In those 9339 utterances, there were `r numbers$lemma` unique lemmas, `r numbers$roleset` unique role sets and `r numbers$arg_struc_cxn` unique argument structure constructions which appeared in the previously mentioned schema.
 
-It is not this study's aim to come to any definitive conclusions about the relationship between word sense and argument structure constructions. Instead, its goal is explore the possibilities of using propbank-annotated corpora and Computational Construction Grammar (CCxG) in a collostructional analysis.
+It is not this study's aim to come to any definitive conclusions about the relationship between word sense and argument structure constructions. Instead, its goal is explore the possibilities of using PropBank-annotated corpora and Computational Construction Grammar (CCxG) in a collostructional analysis.
 
 This paper consists of several sections. First, the research methodology is presented, specifically on how the data set was analysed. This is followed by a presentation, analysis and discussion of the relevant data. The analysis section consists of two parts. First, the cleaned data is examined and second, the results from the Distinctive Collexeme Analysis (DCA) are presented and discussed.
 
 # Data Processing and Methodology
 
-The entire data processing and analysis was done in R using the following packages: 
-
----- insert packages here ----
+The entire data processing and analysis was done in R using the packages `{base}`, `{graphics}`, `{here}`, `{stats}`, `{utils}`, `{ggplot2}`, `{dplyr}`, `{jsonlite}`, `{stringr}`, `{tibble}` and `{tidyr}`. Most of which can be found in the `{tidyverse}` package (@R-tidyverse). The data set was first cleaned and then analysed using the DCA. The data cleaning process is described in the following section.
 
 The data cleaning process can be visualised by the following @fig-flowchart:
 
@@ -176,7 +174,7 @@ corpus_flowchart
 
 This flowchart is showing a step by step process of cleaning the corpus and narrowing down the focus to specific constructions. The top level is the corpus itself, which is filtered to focus on a specific schema, in this case arg0(np)-v(v)-arg1(np)-arg2. From there, the filtered corpus shows 89 different argument structure constructions. The first construction is arg0(np)-v(v)-arg1(np)-arg2(pp) and the second construction is arg0(np)-v(v)-arg2(np)-arg1(np). These are then further divided into role sets that appear exclusively in one of them (marked in red and not analysed in the present paper) and role sets that appear in both constructions (marked in green and analysed).
 
-The raw data was processed in R using the 'jsonlite' package @jsonlite. The data was then converted to a data frame and the relevant columns were selected. The raw data file does not contain the full argument structure construction in one string. To identify and classify the argument structure construction from each utterance a function was used. The resulting data frame contains the argument structure construction, role set and lemma. This data frame contains all the data used for the analysis. This is shown in @tbl-raw-corpus-data.
+The data was converted to a data frame and the relevant columns were selected. The raw data file does not contain the full argument structure construction in one string. To identify and classify the argument structure construction from each utterance a function was used. The resulting data frame contains the argument structure construction, role set and lemma. This data frame contains all the data used for the analysis. This is shown in @tbl-raw-corpus-data.
 
 ```{r}
 #| label: tbl-raw-corpus-data
@@ -194,35 +192,35 @@ kbl(head(data, 10, booktabs = TRUE)) %>%
 
 @tbl-raw-corpus-data shows a small sample of data used for subsequent analyses. The table contains three columns: "arg_struc_cxn", "roleset", and "lemma". The "arg_struc_cxn" column lists the argument structure construction that the roleset occurs in. The "roleset" column lists the specific roleset that the lemma takes on. The "lemma" column lists the lemma of the verb.
 
-As previously mentioned, the type of analysis used for this paper is a collustructrional analysis. According to Stefanowitsch @Steffi2013, there are several types of collustructrional analysis. There is a Simple Collexeme Analysis (SCA), Distinctive Collexeme Analysis (DCA) and Covarying Collexeme Analysis (CCA). The type of analysis used for this paper is the Distinctive Collexeme Analysis. Since this is the only relevant type of analysis for this paper, the other types of analysis will not be discussed further.
+As previously mentioned, the type of analysis used for this paper is a collustructrional analysis. According to @gries_collostructional_2013, there are several types of collustructrional analysis. There is a Simple Collexeme Analysis (SCA), Distinctive Collexeme Analysis (DCA) and Covarying Collexeme Analysis (CCA). The type of analysis used for this paper is the Distinctive Collexeme Analysis. Since this is the only relevant type of analysis for this paper, the other types of analysis will not be discussed further.
 
-DCA @GriesStef2004a compares all words that occur in a slot of two similar constructions. It is based on the frequency of the word and constructions it occurs in. @StefGries2013 presents the following @tbl-dca to illustrate which frequency information is needed for a DCA.
+DCA (@gries_extending_2004) compares all words that occur in a slot of two similar constructions. It is based on the frequency of the word and constructions it occurs in. @gries_collostructional_2013 presents the following @tbl-dca to illustrate which frequency information is needed for a DCA.
 
 |                            |        **Word l of Class L**        |      **Other Words of Class L**      |          **Total**          |
-|----------------------------|:-----------------------------------:|:------------------------------------:|:---------------------------:|
-| Construction c1 of Class C | Frequency of L(l) in C(c1)          | Frequency of L(-l) in C(c1)          | Total frequency of C(c1)    |
-| Construction c2 of Class C | Frequency of L(l) in C(c2)          | Frequency of L(-l) in C(c2)          | Total frequency of C(c2)    |
+|-----------------|:-----------------:|:------------------:|:---------------:|
+| Construction c1 of Class C |     Frequency of L(l) in C(c1)      |     Frequency of L(-l) in C(c1)      |  Total frequency of C(c1)   |
+| Construction c2 of Class C |     Frequency of L(l) in C(c2)      |     Frequency of L(-l) in C(c2)      |  Total frequency of C(c2)   |
 | Total                      | Total frequency of L(l) in C(c1,c2) | Total frequency of L(-l) in C(c1,c2) | Total frequency of C(c1,c2) |
 
 : Frequency information needed for a distinctive collexeme analysis {#tbl-dca}
 
-In this table, the frequency of a word (l & -l) and construction (c1 & c2) are mapped to each other to create a contingency table containing the frequency of l in c1, l in c2, -l in c1, -l in c2. These are then combined to create a total frequency. Such a contingency table can then be used to perform a contingency test to return association measures like, for example, the Fisher-Yates p score. The Fisher-Yates p score is the score that is used most often in these types of analyses @allDCAref and will, therefore, be discussed more thoroughly than the other assocation measures. This measure is preferred over others, like chi-squared, because it does not break any assumptions about the distribution of the data @ellis2009. It is used as a measure of the strength of association between, in this case, a word and a construction. the p-value represents the probability of obtaining a test statistic as extreme or more extreme than the one observed. A small p-value (typically less than 0.05) suggests that the null hypothesis can be rejected, and that the difference in co-occurrence frequencies between the two words being compared is not due to chance. Conversely, a large p-value (typically greater than 0.05) suggests that there is not enough evidence to reject the null hypothesis and that the difference in co-occurrence frequencies may be due to chance. In other words, a small p-value means that the difference in co-occurrence frequencies between the two words is statistically significant and it is unlikely that the observed difference is due to chance. However, it is common in collostructional analysis to log-transform these values in order to make it more intuitive to interpret them @levshina_2015. The same will be done in this analysis. As a result, the values will range from - infinity to + infinity. On that scale, large negative numbers indicate mutual repulsion, large positive numbers indicate mutual attraction and values around zero indicate lack of assocation. It is important to note that in DCA there is a focus on the differences between constructions. To uncover similarities between constructions a SCA can be used @GriesStef2004a but this is not done here given the limited scope of the present research.
+In this table, the frequency of a word (l & -l) and construction (c1 & c2) are mapped to each other to create a contingency table containing the frequency of l in c1, l in c2, -l in c1, -l in c2. These are then combined to create a total frequency. Such a contingency table can then be used to perform a contingency test to return association measures like, for example, the Fisher-Yates p score. The Fisher-Yates p score is the score that is used most often in these types of analyses (@hilpert_distinctive_2006, @wilinski_brink_2017, @gilquin_making_2013 @gries_extending_2004, @gries_collostructional_2013) and will, therefore, be discussed more thoroughly than the other association measures. This measure is preferred over others, like chi-squared, because it does not break any assumptions about the distribution of the data (@ellis_construction_2009). It is used as a measure of the strength of association between, in this case, a word and a construction. the p-value represents the probability of obtaining a test statistic as extreme or more extreme than the one observed. A small p-value (typically less than 0.05) suggests that the null hypothesis can be rejected, and that the difference in co-occurrence frequencies between the two words being compared is not due to chance. Conversely, a large p-value (typically greater than 0.05) suggests that there is not enough evidence to reject the null hypothesis and that the difference in co-occurrence frequencies may be due to chance. In other words, a small p-value means that the difference in co-occurrence frequencies between the two words is statistically significant and it is unlikely that the observed difference is due to chance. However, it is common in collostructional analysis to log-transform these values in order to make it more intuitive to interpret them (@levshina_2015). The same will be done in this analysis. As a result, the values will range from - infinity to + infinity. On that scale, large negative numbers indicate mutual repulsion, large positive numbers indicate mutual attraction and values around zero indicate lack of association. It is important to note that in DCA there is a focus on the differences between constructions. To uncover similarities between constructions a SCA can be used (@gries_extending_2004) but this is not done here given the limited scope of the present research.
 
-An extension of DCA is the possibility to perform it on a data set that has more than two types of constructions. This is referred to as Multiple Distinctive Collexeme Analysis (MDCA) @StefGries2004a. It is based on the same principles as DCA, but instead of comparing two constructions, it compares multiple constructions. In order to perform a MDCA on a data set a multidimensional contingency table is required. @GriesStef2013 gives the following @tbl-mca to illustrate which frequency information is needed for a MDCA.:
+An extension of DCA is the possibility to perform it on a data set that has more than two types of constructions. This is referred to as Multiple Distinctive Collexeme Analysis (MDCA) (@gries_extending_2004). It is based on the same principles as DCA, but instead of comparing two constructions, it compares multiple constructions. In order to perform a MDCA on a data set a multidimensional contingency table is required. @gries_collostructional_2013 gives the following @tbl-mca to illustrate which frequency information is needed for a MDCA.:
 
 |                            |           **Word l of Class L**           |         **Other Words of Class L**         |             **Total**             |
-|----------------------------|:-----------------------------------------:|:------------------------------------------:|:---------------------------------:|
-| Construction c1 of Class C | Frequency of L(l) in C(c1)                | Frequency of L(-l) in C(c1)                | Total frequency of C(c1)          |
-| Construction c2 of Class C | Frequency of L(l) in C(c2)                | Frequency of L(-l) in C(c2)                | Total frequency of C(c2)          |
-| ...                        | ...                                       | ...                                        | ...                               |
-| Construction c(n)          | Freq. of L(l) in C(cn)                    | Freq. of L(-l) in C(cn)                    | Total frequency of C(cn)          |
+|-----------------|:-----------------:|:------------------:|:---------------:|
+| Construction c1 of Class C |        Frequency of L(l) in C(c1)         |        Frequency of L(-l) in C(c1)         |     Total frequency of C(c1)      |
+| Construction c2 of Class C |        Frequency of L(l) in C(c2)         |        Frequency of L(-l) in C(c2)         |     Total frequency of C(c2)      |
+| ...                        |                    ...                    |                    ...                     |                ...                |
+| Construction c(n)          |          Freq. of L(l) in C(cn)           |          Freq. of L(-l) in C(cn)           |     Total frequency of C(cn)      |
 | Total                      | Total frequency of L(l) in C(c1,c2, ...n) | Total frequency of L(-l) in C(c1,c2, ...n) | Total frequency of C(c1,c2, ...n) |
 
 : Frequency information needed for a multiple distinctive collexeme analysis {#tbl-mca}
 
 As can be observed in the above table, the difference is that in the MDCA contingency table there is an n number of constructions represented in the columns. Due to the limited scope of this paper, only the DCA will be discussed in the analysis section. However, the MDCA was still performed and the results are available in the appendix because it could prove useful for future research.
 
-To perform both types of analyses, a R script developed by @GriesStef2013 was used and adapted to suit the data set in this paper. With regards to the DCA, this script calculates the association measures for all words (lemma / role set) in relation to the two most frequent argument structure constructions from the data set and returns a table containing the association measures for each of those words. In total, eight association measures are given. They are presented in @tbl-accosm. Not all of them are as extensively used in the analysis but they are presented for completeness and to give a general overview of the measures that are available when using DCA on a PropBank-annotated corpus. A comparison between these measures is briefly discussed here on the basis of a correlation analysis. This type of analysis is a method used to evaluate the strength and direction of a relationship between two variables. It can be used to determine if there is a relationship between variables, and if so, how strong that relationship is. Correlation coefficients range from -1 to 1, with -1 indicating a perfect negative correlation, 0 indicating no correlation, and 1 indicating a perfect positive correlation. In this case, the variables are the different scores from the association measures. The closer the value is to 1, the stronger the association between the two variables. The closer the value is to -1, the stronger the negative association between the two variables. The closer the value is to 0, the weaker the association between the two variables.
+To perform both types of analyses, a R script developed by S.T. De Gries (@gries_script) was used and adapted to suit the data set in this paper. With regards to the DCA, this script calculates the association measures for all words (lemma / role set) in relation to the two most frequent argument structure constructions from the data set and returns a table containing the association measures for each of those words. In total, eight association measures are given. They are presented in @tbl-accosm. Not all of them are as extensively used in the analysis but they are presented for completeness and to give a general overview of the measures that are available when using DCA on a PropBank-annotated corpus. A comparison between these measures is briefly discussed here on the basis of a correlation analysis. This type of analysis is a method used to evaluate the strength and direction of a relationship between two variables. It can be used to determine if there is a relationship between variables, and if so, how strong that relationship is. Correlation coefficients range from -1 to 1, with -1 indicating a perfect negative correlation, 0 indicating no correlation, and 1 indicating a perfect positive correlation. In this case, the variables are the different scores from the association measures. The closer the value is to 1, the stronger the association between the two variables. The closer the value is to -1, the stronger the negative association between the two variables. The closer the value is to 0, the weaker the association between the two variables.
 
 | Association Measure | Full Name                                         |
 |---------------------|---------------------------------------------------|
@@ -254,9 +252,11 @@ kbl(cor_assoc, booktabs = TRUE) %>%
 
 ```
 
+@tbl-cor-assoc presents a correlation analysis of the association measures used in the DCA. The rows and columns represent different measures and the values in the cells represent the correlation between the measure in the corresponding row and column. It shows that there is a strong positive correlation between LLR, PRES, LOR, DPC2W, and DPW2C measures (values are close to 1), which indicates that these measures are highly related. The FYE measure is positively correlated but to a lesser extent (values are around 0.5) with the other measures. The MI measure is weakly correlated (values are close to 0) with the other measures. As mentioned before, FYE is considered the standard measure in this type of analysis and will therefore be used in this paper as well. However, the other measures were also considered during the interpretation of the results, but it did not make a significant difference in the overall conclusions and are therfore not discussed in detail.
+
 # Results and Discussion
 
-In the following section, an exploratory analysis will be conducted on the cleaned corpus data and on the resulting data from the DCA. It focusses on the role sets (word senses) of verbs. The DCA has also been applied to the lemma data set and will be used for comparison when relevant. The analysis thus departs from an overview of the frequency of the lemmas and rolesets in specific argument constructions. In @tbl-alph-summary, a random subset of an alphabetically sorted list is shown. The argument structure constructions are ordered based on the frequency in which they appear in the data set. 
+In the following section, an exploratory analysis will be conducted on the cleaned corpus data and on the resulting data from the DCA. It focusses on the role sets (word senses) of verbs. The DCA has also been applied to the lemma data set and will be used for comparison when relevant. The analysis thus departs from an overview of the frequency of the lemmas and rolesets in specific argument constructions. In @tbl-alph-summary, a random subset of an alphabetically sorted list is shown. The argument structure constructions are ordered based on the frequency in which they appear in the data set.
 
 ```{r}
 #| label: tbl-alph-summary
@@ -275,13 +275,13 @@ kbl(data[108:128,1:8], booktabs = TRUE) %>%
 
 What @tbl-alph-summary shows is that a lemma manifests itself in different rolesets in different constructions. The logical consequence of this is that there are more role sets than there are lemmas. In other words, a verb can be used in different senses and these senses are potentially linked to a specific construction. For example, the lemma "catch" appears in role sets "catch.02" and "catch.03" and the lemma "charge" appears in the role sets "charge.01", "charge.04" and "charge.05". @tbl-sense-utterance illustrates these role sets with their semantic meaning and an example utterance from the corpus.
 
-|**Lemma** | **Roleset** | **Meaning**       | **Utterance**                                                    | **Arg_Struc_Cxn**              |
-|----------|-------------|-------------------|------------------------------------------------------------------|--------------------------------|
-|catch     | catch.02    |come upon, find    | "We **caught** them cheating"                                    | arg0(np)-v(v)-arg1(np)-arg2(v) |
-|          | catch.03    |trap               | "...asking locals not to [...] **catch** them in nets."          | arg0(np)-v(v)-arg1(np)-arg2(pp)|
-|charge    | charge.01   |asking price       | "He **charge** you a fortune?"                                   | arg0(np)-v(v)-arg1(np)-arg2(pp)|
-|          | charge.04   |buy on credit      | "...car buyers **charge** [...] their purchase on the [...] card"| arg0(np)-v(v)-arg1(np)-arg2(pp)|
-|          | charge.05   |make an allegation | "...they indicated to **charge** Mr. Noriega himself..."         | arg0(np)-v(v)-arg1(np)-arg2(pp)|
+| **Lemma** | **Roleset** | **Meaning**        | **Utterance**                                                         | **Arg_Struc_Cxn**               |
+|------------|------------|------------|--------------------------|------------|
+| catch     | catch.02    | come upon, find    | "We **caught** them cheating"                                         | arg0(np)-v(v)-arg1(np)-arg2(v)  |
+|           | catch.03    | trap               | "...asking locals not to \[...\] **catch** them in nets."             | arg0(np)-v(v)-arg1(np)-arg2(pp) |
+| charge    | charge.01   | asking price       | "He **charge** you a fortune?"                                        | arg0(np)-v(v)-arg1(np)-arg2(pp) |
+|           | charge.04   | buy on credit      | "...car buyers **charge** \[...\] their purchase on the \[...\] card" | arg0(np)-v(v)-arg1(np)-arg2(pp) |
+|           | charge.05   | make an allegation | "...they indicated to **charge** Mr. Noriega himself..."              | arg0(np)-v(v)-arg1(np)-arg2(pp) |
 
 : Example of the role sets and their semantic meaning {#tbl-sense-utterance}
 
@@ -289,16 +289,16 @@ What @tbl-alph-summary shows is that a lemma manifests itself in different roles
 
 | **roleType** | **pos** | **string** | **indices** | **roleset** | **lemma** |
 |--------------|---------|------------|-------------|-------------|-----------|
-|     arg0     |    np   |     We     |      0      |             |           |
-|       v      |    v    |   caugth   |      1      |   catch.02  |   catch   |
-|     arg1     |    np   |    them    |      2      |             |           |
-|     arg2     |    v    |  cheating  |      3      |             |           |
+| arg0         | np      | We         | 0           |             |           |
+| v            | v       | caugth     | 1           | catch.02    | catch     |
+| arg1         | np      | them       | 2           |             |           |
+| arg2         | v       | cheating   | 3           |             |           |
 
 : Example of the argument structure construction of the utterance "We caught them cheating" {#tbl-catch02}
 
 @tbl-catch02 is showing the information of the sentence "We caught them cheating." as annotated in the OntoNotes corpus. The lemma is "catch", the roleset is "catch.02" and the roleType, pos (part of speech), string and indices of the words that fill the role are given in the table. The word 'We' is filling the role of arg0, the word 'caught' is filling the role of v, the word 'them' is filling the role of arg1 (entity) and the word 'cheating' is filling the role of arg2 (attribute).
 
-The next @tbl-freq-summary shows a similar list to @tbl-alph-summary but now no longer alphabetically sorted but sorted based on the frequency of the lemmas and rolesets in the data set. The argument structure constructions are still ordered based on the frequency in which they appear in the data set. 
+The next @tbl-freq-summary shows a similar list to @tbl-alph-summary but now no longer alphabetically sorted but sorted based on the frequency of the lemmas and rolesets in the data set. The argument structure constructions are still ordered based on the frequency in which they appear in the data set.
 
 ```{r}
 #| label: tbl-freq-summary
@@ -315,7 +315,7 @@ kbl(data[1:10,1:8], booktabs = TRUE) %>%
 
 ```
 
-@tbl-freq-summary indicates the frequency of the different rolesets in different constructions as represented by the column names. The "total" column represents the sum of all the values in that row or, in other words, the total frequency of the specific roleset. It is not a surprise that the lemma "give" in the sense "give.01" is the most frequent in the previously defined argument structure schema by quite a margin. This has been well-established in previous research @giveresearch. It could be expected that due to "give.01" its high frequency in the "arg0(np)-v(v)-arg2(np)-arg1(np)" construction, this construction is one of the most frequent constructions in the data set. This can be examined by looking at @tbl-cxn-freq-summary which shows the frequency of the different argument structure constructions in the data set.
+@tbl-freq-summary indicates the frequency of the different rolesets in different constructions as represented by the column names. The "total" column represents the sum of all the values in that row or, in other words, the total frequency of the specific roleset. It is not a surprise that the lemma "give" in the sense "give.01" is the most frequent in the previously defined argument structure schema by quite a margin. This has been well-established in previous research (@gries_extending_2004, @levshina_2015). It could be expected that due to "give.01" its high frequency in the "arg0(np)-v(v)-arg2(np)-arg1(np)" construction, this construction is one of the most frequent constructions in the data set. This can be examined by looking at @tbl-cxn-freq-summary which shows the frequency of the different argument structure constructions in the data set.
 
 ```{r}
 #| label: tbl-cxn-freq-summary
@@ -331,7 +331,7 @@ kbl(data[1:10,1:2], booktabs = TRUE) %>%
 
 ```
 
-@tbl-cxn-freq-summary shows the distribution of different argument structures (arg_struc_cxn) in the data set. Each row in the table represents a different argument structure and the "Freq" column shows the number of times that argument structure was found. It shows the ten most frequent argument structure constructions. The three most frequent argument structure in the data set are "arg0(np)-v(v)-arg1(np)-arg2(pp)" (5497 occurances), "arg0(np)-v(v)-arg2(np)-arg1(np)" (1180 occurances) and "arg0(np)-v(v)-arg1(np)-arg2(c("s", "vp"))" (741 occurances). These frequencies are important to keep in mind when interpreting the results of the DCA analysis. This analyis was performed on the two most frequent type of argument structure construction occuring in the data set. As can be seen in @tbl-cxn-freq-summary there is a significiant difference in frequency between the two most frequent constructions. The "arg0(np)-v(v)-arg2(np)-arg1(np)" is the construction in which "give.01" was most frequent with 662 occurances. In other words, roughly 56% of the times "arg0(np)-v(v)-arg2(np)-arg1(np)" appeared it was in context of "give.01". This has to be taken into account when performing a correlation analysis. In these situations, it is considered better to use a non-parametric correlation test instead of the usual Pearson product-moment correlation coefficient @levshina_2015. In this case, Kendall's τ will be used for the correlation analysis.
+@tbl-cxn-freq-summary shows the distribution of different argument structures (arg_struc_cxn) in the data set. Each row in the table represents a different argument structure and the "Freq" column shows the number of times that argument structure was found. It shows the ten most frequent argument structure constructions. The three most frequent argument structure in the data set are "arg0(np)-v(v)-arg1(np)-arg2(pp)" (5497 occurances), "arg0(np)-v(v)-arg2(np)-arg1(np)" (1180 occurances) and "arg0(np)-v(v)-arg1(np)-arg2(c("s", "vp"))" (741 occurances). These frequencies are important to keep in mind when interpreting the results of the DCA analysis. This analyis was performed on the two most frequent type of argument structure construction occuring in the data set. As can be seen in @tbl-cxn-freq-summary there is a significiant difference in frequency between the two most frequent constructions. The "arg0(np)-v(v)-arg2(np)-arg1(np)" is the construction in which "give.01" was most frequent with 662 occurances. In other words, roughly 56% of the times "arg0(np)-v(v)-arg2(np)-arg1(np)" appeared it was in context of "give.01". This has to be taken into account when performing a correlation analysis. In these situations, it is considered better to use a non-parametric correlation test instead of the usual Pearson product-moment correlation coefficient (@levshina_2015). In this case, Kendall's τ will be used for the correlation analysis.
 
 The next part of the analysis section will depart from the DCA lemma and role set table (@tbl-dca-roleset), which contains all calculated association scores. The analysis starts with giving a general overview of the most frequent and distinctive collostructions found in the corpus. Then, it will proceed to examine the specific role sets and association measures in order to gain insight into the patterns and preferences of the data. Examples of the collostructions will be provided to assist in understanding the findings and interpreting the results. The full results of the analyses are available in the appendix. The results of the DCA are presented in @tbl-dca-roleset:
 
@@ -365,20 +365,23 @@ cxn2 = constructions_df$constructions[2]
 
 ```
 
-In @tbl-dca-roleset, the first column "WORD" shows the lemma / roleset of the word. The next two columns show the frequency of the word in the two different constructions: "arg0(np)-v(v)-arg1(np)-arg2(pp)" and "arg0(np)-v(v)-arg2(np)-arg1(np)". The next columns "LLR", "PRESID", "LOR", "MI", "DPC2W", "DPW2C" and "FYE" are the association measures that give information on the strength of the association between the word and the construction it appears in. 
+In @tbl-dca-roleset, the first column "WORD" shows the lemma / roleset of the word. The next two columns show the frequency of the word in the two different constructions: "arg0(np)-v(v)-arg1(np)-arg2(pp)" and "arg0(np)-v(v)-arg2(np)-arg1(np)". The next columns "LLR", "PRESID", "LOR", "MI", "DPC2W", "DPW2C" and "FYE" are the association measures that give information on the strength of the association between the word and the construction it appears in.
 
 A first observation that can be made is that the two most frequent argument structure constructions and used for the DCA are the arg0(np)-v(v)-arg1(np)-arg2(pp) and arg0(np)-v(v)-arg2(np)-arg1(np). These could, in more traditional terms, be described as the prepositional dative and ditransitive construction. Additionally, there are three categories on how the role sets / lemmas are related to the two constructions. They can appear exclusively in either arg0(np)-v(v)-arg1(np)-arg2(pp) or arg0(np)-v(v)-arg2(np)-arg1(np), or they appear in both. These categories can be distinquised in @fig-plots.
+
 ```{r}
 #| label: fig-plots
 #| fig-cap: Figure showing the distribution of the role sets. 
 
 ggplot(data = cxn_roleset_distinctive, aes(x = log2(cxn_roleset_distinctive[,2] + cxn_roleset_distinctive[,3]), y = LOR)) +
-    geom_text(aes(label = WORD), size = 3) +
+    geom_text(aes(label = WORD), size = 4) +
     xlab("Logged co-occurrence frequency") + ylab("Association (log odds ratio)") +
     geom_hline(yintercept = 0, linetype = "dashed") +
     geom_vline(xintercept = 0, linetype = "dashed")
 
 ```
+
+This plot shows the relationship between the logged co-occurrence frequency and the association (log odds ratio) for a set of words represented by their WORD label. The x-axis represents the logged co-occurrence frequency, which is calculated by taking the log base 2 of the sum of the frequency of the word in two different constructions. The y-axis represents the association (log odds ratio) of the words in the two constructions. The words are also labeled on the plot. This plot is useful for visualizing the relationship between the co-occurrence frequency and the association strength of the words in the two constructions as the three different groups can be clearly distinguished.
 
 The following tables (@tbl-cxn1, @tbl-cxn2 and @tbl-mixed-roleset) show the top five role sets in each of these categories.
 
@@ -476,63 +479,64 @@ kbl(mixed_cxn2_roleset[, c(1, 2, 3, 6, 11)], booktabs = TRUE) %>%
 
 It is important to note that the preference is decided by the "PRES" or the Pearson residual score and not solely the frequency. This because there is a substantial difference between the frequency of arg0(np)-v(v)-arg1(np)-arg2(pp) and arg0(np)-v(v)-arg2(np)-arg1(np), which appeared 5497 and 1180 in the data set respectively. Pearson residuals take that into account. They are a measure of how different the observed frequencies of an event are from the frequencies that would be expected if the event were independent of another. In this case, the residuals are calculated for the frequency of a word in two different constructions. The residuals are negative when the frequency of the word in the second construction is higher than the frequency that would be expected if the word's presence in the two constructions were independent. The negative value suggests that the word is more likely to appear in the second construction than would be expected by chance. The reverse is true of positive values. For example, the role set "send.01" appears 111 times in arg0(np)-v(v)-arg1(np)-arg2(pp) and 49 times in arg0(np)-v(v)-arg2(np)-arg1(np). The Pearson residual for this role set is -1.81, which suggests that the role set is more likely to appear in arg0(np)-v(v)-arg2(np)-arg1(np) based on observed and expected frequency.
 
-To aid the interpretation of the results of the DCA they are compared to a study by @GriesStef2004a where a DCA was used to compare collexemes in a ditransitive and prepositional dative construction. The table is taken from @grieshoffman2013 where the data from @Griesstef2004 was represented. The results of this study are presented in the following @tbl-gries2004.
+To aid the interpretation of the results of the DCA they are compared to a study by @gries_extending_2004 where a DCA was used to compare collexemes in a ditransitive and prepositional dative construction. The table is taken from @gries_extending_2004. The results of this study are presented in the following @tbl-gries2004.
 
-::: {#tbl-gries2004 layout-ncol=2}
-| Collexeme | Prep. Dative | Ditransitive | FYE |
-| --- | --- | --- | --- |
-| Bring | 82 | 7 | 8.83 |
-| Play | 37 | 1 | 5.82 |
-| Take | 63 | 12 | 3.70 |
-| Pass | 29 | 2 | 3.70 |
-| Make | 23 | 3 | 2.17 |
-| Sell | 14 | 1 | 1.15 |
-| Do | 40 | 10 | 1.08 |
-| Supply | 12 | 1 | 1.54 |
-| Read | 10 | 1 | 1.22 |
-| Hand | 21 | 5 | 1.20 |
-| Feed | 9 | 1 | 1.07 |
-| Leave | 20 | 6 | 0.85 |
-| Keep | 7 | 1 | 0.77 |
-| Pay | 34 | 13 | 0.74 |
-| Assign | 8 | 3 | 0.37 |
-| Set | 6 | 2 | 0.37 |
-| Write | 9 | 4 | 0.30 |
-| Cut | 5 | 2 | 0.27 |
-| Lend | 13 | 7 | 0.22 |
+::: {#tbl-gries2004 layout-ncol="2"}
+| Collexeme | Prep. Dative | Ditransitive | FYE  |
+|-----------|--------------|--------------|------|
+| Bring     | 82           | 7            | 8.83 |
+| Play      | 37           | 1            | 5.82 |
+| Take      | 63           | 12           | 3.70 |
+| Pass      | 29           | 2            | 3.70 |
+| Make      | 23           | 3            | 2.17 |
+| Sell      | 14           | 1            | 1.15 |
+| Do        | 40           | 10           | 1.08 |
+| Supply    | 12           | 1            | 1.54 |
+| Read      | 10           | 1            | 1.22 |
+| Hand      | 21           | 5            | 1.20 |
+| Feed      | 9            | 1            | 1.07 |
+| Leave     | 20           | 6            | 0.85 |
+| Keep      | 7            | 1            | 0.77 |
+| Pay       | 34           | 13           | 0.74 |
+| Assign    | 8            | 3            | 0.37 |
+| Set       | 6            | 2            | 0.37 |
+| Write     | 9            | 4            | 0.30 |
+| Cut       | 5            | 2            | 0.27 |
+| Lend      | 13           | 7            | 0.22 |
+
 : Distinctive collexemes in the Prepositional Dative {#tbl-1-gries2004}
 
-| Collexeme | Prep. Dative | Ditransitive | FYE | 
-| --- | --- | --- | --- |
-| Give | 146 | 461 | 119.74 |
-| Tell | 2 | 128 | 57.95 |
-| Show | 15 | 49 | 11.07 |
-| Offer | 15 | 43 | 9.99 |
-| Cost | 1 | 20 | 8.99 |
-| Teach | 1 | 15 | 5.83 |
-| Wish | 1 | 9 | 3.30 |
-| Ask | 4 | 12 | 2.88 |
-| Promise | 1 | 7 | 3.44 |
-| Deny | 3 | 8 | 1.92 |
-| Award | 3 | 7 | 1.58 |
-| Grant | 2 | 5 | 1.25 |
-| Cause | 9 | 8 | 0.67 |
-| Drop | 2 | 3 | 0.62 |
-| Charge | 4 | 4 | 0.53 |
-| Get | 32 | 20 | 0.46 |
-| Allocate | 5 | 4 | 0.41 |
-| Send | 113 | 64 | 0.39 |
-| Owe | 9 | 6 | 0.35 |
-| Lose | 3 | 2 | 0.24 |
+| Collexeme | Prep. Dative | Ditransitive | FYE    |
+|-----------|--------------|--------------|--------|
+| Give      | 146          | 461          | 119.74 |
+| Tell      | 2            | 128          | 57.95  |
+| Show      | 15           | 49           | 11.07  |
+| Offer     | 15           | 43           | 9.99   |
+| Cost      | 1            | 20           | 8.99   |
+| Teach     | 1            | 15           | 5.83   |
+| Wish      | 1            | 9            | 3.30   |
+| Ask       | 4            | 12           | 2.88   |
+| Promise   | 1            | 7            | 3.44   |
+| Deny      | 3            | 8            | 1.92   |
+| Award     | 3            | 7            | 1.58   |
+| Grant     | 2            | 5            | 1.25   |
+| Cause     | 9            | 8            | 0.67   |
+| Drop      | 2            | 3            | 0.62   |
+| Charge    | 4            | 4            | 0.53   |
+| Get       | 32           | 20           | 0.46   |
+| Allocate  | 5            | 4            | 0.41   |
+| Send      | 113          | 64           | 0.39   |
+| Owe       | 9            | 6            | 0.35   |
+| Lose      | 3            | 2            | 0.24   |
 
 : Distinctive collexemes in the Ditransitive construction {#tbl-2-gries2004}
 
-Distinctive collexemes in the Ditransitive and the Prepositional Dative construction in the ICE-GB presented in @Griesstef2004
+Distinctive collexemes in the Ditransitive and the Prepositional Dative construction in the ICE-GB presented in @gries_extending_2004
 :::
 
-@tbl-gries2004 presents two subtables of distinctive collexemes in the Prepositional Dative (@tbl-1-gries2004) and Ditransitive constructions (@tbl-2-gries2004). The tables show the collexeme, the frequency in which it appears in the constructions, and the -log10-transformed Fisher-Yates p-value for each collexeme. The Fisher-Yates scores were not -log10-transformed in the original table but were tranformed here to make for an easier comparison to the data presented in the current study. 
+@tbl-gries2004 presents two subtables of distinctive collexemes in the Prepositional Dative (@tbl-1-gries2004) and Ditransitive constructions (@tbl-2-gries2004). The tables show the collexeme, the frequency in which it appears in the constructions, and the -log10-transformed Fisher-Yates p-value for each collexeme. The Fisher-Yates scores were not -log10-transformed in the original table but were tranformed here to make for an easier comparison to the data presented in the current study.
 
-Before interpreting the role sets, it is perhaps useful to compare lemmas to lemmas. @tbl-cxn1-lemma-lemma-FYE shows the data from @Griesstef2004 and the current study for the lemmas that are distinctive for the ditransative / arg0(np)-v(v)-arg1(np)-arg2(pp).
+Before interpreting the role sets, it is perhaps useful to compare lemmas to lemmas. @tbl-cxn1-lemma-lemma-FYE shows the data from @gries_extending_2004 and the current study for the lemmas that are distinctive for the ditransative / arg0(np)-v(v)-arg1(np)-arg2(pp).
 
 ```{r}
 #| layout-ncol: 2
@@ -566,7 +570,7 @@ kbl(mixed_cxn1_lemma[, c(1, 2, 3, 11)], booktabs = TRUE) %>%
 compared_words_lemma_cxn1 <- compare_word_column(mixed_cxn1_lemma, gries_cxn1)
 ```
 
-@tbl-cxn2-lemma-lemma-FYE shows the data from @Griesstef2004 and the current study for the lemmas that are distinctive for the ditransative / arg0(np)-v(v)-arg1(np)-arg2(pp).
+@tbl-cxn2-lemma-lemma-FYE shows the data from @gries_extending_2004 and the current study for the lemmas that are distinctive for the ditransative / arg0(np)-v(v)-arg1(np)-arg2(pp).
 
 ```{r}
 #| layout-ncol: 2
@@ -578,7 +582,7 @@ compared_words_lemma_cxn1 <- compare_word_column(mixed_cxn1_lemma, gries_cxn1)
 mixed_cxn2_lemma <- mixed_cxn2_lemma[order(-mixed_cxn2_lemma$FYE), ]
 
 # Create a dataframe with the provided data
-gries_cxn2 <- data.frame(Collexeme = c("Give", "Tell", "Show", "Offer", "Cost", "Teach", "Wish", "Ask", "Promise", "Deny", "Award", "Grant", "Cause", "Drop", "Charge", "Get", "Allocate", "Send", "Owe", "Lose"),
+gries_cxn2 <- data.frame(WORD = c("give", "tell", "show", "offer", "cost", "teach", "wish", "ask", "promise", "deny", "award", "grant", "cause", "drop", "charge", "get", "allocate", "send", "owe", "lose"),
                     Prep.Dative = c(146, 2, 15, 15, 1, 1, 1, 4, 1, 3, 3, 2, 9, 2, 4, 32, 5, 113, 9, 3),
                     Ditransitive = c(461, 128, 49, 43, 20, 15, 9, 12, 7, 8, 7, 5, 8, 3, 4, 20, 4, 64, 6, 2),
                     FYE = c(119.74, 57.95, 11.07, 9.99, 8.99, 5.83, 3.30, 2.88, 3.44, 1.92, 1.58, 1.25, 0.67, 0.62, 0.53, 0.46, 0.41, 0.39, 0.35, 0.24))
@@ -601,11 +605,11 @@ kbl(mixed_cxn2_lemma[, c(1, 2, 3, 11)], booktabs = TRUE) %>%
 compared_words_lemma_cxn2 <- compare_word_column(mixed_cxn2_lemma, gries_cxn2)
 ```
 
-The threshold of -log10(0.05) can be employed as a benchmark to distinguish between collexemes that are significantly attracted to or repelled from the prepositional dative or ditransitive construction. Collexemes with log-values greater than 1.3 are considered to be attracted to the construction, while those with scores less than -1.3 are considered to be repelled from it. Values around zero would indicate almost free alternation between the two constructions. Nevertheless, the distinction between central and peripheral collexemes is not clear-cut and instead represents a continuum. The selection of any benchmark should be considered with caution. Furthermore, it should be noted that the p-values are dependent on the sample size. This means that a larger corpus will typically yield lower p-values and larger log-transformed scores @levshina_2015.
+The threshold of -log10(0.05) can be employed as a benchmark to distinguish between collexemes that are significantly attracted to or repelled from the prepositional dative or ditransitive construction. Collexemes with log-values greater than 1.3 are considered to be attracted to the construction, while those with scores less than -1.3 are considered to be repelled from it. Values around zero would indicate almost free alternation between the two constructions. Nevertheless, the distinction between central and peripheral collexemes is not clear-cut and instead represents a continuum. The selection of any benchmark should be considered with caution. Furthermore, it should be noted that the p-values are dependent on the sample size. This means that a larger corpus will typically yield lower p-values and larger log-transformed scores (@levshina_2015).
 
-It is not possible to do an exact one-one comparison because they are a couple of key differences between the data in @griesstef2004 and the current study. The @griesstef2004 study examines "to" dative alternations exclusively which means that alternations that have another preposition are not accounted for in the data. The current study, on the other hand, examines all instances where a arg2(pp) is present. For example, constructions that include "for" or "with" are also counted as arg0(np)-v(v)-arg1(np)-arg2(pp). The current study counts 5497 occurances of the schema matching with the prepositional dative, including all the prepositions. The @griesstef2004 study only counts 1919 occoruances of the "to"-dative. This means that they essentially examine somewhat different phenomena. Consequently, the verbs that are extracted from the corpus only overlap a small amount. The same words for the collexemes distinctive for the arg0(np)-v(v)-arg1(np)-arg2(pp) cosntruction are "`r compared_words_lemma_cxn1$same_words`" and the different words are "`r compared_words_lemma_cxn1$different_words`". The same words for the collexemes distinctive for the arg0(np)-v(v)-arg2(np)-arg1(np) cosntruction are "`r compared_words_lemma_cxn2$same_words`" and the different words are "`r compared_words_lemma_cxn2$different_words`". An interesting example is the word "bring" in @tbl-cxn1-lemma-lemma-FYE-1 which has an FYE score of 8.83 and was found to be the most ditinctive collexeme for the prepositional dative that alternates between the two constructions. This is not the case for the current study. Here, "bring" only has an FYE score of 0.95 which is below the standard treshold of 1.3 which would suggest that it alternates more freely than previously assumed. However, given the differences between the two studies, comparing only FYE scores would not allow for such a claim to be made. What can be carefully stated is that the lemma "bring" alternates more freely between arg0(np)-v(v)-arg1(np)-arg2(pp) and arg0(np)-v(v)-arg2(np)-arg1(np). Due to the limited scope of this research it is not possible to analyse the differences more thoroughly but it could prove useful for further research. Nevertheless, the similarities and difference can be used as a starting point for the comparison of lemmas and role sets.
+It is not possible to do an exact one-one comparison because they are a couple of key differences between the data in @gries_extending_2004 and the current study. The @gries_extending_2004 study examines "to" dative alternations exclusively which means that alternations that have another preposition are not accounted for in the data. The current study, on the other hand, examines all instances where a arg2(pp) is present. For example, constructions that include "for" or "with" are also counted as arg0(np)-v(v)-arg1(np)-arg2(pp). The current study counts 5497 occurances of the schema matching with the prepositional dative, including all the prepositions. The @gries_extending_2004 study only counts 1919 occoruances of the "to"-dative. This means that they essentially examine somewhat different phenomena. Consequently, the verbs that are extracted from the corpus only overlap a small amount. The same words for the collexemes distinctive for the arg0(np)-v(v)-arg1(np)-arg2(pp) construction are "`r compared_words_lemma_cxn1$same_words`" and the different words are "`r compared_words_lemma_cxn1$different_words`". The same words for the collexemes distinctive for the arg0(np)-v(v)-arg2(np)-arg1(np) construction are "`r compared_words_lemma_cxn2$same_words`" and the different words are "`r compared_words_lemma_cxn2$different_words`". An interesting example is the word "bring" in @tbl-cxn1-lemma-lemma-FYE-1 which has an FYE score of 8.83 and was found to be the most ditinctive collexeme for the prepositional dative that alternates between the two constructions. This is not the case for the current study. In the current study, "bring" only has an FYE score of 0.95 which is below the standard treshold of 1.3 which would suggest that it alternates more freely than previously assumed. However, given the differences between the two studies, comparing only FYE scores would not allow for such a claim to be made. What can be carefully stated is that the lemma "bring" alternates more freely between arg0(np)-v(v)-arg1(np)-arg2(pp) and arg0(np)-v(v)-arg2(np)-arg1(np). Due to the limited scope of this research it is not possible to analyse the differences more thoroughly but it could prove useful for further research. Nevertheless, the similarities and difference can be used as a starting point for the comparison of lemmas and role sets.
 
-This final analysis section examines the results from the DCA on the lemmas and role sets from the current study. @tbl-cxn1-lemma-roleset-FYE-current shows the collexemes distinctive for arg0(np)-v(v)-arg1(np)-arg2(pp) and @tbl-cxn2-lemma-roleset-FYE-current shows the collexemes distinctive for arg0(np)-v(v)-arg2(np)-arg1(np). 
+This final analysis section examines the results from the DCA on the lemmas and role sets from the current study. @tbl-cxn1-lemma-roleset-FYE-current shows the collexemes distinctive for arg0(np)-v(v)-arg1(np)-arg2(pp) and @tbl-cxn2-lemma-roleset-FYE-current shows the collexemes distinctive for arg0(np)-v(v)-arg2(np)-arg1(np).
 
 ```{r}
 #| layout-ncol: 2
@@ -631,22 +635,22 @@ kbl(mixed_cxn1_roleset[, c(1, 2, 3, 11)], booktabs = TRUE) %>%
 
 ```
 
-@tbl-cxn1-lemma-roleset-FYE-current shows quite some differences between the results of the DCA on the lemmas and role sets. A notable word missing from the role set column is "take" which had the highest FYE value in the lemma subtable. "take" was also considered relevant in the @Griesstef2004 study. The reason that it does not appear in the role set subtable of this research is because most role sets of "take" only appear in arg0(np)-v(v)-arg1(np)-arg2(pp) and do not alternate with arg0(np)-v(v)-arg2(np)-arg1(np). Therefore, it is not considered a word that appears in both constructions. @tbl-take clarifies this:
+@tbl-cxn1-lemma-roleset-FYE-current shows quite some differences between the results of the DCA on the lemmas and role sets. A notable word missing from the role set column is "take" which had the highest FYE value in the lemma subtable. "take" was also considered relevant in the @gries_extending_2004 study. The reason that it does not appear in the role set subtable of this research is because most role sets of "take" only appear in arg0(np)-v(v)-arg1(np)-arg2(pp) and do not alternate with arg0(np)-v(v)-arg2(np)-arg1(np). Therefore, it is not considered a word that appears in both constructions. @tbl-take clarifies this:
 
-| **Lemma** | **Roleset** | **Meaning**        | **Appears most in**                                                       |
-|-----------|-------------|--------------------|---------------------------------------------------------------------------|
-| take      | take.01     | take, acquire, ... | 189: arg0(np)-v(v)-arg1(np)-arg2(pp) 8: arg0(np)-v(v)-arg1(np)-arg2(advp) |
-|           | take.03     | cause (to be)      | 11: arg0(np)-v(v)-arg1(np)-arg2(pp) 3: arg0(np-v(v)-arg2(pp)-arg1(np)     |
-|           | take.04     | understand to be   | 11: arg0(np)-v(v)-arg1(np)-arg2(pp) 5: arg0(np)-v(v)-arg1(np)-arg2(rb)    |
-|           | take.10     | need, requiring    | 2: arg0(np)-v(v)-arg2(np)-arg1(np)                                        |
-|           | take.25     | take by surprise   | 1: arg0(np)-v(v)-arg1(np)-arg2(pp)                                        |
+| **Lemma** | **Role set** | **Meaning**        | **Appears most in**                                                          |
+|------------|------------|------------|-------------------------------------|
+| take      | take.01      | take, acquire, ... | 189: arg0(np)-v(v)-arg1(np)-arg2(pp)<br>8: arg0(np)-v(v)-arg1(np)-arg2(advp) |
+|           | take.03      | cause (to be)      | 11: arg0(np)-v(v)-arg1(np)-arg2(pp)<br>3: arg0(np-v(v)-arg2(pp)-arg1(np)     |
+|           | take.04      | understand to be   | 11: arg0(np)-v(v)-arg1(np)-arg2(pp)<br>5: arg0(np)-v(v)-arg1(np)-arg2(rb)    |
+|           | take.10      | need, requiring    | 2: arg0(np)-v(v)-arg2(np)-arg1(np)                                           |
+|           | take.25      | take by surprise   | 1: arg0(np)-v(v)-arg1(np)-arg2(pp)                                           |
 
 : Lemma "take" and the role sets it appears in {#tbl-take}
 
 It appears that in none of the role sets of "take" there is alternation between arg0(np)-v(v)-arg1(np)-arg2(pp) and rg0(np)-v(v)-arg2(np)-arg1(np). "take.01" is the meaning of "take, acquire, come to have, choose, ..." appears 189 times in arg0(np)-v(v)-arg1(np)-arg2(pp) and 8 times in arg0(np)-v(v)-arg1(np)-arg2(advp) but not in arg0(np)-v(v)-arg2(np)-arg1(np). In fact, only in the role set of "take.10", meaning "need, requiring", does it appear in arg0(np)-v(v)-arg2(np)-arg1(np) as in the following utterances from the corpus: "I should've known that if it took her ten minutes I should 've hung up".
 
-| **roleType ** | **pos ** | **string ** | **indices ** | **roleset ** | **lemma ** |
-|---------------|----------|-------------|--------------|--------------|------------|
+| **roleType**  | **pos**  | **string**  | **indices**  | **roleset**  | **lemma**  |
+|------------|------------|------------|------------|------------|------------|
 | arg0          | np       | it          | 6            |              |            |
 | v             | v        | took        | 7            | take.10      | take       |
 | arg2          | np       | her         | 8            |              |            |
@@ -656,14 +660,14 @@ It appears that in none of the role sets of "take" there is alternation between 
 
 As a result, "take.01" has 189 appearances in arg0(np)-v(v)-arg1(np)-arg2(pp) and 0 appearances in arg0(np)-v(v)-arg2(np)-arg1(np). It has an even stronger association to arg0(np)-v(v)-arg1(np)-arg2(pp) than previously established. This is why "take" does not appear in the role set subtable of @tbl-cxn1-lemma-roleset-FYE-current which only considers role sets that appear in both constructions.
 
-The same reasoning can be applied to the other words that appear in the lemma subtable but not in the role set subtable. For example, the lemma "leave" only alternates in role set "leave.12". This role set has "put in a location/state when physically leaving" as meaning. The arg0(np)-v(v)-arg2(np)-arg1(np) can be seen in the following utterance: "Once she disappeared from her family Kach says Hose locked her in a bedroom leaving her a bucket to use for a toilet and giving her peanut butter sandwiches and bottled water." 
+The same reasoning can be applied to the other words that appear in the lemma subtable but not in the role set subtable. For example, the lemma "leave" only alternates in role set "leave.12". This role set has "put in a location/state when physically leaving" as meaning. The arg0(np)-v(v)-arg2(np)-arg1(np) can be seen in the following utterance: "Once she disappeared from her family Kach says Hose locked her in a bedroom leaving her a bucket to use for a toilet and giving her peanut butter sandwiches and bottled water."
 
-| **roleType** | **pos** | **string**      | **indices** | **roleset**  | **lemma** |
-|----------|-----|-------------|---------|----------|-------|
-| arg0     | np  | Hose        | 8       |          |       |
-| v        | v   | leaving     | 14      | leave.12 | leave |
-| arg2     | np  | her         | 15      |          |       |
-| arg1     | np  | a bucket... | 16:22   |          |       |
+| **roleType** | **pos** | **string**  | **indices** | **roleset** | **lemma** |
+|--------------|---------|-------------|-------------|-------------|-----------|
+| arg0         | np      | Hose        | 8           |             |           |
+| v            | v       | leaving     | 14          | leave.12    | leave     |
+| arg2         | np      | her         | 15          |             |           |
+| arg1         | np      | a bucket... | 16:22       |             |           |
 
 : Lemma "leave" as role set "leave.12" in arg0(np)-v(v)-arg2(np)-arg1(np) {#tbl-leave12}
 
@@ -695,25 +699,52 @@ kbl(mixed_cxn2_roleset[, c(1, 2, 3, 11)], booktabs = TRUE) %>%
 
 ```
 
-A first observation is that the FYE values for the lemmas and role sets distinctive for arg0(np)-v(v)-arg2(np)-arg1(np) are, in general, higher than in @tbl-cxn1-lemma-roleset-FYE-current. This suggests that the lemma and role sets for arg0(np)-v(v)-arg2(np)-arg1(np) are more distintive and alternate less freely than those distinctive for arg0(np)-v(v)-arg1(np)-arg2(pp). Unsurprisingly, the most distinctive word for arg0(np)-v(v)-arg2(np)-arg1(np) is "give" with role set "give.01". It can also be noted that the FYE values between the lemmas and role sets following the opposite movement as in @tbl-cxn1-lemma-roleset-FYE-current. Here, the FYE values are either equal or higher, instead of equal or lower. For example, the role sets "give.01", "tell.01", "send.01" and "save.01" have higher FYE values than their respective lemmas. This can be explained by the fact that when split into role sets, the frequency of that role set in arg0(np)-v(v)-arg1(np)-arg2(pp) is lower than the frequency of the lemma of that role set in arg0(np)-v(v)-arg1(np)-arg2(pp). This leads to a higher distinctiveness towards arg0(np)-v(v)-arg2(np)-arg1(np). This can especially be seen in the lemma "save" and role set "save.01". The lemma "save" has FYE 0.00 and the role set "save.01" has an FYE value of 2.38. 
+A first observation is that the FYE values for the lemmas and role sets distinctive for arg0(np)-v(v)-arg2(np)-arg1(np) are, in general, higher than in @tbl-cxn1-lemma-roleset-FYE-current. This suggests that the lemma and role sets for arg0(np)-v(v)-arg2(np)-arg1(np) are more distintive and alternate less freely than those distinctive for arg0(np)-v(v)-arg1(np)-arg2(pp). However, once again the difference of frequency between these two constructions must be taken into account when interpreting the results. Unsurprisingly, the most distinctive word for arg0(np)-v(v)-arg2(np)-arg1(np) is "give" with role set "give.01". It can also be noted that the FYE values between the lemmas and role sets following the opposite movement as in @tbl-cxn1-lemma-roleset-FYE-current. Here, the FYE values are either equal or higher, instead of equal or lower. For example, the role sets "give.01", "tell.01", "send.01" and "save.01" have higher FYE values than their respective lemmas. This can be explained by the fact that when split into role sets, the frequency of that role set in arg0(np)-v(v)-arg1(np)-arg2(pp) is lower than the frequency of the lemma of that role set in arg0(np)-v(v)-arg1(np)-arg2(pp). This leads to a higher distinctiveness towards arg0(np)-v(v)-arg2(np)-arg1(np). This can especially be seen in the lemma "save" and role set "save.01". The lemma "save" has FYE 0.00 and the role set "save.01" has an FYE value of 2.38. @tbl-save illustrates this:
 
+| **Lemma** | **Role set** | **Meaning**           | **Appears most in**                                                       |
+|------------|------------|------------|------------------------------------|
+| save      | save.02      | desperate peril sense | 13: arg0(np)-v(v)-arg1(np)-arg2(pp)<br>1: arg0(np)-v(v)-arg1(np)-arg2(np) |
+|           | save.01      | keep from spending    | 4: arg0(np)-v(v)-arg2(np)-arg1(np)<br>1: arg0(np-v(v)-arg1(np)-arg2(pp)   |
+|           | save.03      | collect, accrue       | 4: arg0(np)-v(v)-arg1(np)-arg2(pp)                                        |
 
+: Lemma "save" and the role sets it appears in {#tbl-save}
+
+In role sets "save.02" and "save.03", "save" does not appear in the construction arg0(np)-v(v)-arg2(np)-arg1(np) but rather in arg0(np)-v(v)-arg1(np)-arg2(pp). However, in role set "save.01", "save" is distinctive for arg0(np)-v(v)-arg2(np)-arg1(np) which is why the FYE value is higher than the FYE value of the lemma "save".
+
+Another similar case is the word "send". The lemma "send" has FYE 2.36 and the role set "send.01" has an FYE value of 4.44. @tbl-send shows this futher:
+
+| **Lemma** | **Role set** | **Meaning**     | **Appears most in**                                                                |
+|-----------|-----------|-----------|---------------------------------------|
+| send      | send.01      | give            | 111: arg0(np)-v(v)-arg1(np)-arg2(pp)<br>49: arg0(np)-v(v)-arg2(np)-arg1(np)        |
+|           | send.02      | cause to action | 30: arg0(np)-v(v)-arg1(np)-arg2(c("s,"vp"))<br>21: arg0(np)-v(v)-arg1(np)-arg2(pp) |
+|           | send.03      | cause motion    | 11: arg0(np)-v(v)-arg1(np)-arg2(pp)                                                |
+
+: Lemma "send" and the role sets it appears in {#tbl-send}
+
+It is not a surprise that the lemma "send" in the role set "send.01" with meaning "give" is distintictive for arg0(np)-v(v)-arg2(np)-arg1(np). This is because it serves a similar function as the role set "give.01" which is the most distintictive for arg0(np)-v(v)-arg2(np)-arg1(np). Consider the following sentence from the corpus: "But I think in a larger sense we we were saying to the President Mr. President uh I hope you'll send us someone who doesn't blow the place up doesn't -- doesn't -- doesn't cre- create hi- his own or her own sort of nuclear option."
+
+| **roleType** | **pos** | **string** | **indices** | **roleset** | **lemma** |
+|--------------|---------|------------|-------------|-------------|-----------|
+| arg0         | np      | you        | 19          |             |           |
+| v            | v       | send       | 21          | send.01     | send      |
+| arg2         | np      | us         | 22          |             |           |
+| arg1         | np      | someone... | 23:50       |             |           |
+
+The word "send" can be replaced with "give" and the meaning of the sentence would be preserved. This is why it is not surprising that the role set "send.01" is more distinctive for arg0(np)-v(v)-arg2(np)-arg1(np) than the lemma "send".
+
+Further, it can be noted that the lemma "ask" is not represented in the role sets table. This is comparable to the cases of "take" and "leave" previously discussed. As @tbl-ask shows:
+
+| **Lemma** | **Role set** | **Meaning**    | **Appears most in**                                                       |
+|------------|------------|------------|--------------------------------------|
+| ask       | ask.01       | ask a question | 36: arg0(np)-v(v)-arg2(np)-arg1(np)<br>4: arg0(np)-v(v)-arg2(rp)-arg1(np) |
+|           | ask.02       | ask a favor    | 1: arg0(np)-v(v)-arg1(np)-arg2(pp)                                        |
+
+: Lemma "ask" and the role sets it appears in {#tbl-ask}
+
+The lemma "ask" only appears in arg0(np)-v(v)-arg1(np)-arg2(pp) as role set "ask.02" which has "ask a favor, ask a request, ask for" as meaning. Role set "ask.01" only appears in arg0(np)-v(v)-arg2(np)-arg1(np) and one other construction. This means that "ask" as role set "ask.01" does not alternate between arg0(np)-v(v)-arg2(np)-arg1(np) and arg0(np)-v(v)-arg1(np)-arg2(pp) which is why it is not represented in this role sets table.
 
 # Conclusion
 
-The conclusion should recap the paper, summarizing what was said in each section and how everything ties together. It might feel redundant, in particular in relation to the introduction, but that's precisely the point: for someone who has not heard your ideas, redundancy is key to understand. Be clear about how each section contributes to your main point and what the take-home message is.
-
-Of course, the language of the paper should be formal and academic (I appreciate puns and jokes, but don't lower the register too much). Coherence in the ideas, cohesion between the sentences and appropriate use of the technical vocabulary and of connectors (e.g. *however*, *in contrast*, *while*...) are important and **will be evaluated**. Not because of "language" evaluation but because these aspects are crucial for understanding, and if the reader needs to read a sentence many times and/or have previous knowledge of your process in order to understand the text, it's not well written. I also recommend checking out the `{spelling}` package to run some spelling checks on your files!
+In conclusion it can be stated that applying a Computational Construction Grammar and PropBank-annotated approach to a Distinctive Collexeme Analysis is a methodological possibility. By using the CCxG Explorer developed by the EHAI research team it was workable to extract a specific argument structure construction schema from the PropBank-annotated corpus. It showed that the most frequent construction in that schema are arg0(np)-v(v)-arg1(np)-arg2(pp) and arg0(np)-v(v)-arg2(np)-arg1(np). These were then used to perform a DCA. This comparatative analysis was able to show that by looking at role sets rather than lemmas it is possible to get a more fine-grained analysis of verbs in a specific construction schema. It provides insights into the patterns of co-occurance and alternations between the different word senses of lemmas in a argument structure construction. Further, it gives information about which constructional alternations are possible for a lemma and its role sets. However, it must be noted that these are not definitive conlcusions. Further research is definitely required in order to answer the many questions raised during this study.
 
 `r if (!knitr::is_html_output()) "# References {.unnumbered}"`
-
-```{r}
-#| label: tbl-comp-cxn12
-#| tbl-cap: Comparison lemmas distinctive for arg0(np)-v(v)-arg1(np)-arg2(pp).
-
-gries_cxn12 <- data.frame(WORD = c("bring", "play", "take", "pass", "make", "sell", "do", "supply", "read", "hand", "feed", "leave", "keep", "pay", "assign", "set", "write", "cut", "lend", "give", "tell", "show", "offer", "cost", "teach", "wish", "ask", "promise", "deny", "award", "grant", "cause", "drop", "charge", "get", "allocate", "send", "owe", "lose"),
-                 Prep.Dative = c(82, 37, 63, 29, 23, 14, 40, 12, 10, 21, 9, 20, 7, 34, 8, 6, 9, 5, 13, 146, 2, 15, 15, 1, 1, 1, 4, 1, 3, 3, 2, 9, 2, 4, 32, 5, 113, 9, 3),
-                 Ditransitive = c(7, 1, 12, 2, 3, 1, 10, 1, 1, 5, 1, 6, 1, 13, 3, 2, 4, 2, 7, 461, 128, 49, 43, 20, 15, 9, 12, 7, 8, 7, 5, 8, 3, 4, 20, 4, 64, 6, 2),
-                 FYE = c(8.83, 5.82, 3.70, 3.70, 2.17, 1.15, 1.08, 1.54, 1.22, 1.20, 1.07, 0.85, 0.77, 0.74, 0.37, 0.37, 0.30, 0.27, 0.22, 119.74, 57.95, 11.07, 9.99, 8.99, 5.83, 3.30, 2.88, 3.44, 1.92, 1.58, 1.25, 0.67, 0.62, 0.53, 0.46, 0.41, 0.39, 0.35, 0.24))
-
-```
