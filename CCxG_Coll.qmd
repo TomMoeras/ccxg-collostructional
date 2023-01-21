@@ -243,7 +243,7 @@ To perform both types of analyses, a R script developed by @GriesStef2013 was us
 # read the data set as tsv
 cor_assoc <- read_tsv(file = file.path(project_dir, "results_analysis", "assoc_cor_cxn_roleset_distinctive.csv"), show_col_types = FALSE)
 
-colnames(cor_assoc) <- c("LLR", "PRES", "LOR", "MI", "DPC2W", "DPW2C", "FYE")
+colnames(cor_assoc) <- c("", "LLR", "PRES", "LOR", "MI", "DPC2W", "DPW2C", "FYE")
 rownames(cor_assoc) <- c("LLR", "PRES", "LOR", "MI", "DPC2W", "DPW2C", "FYE")
 
 # display the first five rows of the dataframe
@@ -601,11 +601,11 @@ kbl(mixed_cxn2_lemma[, c(1, 2, 3, 11)], booktabs = TRUE) %>%
 compared_words_lemma_cxn2 <- compare_word_column(mixed_cxn2_lemma, gries_cxn2)
 ```
 
-The threshold of -log10(0.05) can be employed as a benchmark to distinguish between collexemes that are significantly attracted to or repelled from the ditransitive construction. Collexemes with log-values greater than 1.3 are considered to be attracted to the construction, while those with scores less than -1.3 are considered to be repelled from it. This is the cut-off point used in the @Griesstef2004 data. Nevertheless, the distinction between central and peripheral collexemes is not clear-cut and instead represents a continuum. The selection of any benchmark should be considered with caution. Furthermore, it should be noted that the p-values are dependent on the sample size. This means that a larger corpus will typically yield lower p-values and larger log-transformed scores @levshina_2015.
+The threshold of -log10(0.05) can be employed as a benchmark to distinguish between collexemes that are significantly attracted to or repelled from the prepositional dative or ditransitive construction. Collexemes with log-values greater than 1.3 are considered to be attracted to the construction, while those with scores less than -1.3 are considered to be repelled from it. Values around zero would indicate almost free alternation between the two constructions. Nevertheless, the distinction between central and peripheral collexemes is not clear-cut and instead represents a continuum. The selection of any benchmark should be considered with caution. Furthermore, it should be noted that the p-values are dependent on the sample size. This means that a larger corpus will typically yield lower p-values and larger log-transformed scores @levshina_2015.
 
-It is not possible to do an exact one-one comparison because they are a couple of key differences between the data in @griesstef2004 and the current study. The @griesstef2004 study examines "to" dative alternations exclusively which means that alternations that have another preposition are not accounted for in the data. The current study, on the other hand, examines all instances where a arg2(pp) is present. For example, constructions that include "for" or "with" are also counted as arg0(np)-v(v)-arg1(np)-arg2(pp). The current study counts 5497 occurances of the schema matching with the prepositional dative, including all the prepositions. The @griesstef2004 study only counts 1919 occoruances of the "to"-dative. This means that they essentially examine different phenomena. Consequently, the verbs that are extracted from the corpus only overlap a small amount. The same words for the collexemes distinctive for the arg0(np)-v(v)-arg1(np)-arg2(pp) cosntruction are "`r compared_words_lemma_cxn1$same_words`" and the different words are "`r compared_words_lemma_cxn1$different_words`". The same words for the collexemes distinctive for the arg0(np)-v(v)-arg2(np)-arg1(np) cosntruction are `r compared_words_lemma_cxn2$same_words`" and the different words are "`r compared_words_lemma_cxn2$different_words`". Due to the limited scope of this research it is not possible to analyse the differences more thoroughly but it could prove useful for further research. Nevertheless, the similarities and difference can be used as a starting point for the comparison of lemmas and role sets.
+It is not possible to do an exact one-one comparison because they are a couple of key differences between the data in @griesstef2004 and the current study. The @griesstef2004 study examines "to" dative alternations exclusively which means that alternations that have another preposition are not accounted for in the data. The current study, on the other hand, examines all instances where a arg2(pp) is present. For example, constructions that include "for" or "with" are also counted as arg0(np)-v(v)-arg1(np)-arg2(pp). The current study counts 5497 occurances of the schema matching with the prepositional dative, including all the prepositions. The @griesstef2004 study only counts 1919 occoruances of the "to"-dative. This means that they essentially examine somewhat different phenomena. Consequently, the verbs that are extracted from the corpus only overlap a small amount. The same words for the collexemes distinctive for the arg0(np)-v(v)-arg1(np)-arg2(pp) cosntruction are "`r compared_words_lemma_cxn1$same_words`" and the different words are "`r compared_words_lemma_cxn1$different_words`". The same words for the collexemes distinctive for the arg0(np)-v(v)-arg2(np)-arg1(np) cosntruction are "`r compared_words_lemma_cxn2$same_words`" and the different words are "`r compared_words_lemma_cxn2$different_words`". An interesting example is the word "bring" in @tbl-cxn1-lemma-lemma-FYE-1 which has an FYE score of 8.83 and was found to be the most ditinctive collexeme for the prepositional dative that alternates between the two constructions. This is not the case for the current study. Here, "bring" only has an FYE score of 0.95 which is below the standard treshold of 1.3 which would suggest that it alternates more freely than previously assumed. However, given the differences between the two studies, comparing only FYE scores would not allow for such a claim to be made. What can be carefully stated is that the lemma "bring" alternates more freely between arg0(np)-v(v)-arg1(np)-arg2(pp) and arg0(np)-v(v)-arg2(np)-arg1(np). Due to the limited scope of this research it is not possible to analyse the differences more thoroughly but it could prove useful for further research. Nevertheless, the similarities and difference can be used as a starting point for the comparison of lemmas and role sets.
 
-This final analysis section examines the results from the DCA on the lemmas and role sets from the current study. @tbl-cxn1-lemma-roleset-FYE-current shows the collexemes distinctive for arg0(np)-v(v)-arg1(np)-arg2(pp) and @tbl-cxn2-lemma-roleset-FYE-current shows the collexemes distinctive for arg0(np)-v(v)-arg2(np)-arg1(np).
+This final analysis section examines the results from the DCA on the lemmas and role sets from the current study. @tbl-cxn1-lemma-roleset-FYE-current shows the collexemes distinctive for arg0(np)-v(v)-arg1(np)-arg2(pp) and @tbl-cxn2-lemma-roleset-FYE-current shows the collexemes distinctive for arg0(np)-v(v)-arg2(np)-arg1(np). 
 
 ```{r}
 #| layout-ncol: 2
@@ -614,7 +614,7 @@ This final analysis section examines the results from the DCA on the lemmas and 
 #| tbl-subcap: ["Lemmas cxn1 current study", "Role sets cxn1 current study"]
 
 # Order by FYE
-mixed_cxn1_lemma <- mixed_cxn1_lemma[order(-mixed_cxn1_roleset$FYE), ]
+mixed_cxn1_lemma <- mixed_cxn1_lemma[order(-mixed_cxn1_lemma$FYE), ]
 mixed_cxn1_roleset <- mixed_cxn1_roleset[order(-mixed_cxn1_roleset$FYE), ]
 
 # display
@@ -631,6 +631,46 @@ kbl(mixed_cxn1_roleset[, c(1, 2, 3, 11)], booktabs = TRUE) %>%
 
 ```
 
+@tbl-cxn1-lemma-roleset-FYE-current shows quite some differences between the results of the DCA on the lemmas and role sets. A notable word missing from the role set column is "take" which had the highest FYE value in the lemma subtable. "take" was also considered relevant in the @Griesstef2004 study. The reason that it does not appear in the role set subtable of this research is because most role sets of "take" only appear in arg0(np)-v(v)-arg1(np)-arg2(pp) and do not alternate with arg0(np)-v(v)-arg2(np)-arg1(np). Therefore, it is not considered a word that appears in both constructions. @tbl-take clarifies this:
+
+| **Lemma** | **Roleset** | **Meaning**        | **Appears most in**                                                       |
+|-----------|-------------|--------------------|---------------------------------------------------------------------------|
+| take      | take.01     | take, acquire, ... | 189: arg0(np)-v(v)-arg1(np)-arg2(pp) 8: arg0(np)-v(v)-arg1(np)-arg2(advp) |
+|           | take.03     | cause (to be)      | 11: arg0(np)-v(v)-arg1(np)-arg2(pp) 3: arg0(np-v(v)-arg2(pp)-arg1(np)     |
+|           | take.04     | understand to be   | 11: arg0(np)-v(v)-arg1(np)-arg2(pp) 5: arg0(np)-v(v)-arg1(np)-arg2(rb)    |
+|           | take.10     | need, requiring    | 2: arg0(np)-v(v)-arg2(np)-arg1(np)                                        |
+|           | take.25     | take by surprise   | 1: arg0(np)-v(v)-arg1(np)-arg2(pp)                                        |
+
+: Lemma "take" and the role sets it appears in {#tbl-take}
+
+It appears that in none of the role sets of "take" there is alternation between arg0(np)-v(v)-arg1(np)-arg2(pp) and rg0(np)-v(v)-arg2(np)-arg1(np). "take.01" is the meaning of "take, acquire, come to have, choose, ..." appears 189 times in arg0(np)-v(v)-arg1(np)-arg2(pp) and 8 times in arg0(np)-v(v)-arg1(np)-arg2(advp) but not in arg0(np)-v(v)-arg2(np)-arg1(np). In fact, only in the role set of "take.10", meaning "need, requiring", does it appear in arg0(np)-v(v)-arg2(np)-arg1(np) as in the following utterances from the corpus: "I should've known that if it took her ten minutes I should 've hung up".
+
+| **roleType ** | **pos ** | **string ** | **indices ** | **roleset ** | **lemma ** |
+|---------------|----------|-------------|--------------|--------------|------------|
+| arg0          | np       | it          | 6            |              |            |
+| v             | v        | took        | 7            | take.10      | take       |
+| arg2          | np       | her         | 8            |              |            |
+| arg1          | np       | ten mintues | 9:10         |              |            |
+
+: Lemma "take" as role set "take.10" in arg0(np)-v(v)-arg2(np)-arg1(np) {#tbl-take10}
+
+As a result, "take.01" has 189 appearances in arg0(np)-v(v)-arg1(np)-arg2(pp) and 0 appearances in arg0(np)-v(v)-arg2(np)-arg1(np). It has an even stronger association to arg0(np)-v(v)-arg1(np)-arg2(pp) than previously established. This is why "take" does not appear in the role set subtable of @tbl-cxn1-lemma-roleset-FYE-current which only considers role sets that appear in both constructions.
+
+The same reasoning can be applied to the other words that appear in the lemma subtable but not in the role set subtable. For example, the lemma "leave" only alternates in role set "leave.12". This role set has "put in a location/state when physically leaving" as meaning. The arg0(np)-v(v)-arg2(np)-arg1(np) can be seen in the following utterance: "Once she disappeared from her family Kach says Hose locked her in a bedroom leaving her a bucket to use for a toilet and giving her peanut butter sandwiches and bottled water." 
+
+| **roleType** | **pos** | **string**      | **indices** | **roleset**  | **lemma** |
+|----------|-----|-------------|---------|----------|-------|
+| arg0     | np  | Hose        | 8       |          |       |
+| v        | v   | leaving     | 14      | leave.12 | leave |
+| arg2     | np  | her         | 15      |          |       |
+| arg1     | np  | a bucket... | 16:22   |          |       |
+
+: Lemma "leave" as role set "leave.12" in arg0(np)-v(v)-arg2(np)-arg1(np) {#tbl-leave12}
+
+Regarding the FYE values, @tbl-cxn1-lemma-roleset-FYE-current shows that the values are either equal or lower. They are equal when the lemma only appears in one role set in alternation. For example, "sell" and "sell.01" which both have FYE 2.36 or "drive" and "drive.02" which have FYE 0.64. The values are lower when the lemma appears in multiple role sets in alternation. This is the case for the discusses examples above like "take" and "leave". These lower values suggest that the alternation happens more freely when taking the specific sense of word into account instead of looking at the general lemma.
+
+The following @tbl-cxn2-lemma-roleset-FYE-current shows the lemmas and role sets distinctive for arg0(np)-v(v)-arg2(np)-arg1(np).
+
 ```{r}
 #| layout-ncol: 2
 #| label: tbl-cxn2-lemma-roleset-FYE-current
@@ -638,7 +678,7 @@ kbl(mixed_cxn1_roleset[, c(1, 2, 3, 11)], booktabs = TRUE) %>%
 #| tbl-subcap: ["Lemmas cxn2 current study", "Role sets cxn2 current study"]
 
 # Order by FYE
-mixed_cxn2_lemma <- mixed_cxn2_lemma[order(-mixed_cxn2_roleset$FYE), ]
+mixed_cxn2_lemma <- mixed_cxn2_lemma[order(-mixed_cxn2_lemma$FYE), ]
 mixed_cxn2_roleset <- mixed_cxn2_roleset[order(-mixed_cxn2_roleset$FYE), ]
 
 # display
@@ -654,6 +694,10 @@ kbl(mixed_cxn2_roleset[, c(1, 2, 3, 11)], booktabs = TRUE) %>%
   scroll_box(width = "100%")
 
 ```
+
+A first observation is that the FYE values for the lemmas and role sets distinctive for arg0(np)-v(v)-arg2(np)-arg1(np) are, in general, higher than in @tbl-cxn1-lemma-roleset-FYE-current. This suggests that the lemma and role sets for arg0(np)-v(v)-arg2(np)-arg1(np) are more distintive and alternate less freely than those distinctive for arg0(np)-v(v)-arg1(np)-arg2(pp). Unsurprisingly, the most distinctive word for arg0(np)-v(v)-arg2(np)-arg1(np) is "give" with role set "give.01". It can also be noted that the FYE values between the lemmas and role sets following the opposite movement as in @tbl-cxn1-lemma-roleset-FYE-current. Here, the FYE values are either equal or higher, instead of equal or lower. For example, the role sets "give.01", "tell.01", "send.01" and "save.01" have higher FYE values than their respective lemmas. This can be explained by the fact that when split into role sets, the frequency of that role set in arg0(np)-v(v)-arg1(np)-arg2(pp) is lower than the frequency of the lemma of that role set in arg0(np)-v(v)-arg1(np)-arg2(pp). This leads to a higher distinctiveness towards arg0(np)-v(v)-arg2(np)-arg1(np). This can especially be seen in the lemma "save" and role set "save.01". The lemma "save" has FYE 0.00 and the role set "save.01" has an FYE value of 2.38. 
+
+
 
 # Conclusion
 

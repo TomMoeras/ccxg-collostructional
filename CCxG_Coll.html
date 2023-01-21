@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.313">
+<meta name="generator" content="quarto-1.1.251">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -54,7 +54,7 @@ div.csl-indent {
 <link href="CCxG_Coll_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="CCxG_Coll_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
-<script src="CCxG_Coll_files/libs/htmlwidgets-1.6.1/htmlwidgets.js"></script>
+<script src="CCxG_Coll_files/libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
 <script src="CCxG_Coll_files/libs/viz-1.8.2/viz.js"></script>
 <link href="CCxG_Coll_files/libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
 <script src="CCxG_Coll_files/libs/grViz-binding-1.0.9/grViz.js"></script>
@@ -97,7 +97,6 @@ div.csl-indent {
           </div>
   </div>
     
-  
     
   </div>
   
@@ -193,9 +192,9 @@ div.csl-indent {
 <div class="cell">
 <div id="fig-flowchart" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<div class="grViz html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-0e143e5d4a22e27c0cc6" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-0e143e5d4a22e27c0cc6">{"x":{"diagram":"\ndigraph flowchart {\n  node [fontname = arial, shape = rectangle, style = filled, fillcolor = palegreen]\n  tab1 [label = \"Corpus\"]\n  tab2 [label = \"Filtered corpus on schema arg0(np)-v(v)-arg1(np)-arg2\"]\n  tab3 [label = \"87 unique arg-struc-cxn\"]\n  tab4 [label = \"arg0(np)-v(v)-arg1(np)-arg2(pp)\"]\n  tab5 [label = \"arg0(np)-v(v)-arg2(np)-arg1(np)\"]\n  tab6 [label = \"Role sets in both cxn1 & cxn2\"]\n  tab7 [label = \"Role sets exclusively in cxn1\", fillcolor = lightcoral]\n  tab8 [label = \"Role sets exclusively in cxn2\", fillcolor = lightcoral]\n  tab9 [label = \"Role sets that prefer cxn1 but also appear in cxn2\"]\n  tab10 [label = \"Role sets that prefer cxn2 but also appear in cxn1\"]\n\n  tab1 -> tab2\n  tab2 -> tab3\n  tab3 -> tab4\n  tab3 -> tab5\n  tab4 -> tab7\n  tab5 -> tab8\n  tab4 -> tab6\n  tab5 -> tab6\n  tab6 -> tab9\n  tab6 -> tab10\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
-<p></p><figcaption class="figure-caption">Figure&nbsp;1: Flowchart of the cleaning process</figcaption><p></p>
+<div id="htmlwidget-d3397df82e5aea56e6be" style="width:100%;height:464px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d3397df82e5aea56e6be">{"x":{"diagram":"\ndigraph flowchart {\n  node [fontname = arial, shape = rectangle, style = filled, fillcolor = palegreen]\n  tab1 [label = \"Corpus\"]\n  tab2 [label = \"Filtered corpus on schema arg0(np)-v(v)-arg1(np)-arg2\"]\n  tab3 [label = \"87 unique arg-struc-cxn\"]\n  tab4 [label = \"arg0(np)-v(v)-arg1(np)-arg2(pp)\"]\n  tab5 [label = \"arg0(np)-v(v)-arg2(np)-arg1(np)\"]\n  tab6 [label = \"Role sets in both cxn1 & cxn2\"]\n  tab7 [label = \"Role sets exclusively in cxn1\", fillcolor = lightcoral]\n  tab8 [label = \"Role sets exclusively in cxn2\", fillcolor = lightcoral]\n  tab9 [label = \"Role sets that prefer cxn1 but also appear in cxn2\"]\n  tab10 [label = \"Role sets that prefer cxn2 but also appear in cxn1\"]\n\n  tab1 -> tab2\n  tab2 -> tab3\n  tab3 -> tab4\n  tab3 -> tab5\n  tab4 -> tab7\n  tab5 -> tab8\n  tab4 -> tab6\n  tab5 -> tab6\n  tab6 -> tab9\n  tab6 -> tab10\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1: Flowchart of the data cleaning process</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -419,14 +418,14 @@ div.csl-indent {
 <div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; "><table class=" lightable-paper table" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;"><caption>Table&nbsp;6:  Correlation analysis of the different association measures. </caption>
  <thead>
   <tr>
-   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> LLR </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">  </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> LLR </th>
    <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> PRES </th>
    <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> LOR </th>
    <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> MI </th>
    <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> DPC2W </th>
    <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> DPW2C </th>
    <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> FYE </th>
-   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> NA </th>
   </tr>
  </thead>
 <tbody>
@@ -1119,7 +1118,7 @@ div.csl-indent {
    <td style="text-align:right;"> 0.28 </td>
    <td style="text-align:right;"> 0.01 </td>
    <td style="text-align:right;"> 0.18 </td>
-   <td style="text-align:right;"> 3.9 </td>
+   <td style="text-align:right;"> 3.8 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> receive.01 </td>
@@ -1194,7 +1193,7 @@ div.csl-indent {
    <td style="text-align:right;"> 76 </td>
    <td style="text-align:right;"> 0 </td>
    <td style="text-align:right;"> 30 </td>
-   <td style="text-align:right;"> 3.9 </td>
+   <td style="text-align:right;"> 3.8 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> receive.01 </td>
@@ -2366,9 +2365,9 @@ div.csl-indent {
 <div class="cell">
 
 </div>
-<p>The threshold of -log10(0.05) can be employed as a benchmark to distinguish between collexemes that are significantly attracted to or repelled from the ditransitive construction. Collexemes with log-values greater than 1.3 are considered to be attracted to the construction, while those with scores less than -1.3 are considered to be repelled from it. This is the cut-off point used in the <span class="citation" data-cites="Griesstef2004">(<a href="#ref-Griesstef2004" role="doc-biblioref"><strong>Griesstef2004?</strong></a>)</span> data. Nevertheless, the distinction between central and peripheral collexemes is not clear-cut and instead represents a continuum. The selection of any benchmark should be considered with caution. Furthermore, it should be noted that the p-values are dependent on the sample size. This means that a larger corpus will typically yield lower p-values and larger log-transformed scores <span class="citation" data-cites="levshina_2015">Levshina (<a href="#ref-levshina_2015" role="doc-biblioref">2015</a>)</span>.</p>
-<p>It is not possible to do an exact one-one comparison because they are a couple of key differences between the data in <span class="citation" data-cites="griesstef2004">(<a href="#ref-griesstef2004" role="doc-biblioref"><strong>griesstef2004?</strong></a>)</span> and the current study. The <span class="citation" data-cites="griesstef2004">(<a href="#ref-griesstef2004" role="doc-biblioref"><strong>griesstef2004?</strong></a>)</span> study examines “to” dative alternations exclusively which means that alternations that have another preposition are not accounted for in the data. The current study, on the other hand, examines all instances where a arg2(pp) is present. For example, constructions that include “for” or “with” are also counted as arg0(np)-v(v)-arg1(np)-arg2(pp). The current study counts 5497 occurances of the schema matching with the prepositional dative, including all the prepositions. The <span class="citation" data-cites="griesstef2004">(<a href="#ref-griesstef2004" role="doc-biblioref"><strong>griesstef2004?</strong></a>)</span> study only counts 1919 occoruances of the “to”-dative. This means that they essentially examine different phenomena. Consequently, the verbs that are extracted from the corpus only overlap a small amount. The same words for the collexemes distinctive for the arg0(np)-v(v)-arg1(np)-arg2(pp) cosntruction are “take, sell, bring, leave, do” and the different words are “extend, drive, name, provide, charge, deliver, hear, deal, play, pass, make, supply, read, hand, feed, keep, pay, assign, set, write, cut, lend”. The same words for the collexemes distinctive for the arg0(np)-v(v)-arg2(np)-arg1(np) cosntruction are ” and the different words are “give, tell, ask, show, grant, teach, owe, deny, pay, earn, write, send, hand, award, feed, find, serve, singe, lend, save”. Due to the limited scope of this research it is not possible to analyse the differences more thoroughly but it could prove useful for further research. Nevertheless, the similarities and difference can be used as a starting point for the comparison of lemmas and role sets.</p>
-<p>This final analysis section examines the results from the DCA on the lemmas and role sets from the current study. <a href="#tbl-cxn1-lemma-roleset-FYE-current">Table&nbsp;21</a> shows the collexemes distinctive for arg0(np)-v(v)-arg1(np)-arg2(pp) and <a href="#tbl-cxn2-lemma-roleset-FYE-current">Table&nbsp;22</a> shows the collexemes distinctive for arg0(np)-v(v)-arg2(np)-arg1(np).</p>
+<p>The threshold of -log10(0.05) can be employed as a benchmark to distinguish between collexemes that are significantly attracted to or repelled from the prepositional dative or ditransitive construction. Collexemes with log-values greater than 1.3 are considered to be attracted to the construction, while those with scores less than -1.3 are considered to be repelled from it. Values around zero would indicate almost free alternation between the two constructions. Nevertheless, the distinction between central and peripheral collexemes is not clear-cut and instead represents a continuum. The selection of any benchmark should be considered with caution. Furthermore, it should be noted that the p-values are dependent on the sample size. This means that a larger corpus will typically yield lower p-values and larger log-transformed scores <span class="citation" data-cites="levshina_2015">Levshina (<a href="#ref-levshina_2015" role="doc-biblioref">2015</a>)</span>.</p>
+<p>It is not possible to do an exact one-one comparison because they are a couple of key differences between the data in <span class="citation" data-cites="griesstef2004">(<a href="#ref-griesstef2004" role="doc-biblioref"><strong>griesstef2004?</strong></a>)</span> and the current study. The <span class="citation" data-cites="griesstef2004">(<a href="#ref-griesstef2004" role="doc-biblioref"><strong>griesstef2004?</strong></a>)</span> study examines “to” dative alternations exclusively which means that alternations that have another preposition are not accounted for in the data. The current study, on the other hand, examines all instances where a arg2(pp) is present. For example, constructions that include “for” or “with” are also counted as arg0(np)-v(v)-arg1(np)-arg2(pp). The current study counts 5497 occurances of the schema matching with the prepositional dative, including all the prepositions. The <span class="citation" data-cites="griesstef2004">(<a href="#ref-griesstef2004" role="doc-biblioref"><strong>griesstef2004?</strong></a>)</span> study only counts 1919 occoruances of the “to”-dative. This means that they essentially examine somewhat different phenomena. Consequently, the verbs that are extracted from the corpus only overlap a small amount. The same words for the collexemes distinctive for the arg0(np)-v(v)-arg1(np)-arg2(pp) cosntruction are “take, sell, bring, leave, do” and the different words are “extend, drive, name, provide, charge, deliver, hear, deal, play, pass, make, supply, read, hand, feed, keep, pay, assign, set, write, cut, lend”. The same words for the collexemes distinctive for the arg0(np)-v(v)-arg2(np)-arg1(np) cosntruction are “” and the different words are “give, tell, ask, show, grant, teach, owe, deny, pay, earn, write, send, hand, award, feed, find, serve, singe, lend, save”. An interesting example is the word “bring” in <a href="#tbl-cxn1-lemma-lemma-FYE-1">Table&nbsp;19 (a)</a> which has an FYE score of 8.83 and was found to be the most ditinctive collexeme for the prepositional dative that alternates between the two constructions. This is not the case for the current study. Here, “bring” only has an FYE score of 0.95 which is below the standard treshold of 1.3 which would suggest that it alternates more freely than previously assumed. However, given the differences between the two studies, comparing only FYE scores would not allow for such a claim to be made. What can be carefully stated is that the lemma “bring” alternates more freely between arg0(np)-v(v)-arg1(np)-arg2(pp) and arg0(np)-v(v)-arg2(np)-arg1(np). Due to the limited scope of this research it is not possible to analyse the differences more thoroughly but it could prove useful for further research. Nevertheless, the similarities and difference can be used as a starting point for the comparison of lemmas and role sets.</p>
+<p>This final analysis section examines the results from the DCA on the lemmas and role sets from the current study. <a href="#tbl-cxn1-lemma-roleset-FYE-current">Table&nbsp;21</a> shows the collexemes distinctive for arg0(np)-v(v)-arg1(np)-arg2(pp) and <a href="#tbl-cxn2-lemma-roleset-FYE-current">Table&nbsp;25</a> shows the collexemes distinctive for arg0(np)-v(v)-arg2(np)-arg1(np).</p>
 <div id="tbl-cxn1-lemma-roleset-FYE-current" class="cell tbl-parent quarto-layout-panel anchored">
 <div class="panel-caption table-caption">
 <p>Table&nbsp;21: Comparison lemma &amp; roleset distinctive for arg0(np)-v(v)-arg1(np)-arg2(pp).</p>
@@ -2451,6 +2450,18 @@ div.csl-indent {
    <td style="text-align:right;"> 19 </td>
    <td style="text-align:right;"> 2 </td>
    <td style="text-align:right;"> 0.39 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> hear </td>
+   <td style="text-align:right;"> 13 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0.31 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> deal </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0.00 </td>
   </tr>
 </tbody>
 </table></div>
@@ -2540,9 +2551,180 @@ div.csl-indent {
 </div>
 </div>
 </div>
+<p><a href="#tbl-cxn1-lemma-roleset-FYE-current">Table&nbsp;21</a> shows quite some differences between the results of the DCA on the lemmas and role sets. A notable word missing from the role set column is “take” which had the highest FYE value in the lemma subtable. “take” was also considered relevant in the <span class="citation" data-cites="Griesstef2004">(<a href="#ref-Griesstef2004" role="doc-biblioref"><strong>Griesstef2004?</strong></a>)</span> study. The reason that it does not appear in the role set subtable of this research is because most role sets of “take” only appear in arg0(np)-v(v)-arg1(np)-arg2(pp) and do not alternate with arg0(np)-v(v)-arg2(np)-arg1(np). Therefore, it is not considered a word that appears in both constructions. <a href="#tbl-take">Table&nbsp;22</a> clarifies this:</p>
+<div id="tbl-take" class="anchored">
+<table class="table">
+<caption>Table&nbsp;22: Lemma “take” and the role sets it appears in</caption>
+<colgroup>
+<col style="width: 9%">
+<col style="width: 10%">
+<col style="width: 16%">
+<col style="width: 63%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Lemma</strong></th>
+<th><strong>Roleset</strong></th>
+<th><strong>Meaning</strong></th>
+<th><strong>Appears most in</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>take</td>
+<td>take.01</td>
+<td>take, acquire, …</td>
+<td>189: arg0(np)-v(v)-arg1(np)-arg2(pp) 8: arg0(np)-v(v)-arg1(np)-arg2(advp)</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>take.03</td>
+<td>cause (to be)</td>
+<td>11: arg0(np)-v(v)-arg1(np)-arg2(pp) 3: arg0(np-v(v)-arg2(pp)-arg1(np)</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>take.04</td>
+<td>understand to be</td>
+<td>11: arg0(np)-v(v)-arg1(np)-arg2(pp) 5: arg0(np)-v(v)-arg1(np)-arg2(rb)</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>take.10</td>
+<td>need, requiring</td>
+<td>2: arg0(np)-v(v)-arg2(np)-arg1(np)</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>take.25</td>
+<td>take by surprise</td>
+<td>1: arg0(np)-v(v)-arg1(np)-arg2(pp)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>It appears that in none of the role sets of “take” there is alternation between arg0(np)-v(v)-arg1(np)-arg2(pp) and rg0(np)-v(v)-arg2(np)-arg1(np). “take.01” is the meaning of “take, acquire, come to have, choose, …” appears 189 times in arg0(np)-v(v)-arg1(np)-arg2(pp) and 8 times in arg0(np)-v(v)-arg1(np)-arg2(advp) but not in arg0(np)-v(v)-arg2(np)-arg1(np). In fact, only in the role set of “take.10”, meaning “need, requiring”, does it appear in arg0(np)-v(v)-arg2(np)-arg1(np) as in the following utterances from the corpus: “I should’ve known that if it took her ten minutes I should ’ve hung up”.</p>
+<div id="tbl-take10" class="anchored">
+<table class="table">
+<caption>Table&nbsp;23: Lemma “take” as role set “take.10” in arg0(np)-v(v)-arg2(np)-arg1(np)</caption>
+<colgroup>
+<col style="width: 19%">
+<col style="width: 12%">
+<col style="width: 16%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>roleType </strong></th>
+<th><strong>pos </strong></th>
+<th><strong>string </strong></th>
+<th><strong>indices </strong></th>
+<th><strong>roleset </strong></th>
+<th><strong>lemma </strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>arg0</td>
+<td>np</td>
+<td>it</td>
+<td>6</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>v</td>
+<td>v</td>
+<td>took</td>
+<td>7</td>
+<td>take.10</td>
+<td>take</td>
+</tr>
+<tr class="odd">
+<td>arg2</td>
+<td>np</td>
+<td>her</td>
+<td>8</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>arg1</td>
+<td>np</td>
+<td>ten mintues</td>
+<td>9:10</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>As a result, “take.01” has 189 appearances in arg0(np)-v(v)-arg1(np)-arg2(pp) and 0 appearances in arg0(np)-v(v)-arg2(np)-arg1(np). It has an even stronger association to arg0(np)-v(v)-arg1(np)-arg2(pp) than previously established. This is why “take” does not appear in the role set subtable of <a href="#tbl-cxn1-lemma-roleset-FYE-current">Table&nbsp;21</a> which only considers role sets that appear in both constructions.</p>
+<p>The same reasoning can be applied to the other words that appear in the lemma subtable but not in the role set subtable. For example, the lemma “leave” only alternates in role set “leave.12”. This role set has “put in a location/state when physically leaving” as meaning. The arg0(np)-v(v)-arg2(np)-arg1(np) can be seen in the following utterance: “Once she disappeared from her family Kach says Hose locked her in a bedroom leaving her a bucket to use for a toilet and giving her peanut butter sandwiches and bottled water.”</p>
+<div id="tbl-leave12" class="anchored">
+<table class="table">
+<caption>Table&nbsp;24: Lemma “leave” as role set “leave.12” in arg0(np)-v(v)-arg2(np)-arg1(np)</caption>
+<colgroup>
+<col style="width: 18%">
+<col style="width: 9%">
+<col style="width: 24%">
+<col style="width: 16%">
+<col style="width: 18%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>roleType</strong></th>
+<th><strong>pos</strong></th>
+<th><strong>string</strong></th>
+<th><strong>indices</strong></th>
+<th><strong>roleset</strong></th>
+<th><strong>lemma</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>arg0</td>
+<td>np</td>
+<td>Hose</td>
+<td>8</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>v</td>
+<td>v</td>
+<td>leaving</td>
+<td>14</td>
+<td>leave.12</td>
+<td>leave</td>
+</tr>
+<tr class="odd">
+<td>arg2</td>
+<td>np</td>
+<td>her</td>
+<td>15</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>arg1</td>
+<td>np</td>
+<td>a bucket…</td>
+<td>16:22</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Regarding the FYE values, <a href="#tbl-cxn1-lemma-roleset-FYE-current">Table&nbsp;21</a> shows that the values are either equal or lower. They are equal when the lemma only appears in one role set in alternation. For example, “sell” and “sell.01” which both have FYE 2.36 or “drive” and “drive.02” which have FYE 0.64. The values are lower when the lemma appears in multiple role sets in alternation. This is the case for the discusses examples above like “take” and “leave”. These lower values suggest that the alternation happens more freely when taking the specific sense of word into account instead of looking at the general lemma.</p>
+<p>The following <a href="#tbl-cxn2-lemma-roleset-FYE-current">Table&nbsp;25</a> shows the lemmas and role sets distinctive for arg0(np)-v(v)-arg2(np)-arg1(np).</p>
 <div id="tbl-cxn2-lemma-roleset-FYE-current" class="cell tbl-parent quarto-layout-panel anchored">
 <div class="panel-caption table-caption">
-<p>Table&nbsp;22: Comparison lemma &amp; roleset distinctive for arg0(np)-v(v)-arg2(np)-arg1(np).</p>
+<p>Table&nbsp;25: Comparison lemma &amp; roleset distinctive for arg0(np)-v(v)-arg2(np)-arg1(np).</p>
 </div>
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div id="tbl-cxn2-lemma-roleset-FYE-current-1" class="quarto-layout-cell quarto-layout-cell-subref anchored" data-ref-parent="tbl-cxn2-lemma-roleset-FYE-current" style="flex-basis: 50.0%;justify-content: center;">
@@ -2670,6 +2852,12 @@ div.csl-indent {
    <td style="text-align:right;"> 18 </td>
    <td style="text-align:right;"> 6 </td>
    <td style="text-align:right;"> 0.38 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> save </td>
+   <td style="text-align:right;"> 18 </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 0.00 </td>
   </tr>
 </tbody>
 </table></div>
@@ -2807,31 +2995,14 @@ div.csl-indent {
 </div>
 </div>
 </div>
+<p>A first observation is that the FYE values for the lemmas and role sets distinctive for arg0(np)-v(v)-arg2(np)-arg1(np) are, in general, higher than in <a href="#tbl-cxn1-lemma-roleset-FYE-current">Table&nbsp;21</a>. This suggests that the lemma and role sets for arg0(np)-v(v)-arg2(np)-arg1(np) are more distintive and alternate less freely than those distinctive for arg0(np)-v(v)-arg1(np)-arg2(pp). Unsurprisingly, the most distinctive word for arg0(np)-v(v)-arg2(np)-arg1(np) is “give” with role set “give.01”. It can also be noted that the FYE values between the lemmas and role sets following the opposite movement as in <a href="#tbl-cxn1-lemma-roleset-FYE-current">Table&nbsp;21</a>. Here, the FYE values are either equal or higher, instead of equal or lower. For example, the role sets “give.01”, “tell.01”, “send.01” and “save.01” have higher FYE values than their respective lemmas. This can be explained by the fact that when split into role sets, the frequency of that role set in arg0(np)-v(v)-arg1(np)-arg2(pp) is lower than the frequency of the lemma of that role set in arg0(np)-v(v)-arg1(np)-arg2(pp). This leads to a higher distinctiveness towards arg0(np)-v(v)-arg2(np)-arg1(np). This can especially be seen in the lemma “save” and role set “save.01”. The lemma “save” has FYE 0.00 and the role set “save.01” has an FYE value of 2.38.</p>
 </section>
 <section id="conclusion" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Conclusion</h1>
 <p>The conclusion should recap the paper, summarizing what was said in each section and how everything ties together. It might feel redundant, in particular in relation to the introduction, but that’s precisely the point: for someone who has not heard your ideas, redundancy is key to understand. Be clear about how each section contributes to your main point and what the take-home message is.</p>
 <p>Of course, the language of the paper should be formal and academic (I appreciate puns and jokes, but don’t lower the register too much). Coherence in the ideas, cohesion between the sentences and appropriate use of the technical vocabulary and of connectors (e.g.&nbsp;<em>however</em>, <em>in contrast</em>, <em>while</em>…) are important and <strong>will be evaluated</strong>. Not because of “language” evaluation but because these aspects are crucial for understanding, and if the reader needs to read a sentence many times and/or have previous knowledge of your process in order to understand the text, it’s not well written. I also recommend checking out the <code>{spelling}</code> package to run some spelling checks on your files!</p>
 <div id="tbl-comp-cxn12" class="cell tbl-parent quarto-layout-panel anchored" data-tbl-cap="Comparison lemmas distinctive for arg0(np)-v(v)-arg1(np)-arg2(pp).">
-<div class="panel-caption table-caption">
-<p><strong>?(caption)</strong></p>
-</div>
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
-<pre><code> [1] "give"   "tell"   "ask"    "show"   "take"   "grant"  "teach"  "owe"   
- [9] "deny"   "sell"   "pay"    "write"  "hand"   "send"   "feed"   "award" 
-[17] "bring"  "leave"  "charge" "do"     "lend"  </code></pre>
-</div>
-</div>
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
-<pre><code> [1] "earn"     "extend"   "find"     "drive"    "name"     "provide" 
- [7] "hear"     "deliver"  "serve"    "singe"    "deal"     "save"    
-[13] "play"     "pass"     "make"     "supply"   "read"     "keep"    
-[19] "assign"   "set"      "cut"      "offer"    "cost"     "wish"    
-[25] "promise"  "cause"    "drop"     "get"      "allocate" "lose"    </code></pre>
-</div>
-</div>
+
 </div>
 
 </section>
@@ -2883,24 +3054,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
-    let tooltip;
-    if (window.bootstrap) {
-      button.setAttribute("data-bs-toggle", "tooltip");
-      button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
-      tooltip = new bootstrap.Tooltip(button, 
-        { trigger: "manual", 
-          customClass: "code-copy-button-tooltip",
-          offset: [0, -8]});
-      tooltip.show();    
-    }
     setTimeout(function() {
-      if (tooltip) {
-        tooltip.hide();
-        button.removeAttribute("data-bs-title");
-        button.removeAttribute("data-bs-toggle");
-        button.removeAttribute("data-bs-placement");
-      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -2936,42 +3090,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
-    }
-  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
-          }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
       });
-    }
+      return popup.innerHTML;
+    });
   }
 });
 </script>
