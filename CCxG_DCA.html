@@ -1,0 +1,3412 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Thomas Moerman">
+
+<title>Applying Computational Construction Grammar and Collostructional Analysis on a PropBank-annotated Corpus</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="CCxG_DCA_files/libs/clipboard/clipboard.min.js"></script>
+<script src="CCxG_DCA_files/libs/quarto-html/quarto.js"></script>
+<script src="CCxG_DCA_files/libs/quarto-html/popper.min.js"></script>
+<script src="CCxG_DCA_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="CCxG_DCA_files/libs/quarto-html/anchor.min.js"></script>
+<link href="CCxG_DCA_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="CCxG_DCA_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="CCxG_DCA_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="CCxG_DCA_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="CCxG_DCA_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+<script src="CCxG_DCA_files/libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="CCxG_DCA_files/libs/viz-1.8.2/viz.js"></script>
+<link href="CCxG_DCA_files/libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
+<script src="CCxG_DCA_files/libs/grViz-binding-1.0.9/grViz.js"></script>
+<script src="CCxG_DCA_files/libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="CCxG_DCA_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="toc-section-number">1</span>  Introduction</a></li>
+  <li><a href="#data-processing-and-methodology" id="toc-data-processing-and-methodology" class="nav-link" data-scroll-target="#data-processing-and-methodology"><span class="toc-section-number">2</span>  Data Processing and Methodology</a>
+  <ul class="collapse">
+  <li><a href="#arg0np-vv-arg1np-arg2-data-cleaning-process" id="toc-arg0np-vv-arg1np-arg2-data-cleaning-process" class="nav-link" data-scroll-target="#arg0np-vv-arg1np-arg2-data-cleaning-process"><span class="toc-section-number">2.1</span>  arg0(np)-v(v)-arg1(np)-arg2 data-cleaning process</a></li>
+  <li><a href="#corpus-data-after-cleaning" id="toc-corpus-data-after-cleaning" class="nav-link" data-scroll-target="#corpus-data-after-cleaning"><span class="toc-section-number">2.2</span>  Corpus data after cleaning</a></li>
+  <li><a href="#distinctive-collexeme-analysis-dca" id="toc-distinctive-collexeme-analysis-dca" class="nav-link" data-scroll-target="#distinctive-collexeme-analysis-dca"><span class="toc-section-number">2.3</span>  Distinctive Collexeme Analysis (DCA)</a></li>
+  <li><a href="#correlation-analysis-of-the-different-association-measures" id="toc-correlation-analysis-of-the-different-association-measures" class="nav-link" data-scroll-target="#correlation-analysis-of-the-different-association-measures"><span class="toc-section-number">2.4</span>  Correlation analysis of the different association measures</a></li>
+  </ul></li>
+  <li><a href="#results-and-discussion" id="toc-results-and-discussion" class="nav-link" data-scroll-target="#results-and-discussion"><span class="toc-section-number">3</span>  Results and Discussion</a>
+  <ul class="collapse">
+  <li><a href="#exploring-the-data-set" id="toc-exploring-the-data-set" class="nav-link" data-scroll-target="#exploring-the-data-set"><span class="toc-section-number">3.1</span>  Exploring the data set</a></li>
+  <li><a href="#results-dca" id="toc-results-dca" class="nav-link" data-scroll-target="#results-dca"><span class="toc-section-number">3.2</span>  Results DCA</a>
+  <ul class="collapse">
+  <li><a href="#establishing-the-categories" id="toc-establishing-the-categories" class="nav-link" data-scroll-target="#establishing-the-categories"><span class="toc-section-number">3.2.1</span>  Establishing the categories</a></li>
+  <li><a href="#comparison-with-previous-work" id="toc-comparison-with-previous-work" class="nav-link" data-scroll-target="#comparison-with-previous-work"><span class="toc-section-number">3.2.2</span>  Comparison with previous work</a></li>
+  <li><a href="#comparison-of-lemmas-and-role-sets-from-the-current-study" id="toc-comparison-of-lemmas-and-role-sets-from-the-current-study" class="nav-link" data-scroll-target="#comparison-of-lemmas-and-role-sets-from-the-current-study"><span class="toc-section-number">3.2.3</span>  Comparison of lemmas and role sets from the current study</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="toc-section-number">4</span>  Conclusion</a></li>
+  <li><a href="#appendix" id="toc-appendix" class="nav-link" data-scroll-target="#appendix"><span class="toc-section-number">5</span>  Appendix</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Applying Computational Construction Grammar and Collostructional Analysis on a PropBank-annotated Corpus</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Thomas Moerman </p>
+          </div>
+  </div>
+    
+    
+  </div>
+  
+<div>
+  <div class="abstract">
+    <div class="abstract-title">Abstract</div>
+    This paper uses a Computational Construction Grammar (CCG) approach and collostructional analysis on a PropBank-annotated corpus. It explores the data gained from this and focuses on the differences between lemmas and their word senses when used in alternating constructions. This research was written during an internship at the VUB AI Lab. The corpus and dataset were accessed through this internship.
+  </div>
+</div>
+
+</header>
+
+<div class="cell">
+
+</div>
+<section id="introduction" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
+<p>Construction Grammar (CxG) is a general term for a family of theories used for describing and interpreting language. It emphasizes the importance of regular patterns of language use, known as constructions. It argues that these constructions capture all linguistic knowledge in the shape of form-meaning pairs. In other words, in CxG, the traditional concepts of lexicon and grammar are combined. There is no distinction between the two, as the form is inherently connected to meaning (<span class="citation" data-cites="beuls_construction_toappear">Beuls &amp; Van Eecke (<a href="#ref-beuls_construction_toappear" role="doc-biblioref">to appear</a>)</span>, <span class="citation" data-cites="fillmore_mechanisms_1988">Fillmore (<a href="#ref-fillmore_mechanisms_1988" role="doc-biblioref">1988</a>)</span>, <span class="citation" data-cites="fillmore_regularity_1988">Fillmore, Kay &amp; O’Connor (<a href="#ref-fillmore_regularity_1988" role="doc-biblioref">1988</a>)</span>, <span class="citation" data-cites="goldberg_constructions_1995">Goldberg (<a href="#ref-goldberg_constructions_1995" role="doc-biblioref">1995</a>)</span>, <span class="citation" data-cites="beuls_computational_2021">Beuls, Van Eecke &amp; Cangalovic (<a href="#ref-beuls_computational_2021" role="doc-biblioref">2021</a>)</span>). Collostructional analysis, developed by A. Stefanowitsch and S.T. Gries (<span class="citation" data-cites="stefanowitsch_channel_2008">Stefanowitsch &amp; Gries (<a href="#ref-stefanowitsch_channel_2008" role="doc-biblioref">2008</a>)</span>, <span class="citation" data-cites="stefanowitsch_collostructional_2014">Stefanowitsch (<a href="#ref-stefanowitsch_collostructional_2014" role="doc-biblioref">2014</a>)</span>, <span class="citation" data-cites="gries_cluster_2010">Gries &amp; Stefanowitsch (<a href="#ref-gries_cluster_2010" role="doc-biblioref">2010</a>)</span> <span class="citation" data-cites="gries_collostructional_2013">Gries (<a href="#ref-gries_collostructional_2013" role="doc-biblioref">2013</a>)</span>, <span class="citation" data-cites="gries_extending_2004">Gries &amp; Stefanowitsch (<a href="#ref-gries_extending_2004" role="doc-biblioref">2004</a>)</span>), is a combination of several quantitative (statistical) methods for examining the relationship between words (lemmas) and structures. The term collostruction, a blend of the collocation and construction of words, describes measuring the attraction or repulsion of words towards specific syntactic constructions.</p>
+<p>Most studies using collostructional analysis have focused on the relationship between verbs and constructions that convey information about argument structure (<span class="citation" data-cites="gries_collostructional_2013">Gries (<a href="#ref-gries_collostructional_2013" role="doc-biblioref">2013</a>)</span>, <span class="citation" data-cites="gries_extending_2004">Gries &amp; Stefanowitsch (<a href="#ref-gries_extending_2004" role="doc-biblioref">2004</a>)</span>). This paper follows in those footsteps but will take a slightly different approach. It still studies the co-occurrence patterns between verbs and specific English argument constructions. However, instead of only examining the lemma, this paper focuses on the role set or word sense of a specific lemma concerning its place in an argument structure construction. It performs collustructional analysis on a data set taken from the PropBank-annotated OntoNotes 5.0 corpus. What follows is a brief description of the corpus and data set used.</p>
+<p>OntoNotes 5.0 (<span class="citation" data-cites="weischedel_ontonotes_2013">Weischedel et al. (<a href="#ref-weischedel_ontonotes_2013" role="doc-biblioref">2013</a>)</span>) )) is a corpus consisting of a subset of English, Chinese and Arabic texts. It can be described as a broad-coverage corpus that spans several genres, including religious texts, telephone conversations, news articles and weblogs. In total, it consists of 2.9 million words. The corpus is annotated with several different layers of information (see <a href="#fig-ontonotes-annotation-example">Figure&nbsp;1</a>):</p>
+<div id="fig-ontonotes-annotation-example" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="CCxG_DCA_files/PropBank-annotation-example.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1: Example of a sentence annotation in OntoNotes 5.0 (<span class="citation" data-cites="beuls_operationalising_2021">Beuls &amp; Van Eecke (<a href="#ref-beuls_operationalising_2021" role="doc-biblioref">2021</a>)</span>)</figcaption><p></p>
+</figure>
+</div>
+<p>In the above example, the utterance “With their unique charm, these well-known cartoon images once again caused Hong Kong to be a focus of worldwide attention.” is annotated with a treebank, PropBank, word sense annotation, ontology, coreference and entity names annotation layer. <span class="citation" data-cites="bonial_english_2012">Bonial et al. (<a href="#ref-bonial_english_2012" role="doc-biblioref">2012</a>)</span> provide a complete description of these annotations. For the present study, the PropBank annotation layer is of particular interest. The PropBank layer (<span class="citation" data-cites="propbank">Palmer</span>) annotates the argument structure of verbs. It does this by providing a list of possible roles for each verb. These roles are called arguments. The word sense annotation layer lists possible word senses for each word. These word senses are also called role sets. The PropBank layer is used to identify the argument structure. The word sense layer is used to identify the specific word sense of a verb. To illustrate how these annotations should be interpreted, consider the following utterance “She gave Peter a watch.” as shown in <a href="#tbl-give01-example">Table&nbsp;1</a>:</p>
+<div id="tbl-give01-example" class="anchored">
+<table class="table">
+<caption>Table&nbsp;1: Example of the PropBank annotation for the verb “give.01” in the utterance “She gave Peter a watch.”</caption>
+<colgroup>
+<col style="width: 19%">
+<col style="width: 12%">
+<col style="width: 16%">
+<col style="width: 18%">
+<col style="width: 18%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>roleType</strong></th>
+<th><strong>pos</strong></th>
+<th><strong>string</strong></th>
+<th><strong>indices</strong></th>
+<th><strong>roleset</strong></th>
+<th><strong>lemma</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>arg0</td>
+<td>np</td>
+<td>She</td>
+<td>0</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>v</td>
+<td>v</td>
+<td>gave</td>
+<td>1</td>
+<td>give.01</td>
+<td>give</td>
+</tr>
+<tr class="odd">
+<td>arg2</td>
+<td>np</td>
+<td>Peter</td>
+<td>2</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>arg1</td>
+<td>np</td>
+<td>a watch</td>
+<td>3</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>In this utterance, the verb “gave” would be annotated with the lemma “give” and the role set “give.01” which is described as “transfer” in https://PropBank.github.io/v3.4.0/frames/. The verb here is the frame-evoking element (FEE). The role set “give.01” has three arguments: “Arg0”, “Arg1” and “Arg2”. In PropBank annotation, this means that “Arg0” is the giver, “Arg1” is the thing given and “Arg2” is the entity given to. In traditional grammar, these arguments would be described as the agent (Arg0), patient (Arg1) and instrument/benefactive/attribute (Arg2). This paper will use PropBank terminology. This means that the above utterance would be annotated as follows: “She(Arg0-NP) gave(FEE-V) Peter(Arg2-NP) a watch(Arg1-NP)”. In other words, the argument structure construction in which the role set “give.01” is embedded is “Arg0-NP FEE-V Arg2-NP Arg1-NP”. This can be recognized as a ditransitive construction. This paper focuses broadly on ditransitive constructions in their various manifestations.</p>
+<p>The data set used for this analysis is a subset of the OntoNotes 5.0 corpus. This data set was extracted from the corpus using the CCxG Explorer (<span class="citation" data-cites="beuls_operationalising_2021">Beuls &amp; Van Eecke (<a href="#ref-beuls_operationalising_2021" role="doc-biblioref">2021</a>)</span>). The CCxG Explorer is a tool developed by the Evolutionary &amp; Hybrid AI (EHAI) research team at the VUB Artificial Intelligence Lab. Its goal was twofold. From a broad-coverage corpus, it wanted to, first, gain linguistic insights from large-scale construction grammar analyses regarding the English argument structure and, secondly, show the application potential of CCxG by operationalizing it on a large scale. As a result, the CCxG Explorer allows usage-based linguists to search for corpus examples that match a particular semantic structure. This is useful because it provides the option to find examples of morphosyntactic phenomena without the need to identify them explicitly (<span class="citation" data-cites="beuls_construction_toappear">Beuls &amp; Van Eecke (<a href="#ref-beuls_construction_toappear" role="doc-biblioref">to appear</a>)</span>). The CCxG Explorer can be accessed and used on the web at https://ehai.ai.vub.ac.be/ccxg-explorer/. In addition, its source code is publicly available on Gitlab as part of the babel toolkit (<span class="citation" data-cites="ehai_babel">EHAI</span>). However, the method and accuracy of the CCxG Explorer have not yet been established. This is currently being investigated. This is why this present paper takes a cautious approach to the results.</p>
+<p>The following schema was used in the CCxG Explorer to extract the ditransitive constructions: “Arg0-NP FEE-V Arg1-NP Arg2”. However, the precise order is not taken into account, which means that, for example, the following constructions are also extracted: “Arg0-NP FEE-V Arg2-NP Arg1-NP”, “Arg1-NP FEE-V Arg0-NP Arg2” and “Arg1-NP FEE-V Arg2-NP Arg0”. This is because the order of the arguments is not fixed in ditransitive constructions and this schema allows for broader exploration. Further, it should be noted that no part of speech is specified in the Arg2 slot. This is because the Arg2 slot can be filled by not only an NP but also, for example, a PP, which would result in the dative alternation of the ditransitive construction: “She gave a watch to Peter” (arg0(np)-FEE(v)-arg1(np)-arg2(pp)). Note that in CxG approaches, this alternation is seen as a construction in its own right (<span class="citation" data-cites="goldberg_surface_2002">Goldberg (<a href="#ref-goldberg_surface_2002" role="doc-biblioref">2002</a>)</span>).</p>
+<p>Construction-based approaches consider whether a verb can be used in one or both members of an alternating pair based on semantic compatibility. A word can be used in a particular construction if its meaning aligns with the meaning of the construction. It can also alternate between two constructions if its meaning aligns with both. When it comes to alternating pairs, this approach raises questions about the semantic differences between the members of the pair, the degree of productivity in actual usage, and whether a constructional approach can be taken given the answers to these questions() <span class="citation" data-cites="gries_extending_2004">Gries &amp; Stefanowitsch (<a href="#ref-gries_extending_2004" role="doc-biblioref">2004</a>)</span>).</p>
+<p>The search results for this particular schema contained 9339 utterances. They were downloaded as a .json file. This .json file was the raw data for this analysis. It contains the string of utterances and the roles defined in that utterance. The roles are further specified by roleType, part of speech (pos), string, indices, role set and lemma. In those 9339 utterances, there were 924 unique role sets and 87 unique argument structure constructions which appeared in the previously mentioned schema.</p>
+<p>This study does not aim to come to any definitive conclusions about the relationship between word sense and argument structure constructions. Instead, its goal is to explore the possibilities of using PropBank-annotated corpora and Computational Construction Grammar (CCxG) in a collostructional analysis.</p>
+<p>This paper consists of several sections. First, the research methodology is presented, specifically on how the data set was analyzed. A presentation, analysis and discussion of the relevant data follow this. The analysis section consists of two parts. First, the cleaned data is examined and second, the results from the Distinctive Collexeme Analysis (DCA) are presented and discussed.</p>
+</section>
+<section id="data-processing-and-methodology" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Data Processing and Methodology</h1>
+<section id="arg0np-vv-arg1np-arg2-data-cleaning-process" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="arg0np-vv-arg1np-arg2-data-cleaning-process"><span class="header-section-number">2.1</span> arg0(np)-v(v)-arg1(np)-arg2 data-cleaning process</h2>
+<p>The entire data processing and analysis were done in R using the packages <code>{base}</code>, <code>{graphics}</code>, <code>{here}</code>, <code>{stats}</code>, <code>{utils}</code>, <code>{ggplot2}</code>, <code>{dplyr}</code>, <code>{jsonlite}</code>, <code>{stringr}</code>, <code>{tibble}</code> and <code>{tidyr}</code>. Most of which can be found in the <code>{tidyverse}</code> package (<span class="citation" data-cites="R-tidyverse">(<a href="#ref-R-tidyverse" role="doc-biblioref"><strong>R-tidyverse?</strong></a>)</span>). The data set was first cleaned and then analyzed using the DCA. The data-cleaning process is described in the following section.</p>
+<p>The data cleaning process can be visualized by the following <a href="#fig-flowchart">Figure&nbsp;2</a>:</p>
+<div class="cell">
+<div id="fig-flowchart" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<div id="htmlwidget-4612b305e290daca6702" style="width:100%;height:464px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-4612b305e290daca6702">{"x":{"diagram":"\ndigraph flowchart {\n  node [fontname = arial, shape = rectangle, style = filled, fillcolor = palegreen]\n  tab1 [label = \"Corpus\"]\n  tab2 [label = \"Filtered corpus on schema arg0(np)-v(v)-arg1(np)-arg2\"]\n  tab3 [label = \"87 unique arg-struc-cxn\"]\n  tab4 [label = \"arg0(np)-v(v)-arg1(np)-arg2(pp)\"]\n  tab5 [label = \"arg0(np)-v(v)-arg2(np)-arg1(np)\"]\n  tab6 [label = \"Role sets in both cxn1 & cxn2\"]\n  tab7 [label = \"Role sets exclusively in cxn1\", fillcolor = lightcoral]\n  tab8 [label = \"Role sets exclusively in cxn2\", fillcolor = lightcoral]\n  tab9 [label = \"Role sets that prefer cxn1 but also appear in cxn2\"]\n  tab10 [label = \"Role sets that prefer cxn2 but also appear in cxn1\"]\n\n  tab1 -> tab2\n  tab2 -> tab3\n  tab3 -> tab4\n  tab3 -> tab5\n  tab4 -> tab7\n  tab5 -> tab8\n  tab4 -> tab6\n  tab5 -> tab6\n  tab6 -> tab9\n  tab6 -> tab10\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<p></p><figcaption class="figure-caption">Figure&nbsp;2: Flowchart of the data cleaning process</figcaption><p></p>
+</figure>
+</div>
+</div>
+<p>This flowchart shows a step-by-step process of cleaning the corpus and narrowing the focus to specific constructions. The top level is the corpus itself, which is filtered to focus on a specific schema, in this case, arg0(np)-v(v)-arg1(np)-arg2. From there, the filtered corpus shows 87 different argument structure constructions. The first construction is arg0(np)-v(v)-arg1(np)-arg2(pp) and the second construction is arg0(np)-v(v)-arg2(np)-arg1(np). These are further divided into role sets that appear exclusively in one (marked in red and not analyzed in the present paper) and role sets that appear in both constructions (marked in green and analyzed).</p>
+</section>
+<section id="corpus-data-after-cleaning" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="corpus-data-after-cleaning"><span class="header-section-number">2.2</span> Corpus data after cleaning</h2>
+<p>The data was converted to a data frame, and the relevant columns were selected. The raw data file does not contain the complete argument structure construction in one string. A function was used to identify and classify the argument structure construction from each utterance. The resulting data frame contains the argument structure construction, role set and lemma. This data frame contains all the data used for the analysis. This is shown in <a href="#tbl-raw-corpus-data">Table&nbsp;2</a>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="tbl-raw-corpus-data" class="anchored">
+
+<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; "><table class=" lightable-paper table" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;"><caption>Table&nbsp;2:  Raw corpus data used for the subsequent analyses (first 10 rows) </caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> arg_struc_cxn </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> roleset </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> lemma </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> arg0(np)-v(v)-arg1(np)-arg2(c("s", "vp")) </td>
+   <td style="text-align:left;"> invite.01 </td>
+   <td style="text-align:left;"> invite </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> arg0(np)-v(v)-arg1(np)-arg2(pp) </td>
+   <td style="text-align:left;"> force.01 </td>
+   <td style="text-align:left;"> force </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> arg0(np)-v(v)-arg1(np)-arg2(pp) </td>
+   <td style="text-align:left;"> connect.01 </td>
+   <td style="text-align:left;"> connect </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> arg0(np)-v(v)-arg1(np)-arg2(pp) </td>
+   <td style="text-align:left;"> receive.01 </td>
+   <td style="text-align:left;"> receive </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> arg0(np)-v(v)-arg1(np)-arg2(pp) </td>
+   <td style="text-align:left;"> draw.02 </td>
+   <td style="text-align:left;"> draw </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> arg0(np)-v(v)-arg1(np)-arg2(pp) </td>
+   <td style="text-align:left;"> lay.01 </td>
+   <td style="text-align:left;"> lay </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> arg0(np)-v(v)-arg1(np)-arg2(c("s", "vp")) </td>
+   <td style="text-align:left;"> order.01 </td>
+   <td style="text-align:left;"> order </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> arg0(np)-v(v)-arg1(np)-arg2(np) </td>
+   <td style="text-align:left;"> call.01 </td>
+   <td style="text-align:left;"> call </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> arg0(np)-v(v)-arg1(np)-arg2(pp) </td>
+   <td style="text-align:left;"> deal.02 </td>
+   <td style="text-align:left;"> deal </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> arg0(np)-v(v)-arg1(np)-arg2(adjp) </td>
+   <td style="text-align:left;"> turn.02 </td>
+   <td style="text-align:left;"> turn </td>
+  </tr>
+</tbody>
+</table></div>
+
+</div>
+</div>
+</div>
+<p><a href="#tbl-raw-corpus-data">Table&nbsp;2</a> shows a small sample of data used for subsequent analyses. The table contains three columns: “arg_struc_cxn”, “roleset”, and “lemma”. The “arg_struc_cxn” column lists the argument structure construction that the role set occurs. The “roleset” column lists the specific role set that the lemma takes on. Finally, the “lemma” column lists the lemma of the verb.</p>
+</section>
+<section id="distinctive-collexeme-analysis-dca" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="distinctive-collexeme-analysis-dca"><span class="header-section-number">2.3</span> Distinctive Collexeme Analysis (DCA)</h2>
+<p>As previously mentioned, the type of analysis used for this paper is a collustructrional analysis. According to <span class="citation" data-cites="gries_collostructional_2013">Gries (<a href="#ref-gries_collostructional_2013" role="doc-biblioref">2013</a>)</span>, there are several types of collustructrional analysis. There is a Simple Collexeme Analysis (SCA), Distinctive Collexeme Analysis (DCA) and Covarying Collexeme Analysis (CCA). The type of analysis used for this paper is the Distinctive Collexeme Analysis. Since this is the only relevant type of analysis for this paper, the other types of analysis will not be discussed further.</p>
+<p>DCA (<span class="citation" data-cites="gries_extending_2004">Gries &amp; Stefanowitsch (<a href="#ref-gries_extending_2004" role="doc-biblioref">2004</a>)</span>) compares all words that occur in a slot of two similar constructions. It is based on the frequency of the word and the constructions it occurs in. <span class="citation" data-cites="gries_collostructional_2013">Gries (<a href="#ref-gries_collostructional_2013" role="doc-biblioref">2013</a>)</span> presents the following <a href="#tbl-dca">Table&nbsp;3</a> to illustrate which frequency information is needed for a DCA.</p>
+<div id="tbl-dca" class="anchored">
+<table class="table">
+<caption>Table&nbsp;3: Frequency information needed for a distinctive collexeme analysis</caption>
+<colgroup>
+<col style="width: 23%">
+<col style="width: 26%">
+<col style="width: 27%">
+<col style="width: 23%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;"><strong>Word l of Class L</strong></th>
+<th style="text-align: center;"><strong>Other Words of Class L</strong></th>
+<th style="text-align: center;"><strong>Total</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Construction c1 of Class C</td>
+<td style="text-align: center;">Frequency of L(l) in C(c1)</td>
+<td style="text-align: center;">Frequency of L(-l) in C(c1)</td>
+<td style="text-align: center;">Total frequency of C(c1)</td>
+</tr>
+<tr class="even">
+<td>Construction c2 of Class C</td>
+<td style="text-align: center;">Frequency of L(l) in C(c2)</td>
+<td style="text-align: center;">Frequency of L(-l) in C(c2)</td>
+<td style="text-align: center;">Total frequency of C(c2)</td>
+</tr>
+<tr class="odd">
+<td>Total</td>
+<td style="text-align: center;">Total frequency of L(l) in C(c1,c2)</td>
+<td style="text-align: center;">Total frequency of L(-l) in C(c1,c2)</td>
+<td style="text-align: center;">Total frequency of C(c1,c2)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>In this table, the frequency of a word (l &amp; -l) and construction (c1 &amp; c2) are mapped to create a contingency table containing the frequency of l in c1, l in c2, -l in c1, -l in c2. These are then combined to create a total frequency. Such a contingency table can then be used to perform a contingency test to return association measures like, for example, the Fisher-Yates p score. The Fisher-Yates p score is the score that is used most often in these types of analyses (<span class="citation" data-cites="hilpert_distinctive_2006">Hilpert (<a href="#ref-hilpert_distinctive_2006" role="doc-biblioref">2006</a>)</span>, <span class="citation" data-cites="wilinski_brink_2017">Wiliński (<a href="#ref-wilinski_brink_2017" role="doc-biblioref">2017</a>)</span>, <span class="citation" data-cites="gilquin_making_2013">Gilquin (<a href="#ref-gilquin_making_2013" role="doc-biblioref">2013</a>)</span> <span class="citation" data-cites="gries_extending_2004">Gries &amp; Stefanowitsch (<a href="#ref-gries_extending_2004" role="doc-biblioref">2004</a>)</span>, <span class="citation" data-cites="gries_collostructional_2013">Gries (<a href="#ref-gries_collostructional_2013" role="doc-biblioref">2013</a>)</span>) and will, therefore, be discussed more thoroughly than the other association measures. This measure is preferred over others, like chi-squared, because it does not break any assumptions about the distribution of the data (<span class="citation" data-cites="ellis_construction_2009">Ellis &amp; Ferreira–Junior (<a href="#ref-ellis_construction_2009" role="doc-biblioref">2009</a>)</span>). It is used to measure the strength of association between, in this case, a word and a construction. The p-value represents the probability of obtaining a test statistic as extreme or more extreme than the one observed.</p>
+<p>A small p-value (typically less than 0.05) suggests that the null hypothesis can be rejected and that the difference in co-occurrence frequencies between the two words being compared is not due to chance. Conversely, a significant p-value (typically greater than 0.05) suggests insufficient evidence to reject the null hypothesis and that the difference in co-occurrence frequencies may be due to chance. In other words, a small p-value means that the difference in co-occurrence frequencies between the two words is statistically significant, and it is unlikely that the observed difference is due to chance. However, it is common in collostructional analysis to log-transform these values to make it more intuitive to interpret them (<span class="citation" data-cites="levshina_2015">Levshina (<a href="#ref-levshina_2015" role="doc-biblioref">2015</a>)</span>). The same will be done in this analysis. As a result, the values will range from - infinity to + infinity. On that scale, large negative numbers indicate mutual repulsion, large positive numbers indicate mutual attraction and values around zero indicate a lack of association. It is important to note that in DCA, there is a focus on the differences between constructions. SCA can be used to uncover similarities between constructions (<span class="citation" data-cites="gries_extending_2004">Gries &amp; Stefanowitsch (<a href="#ref-gries_extending_2004" role="doc-biblioref">2004</a>)</span>) but this is not done here, given the limited scope of the present research.</p>
+<p>An extension of DCA is the possibility to perform it on a data set with more than two types of constructions. This is referred to as Multiple Distinctive Collexeme Analysis (MDCA) (<span class="citation" data-cites="gries_extending_2004">Gries &amp; Stefanowitsch (<a href="#ref-gries_extending_2004" role="doc-biblioref">2004</a>)</span>). )). It is based on the same principles as DCA, but instead of comparing two constructions, it compares multiple constructions. In order to perform an MDCA on a data set, a multidimensional contingency table is required. <span class="citation" data-cites="gries_collostructional_2013">Gries (<a href="#ref-gries_collostructional_2013" role="doc-biblioref">2013</a>)</span> gives the following <a href="#tbl-mca">Table&nbsp;4</a> to illustrate which frequency information is needed for an MDCA.:</p>
+<div id="tbl-mca" class="anchored">
+<table class="table">
+<caption>Table&nbsp;4: Frequency information needed for a multiple distinctive collexeme analysis</caption>
+<colgroup>
+<col style="width: 23%">
+<col style="width: 26%">
+<col style="width: 27%">
+<col style="width: 23%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;"><strong>Word l of Class L</strong></th>
+<th style="text-align: center;"><strong>Other Words of Class L</strong></th>
+<th style="text-align: center;"><strong>Total</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Construction c1 of Class C</td>
+<td style="text-align: center;">Frequency of L(l) in C(c1)</td>
+<td style="text-align: center;">Frequency of L(-l) in C(c1)</td>
+<td style="text-align: center;">Total frequency of C(c1)</td>
+</tr>
+<tr class="even">
+<td>Construction c2 of Class C</td>
+<td style="text-align: center;">Frequency of L(l) in C(c2)</td>
+<td style="text-align: center;">Frequency of L(-l) in C(c2)</td>
+<td style="text-align: center;">Total frequency of C(c2)</td>
+</tr>
+<tr class="odd">
+<td>…</td>
+<td style="text-align: center;">…</td>
+<td style="text-align: center;">…</td>
+<td style="text-align: center;">…</td>
+</tr>
+<tr class="even">
+<td>Construction c(n)</td>
+<td style="text-align: center;">Freq. of L(l) in C(cn)</td>
+<td style="text-align: center;">Freq. of L(-l) in C(cn)</td>
+<td style="text-align: center;">Total frequency of C(cn)</td>
+</tr>
+<tr class="odd">
+<td>Total</td>
+<td style="text-align: center;">Total frequency of L(l) in C(c1,c2, …n)</td>
+<td style="text-align: center;">Total frequency of L(-l) in C(c1,c2, …n)</td>
+<td style="text-align: center;">Total frequency of C(c1,c2, …n)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>As can be observed in the above table, the difference is that in the MDCA contingency table, there is an n number of constructions represented in the columns. Due to the limited scope of this paper, only the DCA will be discussed in the analysis section. However, the MDCA was still performed, and the results are available in the appendix because it could prove helpful in future research.</p>
+<p>To perform both types of analyses, an R script developed by S.T. De Gries (<span class="citation" data-cites="gries_script">Gries (<a href="#ref-gries_script" role="doc-biblioref">2022</a>)</span>) was used and adapted to suit the data set in this paper. Regarding the DCA, this script calculates the association measures for all words (lemma/role set) concerning the two most frequent argument structure constructions from the data set and returns a table containing the association measures for each. In total, eight association measures are given. They are presented in <a href="#tbl-accosm">Table&nbsp;5</a>. Not all of them are as extensively used in the analysis. However, they are presented for completeness and to give a general overview of the available measures when using DCA on a PropBank-annotated corpus. A comparison between these measures is briefly discussed here based on a correlation analysis. This type of analysis is used to evaluate the strength and direction of a relationship between two variables. It can be used to determine if there is a relationship between variables and, if so, how strong that relationship is. Correlation coefficients range from -1 to 1, with -1 indicating a perfect negative correlation, 0 indicating no correlation, and 1 indicating a perfect positive correlation. In this case, the variables are the different scores from the association measures. The closer the value is to 1, the stronger the association between the two variables. The closer the value is to -1, the stronger the negative association between the two variables. The closer the value is to 0, the weaker the association between the two variables.</p>
+<div id="tbl-accosm" class="anchored">
+<table class="table">
+<caption>Table&nbsp;5: Association measures used in the DCA</caption>
+<colgroup>
+<col style="width: 29%">
+<col style="width: 70%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Association Measure</th>
+<th>Full Name</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>LLR</td>
+<td>Log-Likelihood Ratio</td>
+</tr>
+<tr class="even">
+<td>PRES</td>
+<td>Pearson Residual</td>
+</tr>
+<tr class="odd">
+<td>LOR</td>
+<td>Log Odds Ratio</td>
+</tr>
+<tr class="even">
+<td>MI</td>
+<td>Mutual Information</td>
+</tr>
+<tr class="odd">
+<td>DPC2W</td>
+<td>Difference in Probability of Construction to Word</td>
+</tr>
+<tr class="even">
+<td>DPW2C</td>
+<td>Difference in Probability of Word to Construction</td>
+</tr>
+<tr class="odd">
+<td>FYE</td>
+<td>Log-transformed Fisher-Yates Exact Test</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="correlation-analysis-of-the-different-association-measures" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="correlation-analysis-of-the-different-association-measures"><span class="header-section-number">2.4</span> Correlation analysis of the different association measures</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div id="tbl-cor-assoc" class="anchored">
+
+<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; "><table class=" lightable-paper table" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;"><caption>Table&nbsp;6:  Correlation analysis of the different association measures. </caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">  </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> LLR </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> PRES </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> LOR </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> MI </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> DPC2W </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> DPW2C </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> FYE </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> log.likelihood.values </td>
+   <td style="text-align:right;"> 1.00 </td>
+   <td style="text-align:right;"> 0.83 </td>
+   <td style="text-align:right;"> 0.79 </td>
+   <td style="text-align:right;"> -0.23 </td>
+   <td style="text-align:right;"> 0.82 </td>
+   <td style="text-align:right;"> 0.79 </td>
+   <td style="text-align:right;"> 0.65 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> pearson.residuals </td>
+   <td style="text-align:right;"> 0.83 </td>
+   <td style="text-align:right;"> 1.00 </td>
+   <td style="text-align:right;"> 0.95 </td>
+   <td style="text-align:right;"> 0.21 </td>
+   <td style="text-align:right;"> 0.99 </td>
+   <td style="text-align:right;"> 0.95 </td>
+   <td style="text-align:right;"> 0.49 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> log.odds.ratios </td>
+   <td style="text-align:right;"> 0.79 </td>
+   <td style="text-align:right;"> 0.95 </td>
+   <td style="text-align:right;"> 1.00 </td>
+   <td style="text-align:right;"> 0.35 </td>
+   <td style="text-align:right;"> 0.94 </td>
+   <td style="text-align:right;"> 1.00 </td>
+   <td style="text-align:right;"> 0.44 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> mi.scores </td>
+   <td style="text-align:right;"> -0.23 </td>
+   <td style="text-align:right;"> 0.21 </td>
+   <td style="text-align:right;"> 0.35 </td>
+   <td style="text-align:right;"> 1.00 </td>
+   <td style="text-align:right;"> 0.20 </td>
+   <td style="text-align:right;"> 0.35 </td>
+   <td style="text-align:right;"> -0.27 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> delta.p.constr.cues.word </td>
+   <td style="text-align:right;"> 0.82 </td>
+   <td style="text-align:right;"> 0.99 </td>
+   <td style="text-align:right;"> 0.94 </td>
+   <td style="text-align:right;"> 0.20 </td>
+   <td style="text-align:right;"> 1.00 </td>
+   <td style="text-align:right;"> 0.94 </td>
+   <td style="text-align:right;"> 0.49 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> delta.p.word.cues.constr </td>
+   <td style="text-align:right;"> 0.79 </td>
+   <td style="text-align:right;"> 0.95 </td>
+   <td style="text-align:right;"> 1.00 </td>
+   <td style="text-align:right;"> 0.35 </td>
+   <td style="text-align:right;"> 0.94 </td>
+   <td style="text-align:right;"> 1.00 </td>
+   <td style="text-align:right;"> 0.44 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> fisher.scores </td>
+   <td style="text-align:right;"> 0.65 </td>
+   <td style="text-align:right;"> 0.49 </td>
+   <td style="text-align:right;"> 0.44 </td>
+   <td style="text-align:right;"> -0.27 </td>
+   <td style="text-align:right;"> 0.49 </td>
+   <td style="text-align:right;"> 0.44 </td>
+   <td style="text-align:right;"> 1.00 </td>
+  </tr>
+</tbody>
+</table></div>
+
+</div>
+</div>
+</div>
+<p><a href="#tbl-cor-assoc">Table&nbsp;6</a> presents a correlation analysis of the association measures used in the DCA. The rows and columns represent different measures, and the values in the cells represent the correlation between the measure in the corresponding row and column. It shows a strong positive correlation between LLR, PRES, LOR, DPC2W, and DPW2C measures (values are close to 1), which indicates that these measures are highly related. The FYE measure is positively correlated but to a lesser extent (values are around 0.5) with the other measures. The MI measure is weakly correlated (values are close to 0) with the other measures. As mentioned before, FYE is considered the standard measure in this type of analysis and will be used in this paper. However, the other measures were also considered when interpreting the results. However, they did not make a significant difference in the overall conclusions and are therefore not discussed in detail.</p>
+</section>
+</section>
+<section id="results-and-discussion" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Results and Discussion</h1>
+<section id="exploring-the-data-set" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="exploring-the-data-set"><span class="header-section-number">3.1</span> Exploring the data set</h2>
+<p>The following section will conduct an exploratory analysis of the cleaned corpus data and the resulting data from the DCA. It focuses on the role sets (word senses) of verbs. The DCA has also been applied to the lemma data set and will be used for comparison when relevant. The analysis departs from an overview of the frequency of the lemmas and role sets in specific argument constructions. <a href="#tbl-alph-summary">Table&nbsp;7</a> shows a random subset of an alphabetically sorted list. The argument structure constructions are ordered based on the frequency with which they appear in the data set.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="tbl-alph-summary" class="anchored">
+
+<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; "><table class=" lightable-paper table" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;"><caption>Table&nbsp;7:  Alphabetically sorted summary of the data set (random 20 rows and first 8 columns). </caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> lemma </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> roleset </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> total </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg1(np)-arg2(pp) </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg2(np)-arg1(np) </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg1(np)-arg2(c("s", "vp")) </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg1(np)-arg2(vp) </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg1(np)-arg2(np) </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> cast </td>
+   <td style="text-align:left;"> cast.02 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> castigate </td>
+   <td style="text-align:left;"> castigate.01 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> catapult </td>
+   <td style="text-align:left;"> catapult.01 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> catch </td>
+   <td style="text-align:left;"> catch.02 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> catch </td>
+   <td style="text-align:left;"> catch.03 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> cede </td>
+   <td style="text-align:left;"> cede.01 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> challenge </td>
+   <td style="text-align:left;"> challenge.01 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> change </td>
+   <td style="text-align:left;"> change.01 </td>
+   <td style="text-align:right;"> 22 </td>
+   <td style="text-align:right;"> 21 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> channel </td>
+   <td style="text-align:left;"> channel.01 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> characterize </td>
+   <td style="text-align:left;"> characterize.01 </td>
+   <td style="text-align:right;"> 8 </td>
+   <td style="text-align:right;"> 6 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> charge </td>
+   <td style="text-align:left;"> charge.01 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> charge </td>
+   <td style="text-align:left;"> charge.04 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> charge </td>
+   <td style="text-align:left;"> charge.05 </td>
+   <td style="text-align:right;"> 21 </td>
+   <td style="text-align:right;"> 21 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> charter </td>
+   <td style="text-align:left;"> charter.01 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> chastise </td>
+   <td style="text-align:left;"> chastise.01 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> chide </td>
+   <td style="text-align:left;"> chide.01 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> choose </td>
+   <td style="text-align:left;"> choose.01 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> cite </td>
+   <td style="text-align:left;"> cite.01 </td>
+   <td style="text-align:right;"> 12 </td>
+   <td style="text-align:right;"> 11 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> cite </td>
+   <td style="text-align:left;"> cite.02 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> claim </td>
+   <td style="text-align:left;"> claim.01 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> clean </td>
+   <td style="text-align:left;"> clean.01 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+</tbody>
+</table></div>
+
+</div>
+</div>
+</div>
+<p><a href="#tbl-alph-summary">Table&nbsp;7</a> shows that a lemma manifests itself in different role sets in different constructions. The logical consequence of this is that there are more role sets than there are lemmas. In other words, a verb can be used in different senses, and these senses are potentially linked to a specific construction. For example, the lemma “catch” appears in role sets “catch.02” and “catch.03” and the lemma “charge” appears in the role sets “charge.01”, “charge.04” and “charge.05”. <a href="#tbl-sense-utterance">Table&nbsp;8</a> illustrates these role sets with their semantic meaning and an example utterance from the corpus.</p>
+<div id="tbl-sense-utterance" class="anchored">
+<table class="table">
+<caption>Table&nbsp;8: Example of the role sets and their semantic meaning</caption>
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 35%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Lemma</strong></th>
+<th><strong>Roleset</strong></th>
+<th><strong>Meaning</strong></th>
+<th><strong>Utterance</strong></th>
+<th><strong>Arg_Struc_Cxn</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>catch</td>
+<td>catch.02</td>
+<td>come upon, find</td>
+<td>“We <strong>caught</strong> them cheating”</td>
+<td>arg0(np)-v(v)-arg1(np)-arg2(v)</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>catch.03</td>
+<td>trap</td>
+<td>“…asking locals not to […] <strong>catch</strong> them in nets.”</td>
+<td>arg0(np)-v(v)-arg1(np)-arg2(pp)</td>
+</tr>
+<tr class="odd">
+<td>charge</td>
+<td>charge.01</td>
+<td>asking price</td>
+<td>“He <strong>charge</strong> you a fortune?”</td>
+<td>arg0(np)-v(v)-arg1(np)-arg2(pp)</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>charge.04</td>
+<td>buy on credit</td>
+<td>“…car buyers <strong>charge</strong> […] their purchase on the […] card”</td>
+<td>arg0(np)-v(v)-arg1(np)-arg2(pp)</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>charge.05</td>
+<td>make an allegation</td>
+<td>“…they indicated to <strong>charge</strong> Mr.&nbsp;Noriega himself…”</td>
+<td>arg0(np)-v(v)-arg1(np)-arg2(pp)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><a href="#tbl-sense-utterance">Table&nbsp;8</a> shows information about the different senses of a single lemma (in this case, “catch” and “charge”). Each row represents a different sense of the lemma, identified by its role set. The columns in the table provide information about the meaning of the sense, as defined in the PropBank database, an example utterance from a dataset, and the argument structure construction (arg_struc_cxn) of that utterance. To further clarify how the argument structure construction is applied to the utterance, <a href="#tbl-catch02">Table&nbsp;9</a> is given:</p>
+<div id="tbl-catch02" class="anchored">
+<table class="table">
+<caption>Table&nbsp;9: Example of the argument structure construction of the utterance “We caught them cheating”</caption>
+<colgroup>
+<col style="width: 19%">
+<col style="width: 12%">
+<col style="width: 16%">
+<col style="width: 18%">
+<col style="width: 18%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>roleType</strong></th>
+<th><strong>pos</strong></th>
+<th><strong>string</strong></th>
+<th><strong>indices</strong></th>
+<th><strong>roleset</strong></th>
+<th><strong>lemma</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>arg0</td>
+<td>np</td>
+<td>We</td>
+<td>0</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>v</td>
+<td>v</td>
+<td>caught</td>
+<td>1</td>
+<td>catch.02</td>
+<td>catch</td>
+</tr>
+<tr class="odd">
+<td>arg1</td>
+<td>np</td>
+<td>them</td>
+<td>2</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>arg2</td>
+<td>v</td>
+<td>cheating</td>
+<td>3</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><a href="#tbl-catch02">Table&nbsp;9</a> shows the information in the sentence “We caught them cheating.” as annotated in the OntoNotes corpus. The lemma is “catch”, the role set is “catch.02” and the roleType, pos (part of speech), string and indices of the words that fill the role are given in the table. The word ‘We’ fills the role of arg0, the word ‘caught’ fills the role of v, the word ‘them’ fills the role of arg1 (entity) and the word ‘cheating’ fills the role of arg2 (attribute).</p>
+<p>The following <a href="#tbl-freq-summary">Table&nbsp;10</a> shows a similar list to <a href="#tbl-alph-summary">Table&nbsp;7</a> but is no longer alphabetically sorted but sorted based on the frequency of the lemmas and role sets in the data set. The argument structure constructions are still ordered based on the frequency with which they appear in the data set.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="tbl-freq-summary" class="anchored">
+
+<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; "><table class=" lightable-paper table" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;"><caption>Table&nbsp;10:  Frequency-ordered overview of the data set (first 10 rows and 8 columns). </caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> lemma </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> roleset </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> total </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg1(np)-arg2(pp) </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg2(np)-arg1(np) </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg1(np)-arg2(c("s", "vp")) </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg1(np)-arg2(vp) </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg1(np)-arg2(np) </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> give </td>
+   <td style="text-align:left;"> give.01 </td>
+   <td style="text-align:right;"> 976 </td>
+   <td style="text-align:right;"> 224 </td>
+   <td style="text-align:right;"> 662 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> put </td>
+   <td style="text-align:left;"> put.01 </td>
+   <td style="text-align:right;"> 443 </td>
+   <td style="text-align:right;"> 355 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> 2 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> use </td>
+   <td style="text-align:left;"> use.01 </td>
+   <td style="text-align:right;"> 381 </td>
+   <td style="text-align:right;"> 76 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> 284 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> bring </td>
+   <td style="text-align:left;"> bring.01 </td>
+   <td style="text-align:right;"> 243 </td>
+   <td style="text-align:right;"> 175 </td>
+   <td style="text-align:right;"> 27 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> 4 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> take </td>
+   <td style="text-align:left;"> take.01 </td>
+   <td style="text-align:right;"> 225 </td>
+   <td style="text-align:right;"> 189 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> call </td>
+   <td style="text-align:left;"> call.01 </td>
+   <td style="text-align:right;"> 195 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 130 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> tell </td>
+   <td style="text-align:left;"> tell.01 </td>
+   <td style="text-align:right;"> 192 </td>
+   <td style="text-align:right;"> 19 </td>
+   <td style="text-align:right;"> 150 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> send </td>
+   <td style="text-align:left;"> send.01 </td>
+   <td style="text-align:right;"> 188 </td>
+   <td style="text-align:right;"> 111 </td>
+   <td style="text-align:right;"> 49 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 3 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> spend </td>
+   <td style="text-align:left;"> spend.02 </td>
+   <td style="text-align:right;"> 134 </td>
+   <td style="text-align:right;"> 49 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> 74 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> force </td>
+   <td style="text-align:left;"> force.01 </td>
+   <td style="text-align:right;"> 118 </td>
+   <td style="text-align:right;"> 22 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 80 </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+</tbody>
+</table></div>
+
+</div>
+</div>
+</div>
+<p><a href="#tbl-freq-summary">Table&nbsp;10</a> indicates the frequency of the different role sets in different constructions, represented by the column names. The “total” column represents the sum of all the values in that row or, in other words, the total frequency of the specific role set. It is not a surprise that the lemma “give” in the sense “give.01” is the most frequent in the previously defined argument structure schema by quite a margin. This has been well-established in previous research (<span class="citation" data-cites="gries_extending_2004">Gries &amp; Stefanowitsch (<a href="#ref-gries_extending_2004" role="doc-biblioref">2004</a>)</span>, <span class="citation" data-cites="levshina_2015">Levshina (<a href="#ref-levshina_2015" role="doc-biblioref">2015</a>)</span>). Therefore, it could be expected that due to “give.01” its high frequency in the “arg0(np)-v(v)-arg2(np)-arg1(np)” construction, this construction is one of the most frequent constructions in the data set. This can be examined by looking at <a href="#tbl-cxn-freq-summary">Table&nbsp;11</a> which shows the frequency of the different argument structure constructions in the data set.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="tbl-cxn-freq-summary" class="anchored">
+
+<table class=" lightable-paper table" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;"><caption>Table&nbsp;11:  Frequency-ordered overview of the argument structure constructions (first 10 rows). </caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> arg_struc_cxn </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> Freq </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> arg0(np)-v(v)-arg1(np)-arg2(pp) </td>
+   <td style="text-align:right;"> 5497 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> arg0(np)-v(v)-arg2(np)-arg1(np) </td>
+   <td style="text-align:right;"> 1180 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> arg0(np)-v(v)-arg1(np)-arg2(c("s", "vp")) </td>
+   <td style="text-align:right;"> 741 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> arg0(np)-v(v)-arg1(np)-arg2(vp) </td>
+   <td style="text-align:right;"> 315 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> arg0(np)-v(v)-arg1(np)-arg2(np) </td>
+   <td style="text-align:right;"> 226 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> arg0(np)-v(v)-arg2(pp)-arg1(np) </td>
+   <td style="text-align:right;"> 142 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> arg1(np)-arg0(np)-v(v)-arg2(np) </td>
+   <td style="text-align:right;"> 119 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> arg0(np)-v(v)-arg2(rp)-arg1(np) </td>
+   <td style="text-align:right;"> 113 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> arg0(np)-v(v)-arg1(np)-arg2(sbar) </td>
+   <td style="text-align:right;"> 111 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> arg1(np)-arg0(np)-v(v)-arg2(pp) </td>
+   <td style="text-align:right;"> 110 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p><a href="#tbl-cxn-freq-summary">Table&nbsp;11</a> shows the data set’s distribution of different argument structures (arg_struc_cxn). Each row in the table represents a different argument structure, and the “Freq” column shows the number of times that argument structure was found. It shows the ten most frequent argument structure constructions. The three most frequent argument structures in the data set are “arg0(np)-v(v)-arg1(np)-arg2(pp)” (5497 occurrences), “arg0(np)-v(v)-arg2(np)-arg1(np)” (1180 occurrences) and “arg0(np)-v(v)-arg1(np)-arg2(c(”s”, “vp”))” (741 occurrences). These frequencies are essential to keep in mind when interpreting the results of the DCA analysis. This analysis was performed on the two most frequent types of argument structure construction occurring in the data set. As can be seen in <a href="#tbl-cxn-freq-summary">Table&nbsp;11</a>, there is a significant difference in frequency between the two most frequent constructions. For example, the “arg0(np)-v(v)-arg2(np)-arg1(np)” is the construction in which “give.01” was most frequent, with 662 occurrences. In other words, roughly 56% of the times “arg0(np)-v(v)-arg2(np)-arg1(np)” appeared, it was in the context of “give.01”. This has to be taken into account when performing a correlation analysis. In these situations, it is considered better to use a non-parametric correlation test instead of the usual Pearson product-moment correlation coefficient (<span class="citation" data-cites="levshina_2015">Levshina (<a href="#ref-levshina_2015" role="doc-biblioref">2015</a>)</span>). In this case, Kendall’s τ will be used for the correlation analysis.</p>
+</section>
+<section id="results-dca" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="results-dca"><span class="header-section-number">3.2</span> Results DCA</h2>
+<p>The next part of the analysis section will depart from the DCA lemma and role set table (<a href="#tbl-dca-roleset">Table&nbsp;12</a>), which contains all calculated association scores. First, the analysis gives a general overview of the most frequent and distinctive collostructions found in the corpus. Then, it will examine the specific role sets and association measures to gain insight into the patterns and preferences of the data. Finally, examples of the collostructions will be provided to assist in understanding the findings and interpreting the results. The full results of the analyses are available in the appendix. The results of the DCA are presented in <a href="#tbl-dca-roleset">Table&nbsp;12</a>:</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="tbl-dca-roleset" class="anchored">
+
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:600px; overflow-x: scroll; width:100%; "><table class=" lightable-paper table" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;"><caption>Table&nbsp;12:  Raw results DCA analysis (first 5 rows). </caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;position: sticky; top:0; background-color: #FFFFFF;"> WORD </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg1(np)-arg2(pp) </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg2(np)-arg1(np) </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;position: sticky; top:0; background-color: #FFFFFF;"> PREF </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;position: sticky; top:0; background-color: #FFFFFF;"> LLR </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;position: sticky; top:0; background-color: #FFFFFF;"> PRES </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;position: sticky; top:0; background-color: #FFFFFF;"> LOR </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;position: sticky; top:0; background-color: #FFFFFF;"> MI </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;position: sticky; top:0; background-color: #FFFFFF;"> DPC2W </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;position: sticky; top:0; background-color: #FFFFFF;"> DPW2C </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;position: sticky; top:0; background-color: #FFFFFF;"> FYE </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> put.01 </td>
+   <td style="text-align:right;"> 355 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> arg0(np)-v(v)-arg1(np)-arg2(pp) </td>
+   <td style="text-align:right;"> 142 </td>
+   <td style="text-align:right;"> 3.7 </td>
+   <td style="text-align:right;"> 27 </td>
+   <td style="text-align:right;"> 0.28 </td>
+   <td style="text-align:right;"> 0.06 </td>
+   <td style="text-align:right;"> 0.19 </td>
+   <td style="text-align:right;"> 16.0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> take.01 </td>
+   <td style="text-align:right;"> 189 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> arg0(np)-v(v)-arg1(np)-arg2(pp) </td>
+   <td style="text-align:right;"> 75 </td>
+   <td style="text-align:right;"> 2.7 </td>
+   <td style="text-align:right;"> 26 </td>
+   <td style="text-align:right;"> 0.28 </td>
+   <td style="text-align:right;"> 0.03 </td>
+   <td style="text-align:right;"> 0.18 </td>
+   <td style="text-align:right;"> 8.6 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> accuse.01 </td>
+   <td style="text-align:right;"> 100 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> arg0(np)-v(v)-arg1(np)-arg2(pp) </td>
+   <td style="text-align:right;"> 39 </td>
+   <td style="text-align:right;"> 1.9 </td>
+   <td style="text-align:right;"> 26 </td>
+   <td style="text-align:right;"> 0.28 </td>
+   <td style="text-align:right;"> 0.02 </td>
+   <td style="text-align:right;"> 0.18 </td>
+   <td style="text-align:right;"> 5.1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> use.01 </td>
+   <td style="text-align:right;"> 76 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> arg0(np)-v(v)-arg1(np)-arg2(pp) </td>
+   <td style="text-align:right;"> 30 </td>
+   <td style="text-align:right;"> 1.7 </td>
+   <td style="text-align:right;"> 26 </td>
+   <td style="text-align:right;"> 0.28 </td>
+   <td style="text-align:right;"> 0.01 </td>
+   <td style="text-align:right;"> 0.18 </td>
+   <td style="text-align:right;"> 3.8 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> receive.01 </td>
+   <td style="text-align:right;"> 75 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> arg0(np)-v(v)-arg1(np)-arg2(pp) </td>
+   <td style="text-align:right;"> 29 </td>
+   <td style="text-align:right;"> 1.7 </td>
+   <td style="text-align:right;"> 26 </td>
+   <td style="text-align:right;"> 0.28 </td>
+   <td style="text-align:right;"> 0.01 </td>
+   <td style="text-align:right;"> 0.18 </td>
+   <td style="text-align:right;"> 4.0 </td>
+  </tr>
+</tbody>
+</table></div>
+
+</div>
+</div>
+</div>
+<p>In <a href="#tbl-dca-roleset">Table&nbsp;12</a>, the first column, “WORD” shows the lemma/role set of the word. The following two columns show the frequency of the word in the two different constructions: “arg0(np)-v(v)-arg1(np)-arg2(pp)” and “arg0(np)-v(v)-arg2(np)-arg1(np)”. The following columns, “LLR”, “PRESID”, “LOR”, “MI”, “DPC2W”, “DPW2C” and “FYE” are the association measures that give information on the strength of the association between the word and the construction it appears in.</p>
+<section id="establishing-the-categories" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="establishing-the-categories"><span class="header-section-number">3.2.1</span> Establishing the categories</h3>
+<p>A first observation that can be made is that the two most frequent argument structure constructions used for the DCA are the arg0(np)-v(v)-arg1(np)-arg2(pp) and arg0(np)-v(v)-arg2(np)-arg1(np). In more traditional terms, these could be described as the prepositional dative and ditransitive construction. Additionally, there are three categories of how the role sets/lemmas are related to the two constructions. They can appear exclusively in either arg0(np)-v(v)-arg1(np)-arg2(pp) or arg0(np)-v(v)-arg2(np)-arg1(np), or they appear in both. These categories can be distinguished in <a href="#fig-plots">Figure&nbsp;3</a>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-plots" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="CCxG_DCA_files/figure-html/fig-plots-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;3: Figure showing the distribution of the role sets.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This plot shows the relationship between the logged co-occurrence frequency and the association (log odds ratio) for a set of words represented by their WORD label. The x-axis represents the logged co-occurrence frequency, which is calculated by taking the log base 2 of the sum of the frequency of the word in two different constructions. The y-axis represents the association (log odds ratio) of the words in the two constructions. The words are also labeled on the plot. This plot helps visualize the relationship between the co-occurrence frequency and the association strength of the words in the two constructions, as the three groups can be distinguished.</p>
+<p>The following tables (<a href="#tbl-cxn1">Table&nbsp;13</a>, <a href="#tbl-cxn2">Table&nbsp;14</a> and <a href="#tbl-mixed-roleset">Table&nbsp;15</a>) show the top five role sets in each category.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="tbl-cxn1" class="anchored">
+
+<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; "><table class=" lightable-paper table" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;"><caption>Table&nbsp;13:  Role sets that appear exclusively in arg0(np)-v(v)-arg1(np)-arg2(pp) (ordered by LLR). </caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> WORD </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg1(np)-arg2(pp) </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg2(np)-arg1(np) </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> LLR </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> FYE </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> put.01 </td>
+   <td style="text-align:right;"> 355 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 142 </td>
+   <td style="text-align:right;"> 16.0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> take.01 </td>
+   <td style="text-align:right;"> 189 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 75 </td>
+   <td style="text-align:right;"> 8.6 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> accuse.01 </td>
+   <td style="text-align:right;"> 100 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 39 </td>
+   <td style="text-align:right;"> 5.1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> use.01 </td>
+   <td style="text-align:right;"> 76 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 30 </td>
+   <td style="text-align:right;"> 3.8 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> receive.01 </td>
+   <td style="text-align:right;"> 75 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 29 </td>
+   <td style="text-align:right;"> 4.0 </td>
+  </tr>
+</tbody>
+</table></div>
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="tbl-cxn2" class="anchored">
+
+<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; "><table class=" lightable-paper table" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;"><caption>Table&nbsp;14:  Role sets that appear exclusively in arg0(np)-v(v)-arg2(np)-arg1(np) (ordered by LLR). </caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> WORD </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg1(np)-arg2(pp) </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg2(np)-arg1(np) </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> LLR </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> FYE </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> ask.01 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 36 </td>
+   <td style="text-align:right;"> 125.7 </td>
+   <td style="text-align:right;"> 27.3 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> wish.01 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 8 </td>
+   <td style="text-align:right;"> 27.8 </td>
+   <td style="text-align:right;"> 6.0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> fine.01 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 10.4 </td>
+   <td style="text-align:right;"> 2.3 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> guarantee.01 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 10.4 </td>
+   <td style="text-align:right;"> 2.3 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> allow.02 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 6.9 </td>
+   <td style="text-align:right;"> 1.5 </td>
+  </tr>
+</tbody>
+</table></div>
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="tbl-mixed-roleset" class="anchored">
+
+<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; "><table class=" lightable-paper table" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;"><caption>Table&nbsp;15:  Role sets that appear both in arg0(np)-v(v)-arg1(np)-arg2(pp) and arg0(np)-v(v)-arg2(np)-arg1(np) (ordered by LLR). </caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> WORD </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg1(np)-arg2(pp) </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg2(np)-arg1(np) </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> LLR </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> FYE </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> give.01 </td>
+   <td style="text-align:right;"> 224 </td>
+   <td style="text-align:right;"> 662 </td>
+   <td style="text-align:right;"> 1737 </td>
+   <td style="text-align:right;"> 379 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> tell.01 </td>
+   <td style="text-align:right;"> 19 </td>
+   <td style="text-align:right;"> 150 </td>
+   <td style="text-align:right;"> 424 </td>
+   <td style="text-align:right;"> 93 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> show.01 </td>
+   <td style="text-align:right;"> 29 </td>
+   <td style="text-align:right;"> 61 </td>
+   <td style="text-align:right;"> 112 </td>
+   <td style="text-align:right;"> 25 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> grant.01 </td>
+   <td style="text-align:right;"> 9 </td>
+   <td style="text-align:right;"> 25 </td>
+   <td style="text-align:right;"> 51 </td>
+   <td style="text-align:right;"> 12 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> teach.01 </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 15 </td>
+   <td style="text-align:right;"> 34 </td>
+   <td style="text-align:right;"> 8 </td>
+  </tr>
+</tbody>
+</table></div>
+
+</div>
+</div>
+</div>
+<p>The analysis will focus on the role sets that appear in both arg0(np)-v(v)-arg1(np)-arg2(pp) and arg0(np)-v(v)-arg2(np)-arg1(np). Here two additional subcategories can be distinguished. First, there are role sets that prefer the arg0(np)-v(v)-arg1(np)-arg2(pp) construction but also appear in the other construction (11 role sets in total, <a href="#tbl-mixed-cxn1-roleset">Table&nbsp;16</a>) and second, there are role sets that prefer the arg0(np)-v(v)-arg2(np)-arg1(np) construction but also appear in the arg0(np)-v(v)-arg1(np)-arg2(pp) (19 role sets in total, <a href="#tbl-mixed-cxn2-roleset">Table&nbsp;17</a>). The following tables show all role sets in each of these categories. This is shown in the following tables: <a href="#tbl-mixed-cxn1-roleset">Table&nbsp;16</a> and <a href="#tbl-mixed-cxn2-roleset">Table&nbsp;17</a>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="tbl-mixed-cxn1-roleset" class="anchored">
+
+<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; "><table class=" lightable-paper table" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;"><caption>Table&nbsp;16:  Role sets that have PREF in arg0(np)-v(v)-arg1(np)-arg2(pp) but also appear in arg0(np)-v(v)-arg2(np)-arg1(np) (ordered by FYE). </caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> WORD </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg1(np)-arg2(pp) </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg2(np)-arg1(np) </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> PRES </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> FYE </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> sell.01 </td>
+   <td style="text-align:right;"> 82 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 1.23 </td>
+   <td style="text-align:right;"> 2.36 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> bring.01 </td>
+   <td style="text-align:right;"> 175 </td>
+   <td style="text-align:right;"> 27 </td>
+   <td style="text-align:right;"> 0.67 </td>
+   <td style="text-align:right;"> 0.95 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> do.02 </td>
+   <td style="text-align:right;"> 60 </td>
+   <td style="text-align:right;"> 8 </td>
+   <td style="text-align:right;"> 0.54 </td>
+   <td style="text-align:right;"> 0.68 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> drive.02 </td>
+   <td style="text-align:right;"> 17 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0.57 </td>
+   <td style="text-align:right;"> 0.64 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> provide.01 </td>
+   <td style="text-align:right;"> 91 </td>
+   <td style="text-align:right;"> 14 </td>
+   <td style="text-align:right;"> 0.49 </td>
+   <td style="text-align:right;"> 0.60 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> name.01 </td>
+   <td style="text-align:right;"> 15 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0.50 </td>
+   <td style="text-align:right;"> 0.48 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> leave.12 </td>
+   <td style="text-align:right;"> 32 </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 0.43 </td>
+   <td style="text-align:right;"> 0.42 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> deliver.01 </td>
+   <td style="text-align:right;"> 19 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 0.41 </td>
+   <td style="text-align:right;"> 0.39 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> hear.01 </td>
+   <td style="text-align:right;"> 13 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0.43 </td>
+   <td style="text-align:right;"> 0.31 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> extend.02 </td>
+   <td style="text-align:right;"> 17 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 0.34 </td>
+   <td style="text-align:right;"> 0.25 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> deal.02 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0.03 </td>
+   <td style="text-align:right;"> 0.00 </td>
+  </tr>
+</tbody>
+</table></div>
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="tbl-mixed-cxn2-roleset" class="anchored">
+
+<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; "><table class=" lightable-paper table" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;"><caption>Table&nbsp;17:  Role sets that have PREF in arg0(np)-v(v)-arg2(np)-arg1(np) but also appear in arg0(np)-v(v)-arg1(np)-arg2(pp) (ordered by FYE). </caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> WORD </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg1(np)-arg2(pp) </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg2(np)-arg1(np) </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> PRES </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> FYE </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> give.01 </td>
+   <td style="text-align:right;"> 224 </td>
+   <td style="text-align:right;"> 662 </td>
+   <td style="text-align:right;"> -18.71 </td>
+   <td style="text-align:right;"> 378.54 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> tell.01 </td>
+   <td style="text-align:right;"> 19 </td>
+   <td style="text-align:right;"> 150 </td>
+   <td style="text-align:right;"> -10.18 </td>
+   <td style="text-align:right;"> 93.09 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> show.01 </td>
+   <td style="text-align:right;"> 29 </td>
+   <td style="text-align:right;"> 61 </td>
+   <td style="text-align:right;"> -5.24 </td>
+   <td style="text-align:right;"> 25.26 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> grant.01 </td>
+   <td style="text-align:right;"> 9 </td>
+   <td style="text-align:right;"> 25 </td>
+   <td style="text-align:right;"> -3.59 </td>
+   <td style="text-align:right;"> 11.90 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> teach.01 </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 15 </td>
+   <td style="text-align:right;"> -2.94 </td>
+   <td style="text-align:right;"> 8.04 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> owe.01 </td>
+   <td style="text-align:right;"> 9 </td>
+   <td style="text-align:right;"> 14 </td>
+   <td style="text-align:right;"> -2.28 </td>
+   <td style="text-align:right;"> 5.35 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> send.01 </td>
+   <td style="text-align:right;"> 111 </td>
+   <td style="text-align:right;"> 49 </td>
+   <td style="text-align:right;"> -1.81 </td>
+   <td style="text-align:right;"> 4.44 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> deny.01 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 6 </td>
+   <td style="text-align:right;"> -1.98 </td>
+   <td style="text-align:right;"> 3.75 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> pay.01 </td>
+   <td style="text-align:right;"> 61 </td>
+   <td style="text-align:right;"> 27 </td>
+   <td style="text-align:right;"> -1.34 </td>
+   <td style="text-align:right;"> 2.67 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> earn.01 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> -1.57 </td>
+   <td style="text-align:right;"> 2.58 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> write.01 </td>
+   <td style="text-align:right;"> 13 </td>
+   <td style="text-align:right;"> 10 </td>
+   <td style="text-align:right;"> -1.36 </td>
+   <td style="text-align:right;"> 2.45 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> save.01 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> -1.54 </td>
+   <td style="text-align:right;"> 2.38 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> hand.01 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> -1.40 </td>
+   <td style="text-align:right;"> 2.22 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> award.01 </td>
+   <td style="text-align:right;"> 13 </td>
+   <td style="text-align:right;"> 7 </td>
+   <td style="text-align:right;"> -0.85 </td>
+   <td style="text-align:right;"> 1.16 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> charge.01 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> -0.94 </td>
+   <td style="text-align:right;"> 1.08 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> feed.01 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> -0.94 </td>
+   <td style="text-align:right;"> 1.08 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> find.01 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> -0.94 </td>
+   <td style="text-align:right;"> 1.08 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> lend.01 </td>
+   <td style="text-align:right;"> 18 </td>
+   <td style="text-align:right;"> 6 </td>
+   <td style="text-align:right;"> -0.40 </td>
+   <td style="text-align:right;"> 0.38 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> sing.01 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> -0.16 </td>
+   <td style="text-align:right;"> 0.00 </td>
+  </tr>
+</tbody>
+</table></div>
+
+</div>
+</div>
+</div>
+<p>It is important to note that the preference is decided by the “PRES” or the Pearson residual score and not solely the frequency. This is because there is a substantial difference between the frequency of arg0(np)-v(v)-arg1(np)-arg2(pp) and arg0(np)-v(v)-arg2(np)-arg1(np), which appeared 5497 and 1180 in the data set respectively. Pearson residuals take that into account. They are a measure of how different the observed frequencies of an event are from the frequencies that would be expected if the event were independent of another. In this case, the residuals are calculated for the frequency of a word in two different constructions. The residuals are negative when the frequency of the second construction is higher than the frequency that would be expected if the word’s presence in the two constructions were independent. The negative value suggests that the word is more likely to appear in the second construction than expected by chance. The reverse is true of positive values. For example, the role set “send.01” appears 111 times in arg0(np)-v(v)-arg1(np)-arg2(pp) and 49 times in arg0(np)-v(v)-arg2(np)-arg1(np). The Pearson residual for this role set is -1.81, which suggests that the role set is more likely to appear in arg0(np)-v(v)-arg2(np)-arg1(np) based on observed and expected frequency.</p>
+</section>
+<section id="comparison-with-previous-work" class="level3" data-number="3.2.2">
+<h3 data-number="3.2.2" class="anchored" data-anchor-id="comparison-with-previous-work"><span class="header-section-number">3.2.2</span> Comparison with previous work</h3>
+<p>To aid the interpretation of the results of the DCA, they are compared to a study by <span class="citation" data-cites="gries_extending_2004">Gries &amp; Stefanowitsch (<a href="#ref-gries_extending_2004" role="doc-biblioref">2004</a>)</span>, where a DCA was used to compare collexemes in a ditransitive and prepositional dative construction. The table is taken from <span class="citation" data-cites="gries_extending_2004">Gries &amp; Stefanowitsch (<a href="#ref-gries_extending_2004" role="doc-biblioref">2004</a>)</span>. The results of this study are presented in the following <a href="#tbl-gries2004">Table&nbsp;18</a>.</p>
+<div id="tbl-gries2004" class="tbl-parent quarto-layout-panel anchored">
+<div class="panel-caption table-caption">
+<p>Table&nbsp;18: Distinctive collexemes in the Ditransitive and the Prepositional Dative construction in the ICE-GB presented in <span class="citation" data-cites="gries_extending_2004">Gries &amp; Stefanowitsch (<a href="#ref-gries_extending_2004" role="doc-biblioref">2004</a>)</span></p>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div id="tbl-1-gries2004" class="quarto-layout-cell quarto-layout-cell-subref anchored" data-ref-parent="tbl-gries2004" style="flex-basis: 50.0%;justify-content: center;">
+<table class="table">
+<caption>(a) Distinctive collexemes in the Prepositional Dative</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Collexeme</th>
+<th style="text-align: left;">Prep. Dative</th>
+<th style="text-align: left;">Ditransitive</th>
+<th style="text-align: left;">FYE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Bring</td>
+<td style="text-align: left;">82</td>
+<td style="text-align: left;">7</td>
+<td style="text-align: left;">8.83</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Play</td>
+<td style="text-align: left;">37</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">5.82</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Take</td>
+<td style="text-align: left;">63</td>
+<td style="text-align: left;">12</td>
+<td style="text-align: left;">3.70</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pass</td>
+<td style="text-align: left;">29</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">3.70</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Make</td>
+<td style="text-align: left;">23</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">2.17</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sell</td>
+<td style="text-align: left;">14</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1.15</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Do</td>
+<td style="text-align: left;">40</td>
+<td style="text-align: left;">10</td>
+<td style="text-align: left;">1.08</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Supply</td>
+<td style="text-align: left;">12</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1.54</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Read</td>
+<td style="text-align: left;">10</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1.22</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hand</td>
+<td style="text-align: left;">21</td>
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">1.20</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Feed</td>
+<td style="text-align: left;">9</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1.07</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Leave</td>
+<td style="text-align: left;">20</td>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">0.85</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Keep</td>
+<td style="text-align: left;">7</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0.77</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pay</td>
+<td style="text-align: left;">34</td>
+<td style="text-align: left;">13</td>
+<td style="text-align: left;">0.74</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Assign</td>
+<td style="text-align: left;">8</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">0.37</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Set</td>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">0.37</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Write</td>
+<td style="text-align: left;">9</td>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">0.30</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cut</td>
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">0.27</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Lend</td>
+<td style="text-align: left;">13</td>
+<td style="text-align: left;">7</td>
+<td style="text-align: left;">0.22</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="tbl-2-gries2004" class="quarto-layout-cell quarto-layout-cell-subref anchored" data-ref-parent="tbl-gries2004" style="flex-basis: 50.0%;justify-content: center;">
+<table class="table">
+<caption>(b) Distinctive collexemes in the Ditransitive construction</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Collexeme</th>
+<th style="text-align: left;">Prep. Dative</th>
+<th style="text-align: left;">Ditransitive</th>
+<th style="text-align: left;">FYE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Give</td>
+<td style="text-align: left;">146</td>
+<td style="text-align: left;">461</td>
+<td style="text-align: left;">119.74</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Tell</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">128</td>
+<td style="text-align: left;">57.95</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Show</td>
+<td style="text-align: left;">15</td>
+<td style="text-align: left;">49</td>
+<td style="text-align: left;">11.07</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Offer</td>
+<td style="text-align: left;">15</td>
+<td style="text-align: left;">43</td>
+<td style="text-align: left;">9.99</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cost</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">20</td>
+<td style="text-align: left;">8.99</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Teach</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">15</td>
+<td style="text-align: left;">5.83</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Wish</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">9</td>
+<td style="text-align: left;">3.30</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ask</td>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">12</td>
+<td style="text-align: left;">2.88</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Promise</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">7</td>
+<td style="text-align: left;">3.44</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Deny</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">8</td>
+<td style="text-align: left;">1.92</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Award</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">7</td>
+<td style="text-align: left;">1.58</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Grant</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">1.25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cause</td>
+<td style="text-align: left;">9</td>
+<td style="text-align: left;">8</td>
+<td style="text-align: left;">0.67</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Drop</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">0.62</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Charge</td>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">0.53</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Get</td>
+<td style="text-align: left;">32</td>
+<td style="text-align: left;">20</td>
+<td style="text-align: left;">0.46</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Allocate</td>
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">0.41</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Send</td>
+<td style="text-align: left;">113</td>
+<td style="text-align: left;">64</td>
+<td style="text-align: left;">0.39</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Owe</td>
+<td style="text-align: left;">9</td>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">0.35</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Lose</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">0.24</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p><a href="#tbl-gries2004">Table&nbsp;18</a> presents two subtables of distinctive collexemes in the Prepositional Dative (<a href="#tbl-1-gries2004">Table&nbsp;18 (a)</a>) and Ditransitive constructions (<a href="#tbl-2-gries2004">Table&nbsp;18 (b)</a>). The tables show the collexeme, the frequency in which it appears in the constructions, and the -log10-transformed Fisher-Yates p-value for each collexeme. The Fisher-Yates scores were not -log10-transformed in the original table but were transformed here to make for easier comparison to the data presented in the current study.</p>
+<p>Before interpreting the role sets, it is perhaps useful to compare lemmas to lemmas. <a href="#tbl-cxn1-lemma-lemma-FYE">Table&nbsp;19</a> shows the data from <span class="citation" data-cites="gries_extending_2004">Gries &amp; Stefanowitsch (<a href="#ref-gries_extending_2004" role="doc-biblioref">2004</a>)</span> and the current study for the lemmas that are distinctive for the ditransitive / arg0(np)-v(v)-arg1(np)-arg2(pp).</p>
+<div id="tbl-cxn1-lemma-lemma-FYE" class="cell tbl-parent quarto-layout-panel anchored">
+<div class="panel-caption table-caption">
+<p>Table&nbsp;19: Comparison lemmas distinctive for arg0(np)-v(v)-arg1(np)-arg2(pp).</p>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div id="tbl-cxn1-lemma-lemma-FYE-1" class="quarto-layout-cell quarto-layout-cell-subref anchored" data-ref-parent="tbl-cxn1-lemma-lemma-FYE" style="flex-basis: 50.0%;justify-content: center;">
+
+<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; "><table class=" lightable-paper table" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;"><caption>(a) Gries and Stefanowitsch (2013) </caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> WORD </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> Prep.Dative </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> Ditransitive </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> FYE </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> bring </td>
+   <td style="text-align:right;"> 82 </td>
+   <td style="text-align:right;"> 7 </td>
+   <td style="text-align:right;"> 8.83 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> play </td>
+   <td style="text-align:right;"> 37 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 5.82 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> take </td>
+   <td style="text-align:right;"> 63 </td>
+   <td style="text-align:right;"> 12 </td>
+   <td style="text-align:right;"> 3.70 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> pass </td>
+   <td style="text-align:right;"> 29 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 3.70 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> make </td>
+   <td style="text-align:right;"> 23 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 2.17 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> sell </td>
+   <td style="text-align:right;"> 14 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1.15 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> do </td>
+   <td style="text-align:right;"> 40 </td>
+   <td style="text-align:right;"> 10 </td>
+   <td style="text-align:right;"> 1.08 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> supply </td>
+   <td style="text-align:right;"> 12 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1.54 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> read </td>
+   <td style="text-align:right;"> 10 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1.22 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> hand </td>
+   <td style="text-align:right;"> 21 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 1.20 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> feed </td>
+   <td style="text-align:right;"> 9 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1.07 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> leave </td>
+   <td style="text-align:right;"> 20 </td>
+   <td style="text-align:right;"> 6 </td>
+   <td style="text-align:right;"> 0.85 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> keep </td>
+   <td style="text-align:right;"> 7 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0.77 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> pay </td>
+   <td style="text-align:right;"> 34 </td>
+   <td style="text-align:right;"> 13 </td>
+   <td style="text-align:right;"> 0.74 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> assign </td>
+   <td style="text-align:right;"> 8 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 0.37 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> set </td>
+   <td style="text-align:right;"> 6 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 0.37 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> write </td>
+   <td style="text-align:right;"> 9 </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 0.30 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> cut </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 0.27 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> lend </td>
+   <td style="text-align:right;"> 13 </td>
+   <td style="text-align:right;"> 7 </td>
+   <td style="text-align:right;"> 0.22 </td>
+  </tr>
+</tbody>
+</table></div>
+
+</div>
+<div id="tbl-cxn1-lemma-lemma-FYE-2" class="quarto-layout-cell quarto-layout-cell-subref anchored" data-ref-parent="tbl-cxn1-lemma-lemma-FYE" style="flex-basis: 50.0%;justify-content: center;">
+
+<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; "><table class=" lightable-paper table" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;"><caption>(b) Current study </caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> WORD </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg1(np)-arg2(pp) </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg2(np)-arg1(np) </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> FYE </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> take </td>
+   <td style="text-align:right;"> 213 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 8.82 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> sell </td>
+   <td style="text-align:right;"> 82 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 2.36 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> extend </td>
+   <td style="text-align:right;"> 32 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 1.14 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> bring </td>
+   <td style="text-align:right;"> 175 </td>
+   <td style="text-align:right;"> 27 </td>
+   <td style="text-align:right;"> 0.95 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> leave </td>
+   <td style="text-align:right;"> 41 </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 0.78 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> do </td>
+   <td style="text-align:right;"> 60 </td>
+   <td style="text-align:right;"> 8 </td>
+   <td style="text-align:right;"> 0.68 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> drive </td>
+   <td style="text-align:right;"> 17 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0.64 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> name </td>
+   <td style="text-align:right;"> 16 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0.63 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> provide </td>
+   <td style="text-align:right;"> 91 </td>
+   <td style="text-align:right;"> 14 </td>
+   <td style="text-align:right;"> 0.60 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> charge </td>
+   <td style="text-align:right;"> 23 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 0.53 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> deliver </td>
+   <td style="text-align:right;"> 19 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 0.39 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> hear </td>
+   <td style="text-align:right;"> 13 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0.31 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> deal </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0.00 </td>
+  </tr>
+</tbody>
+</table></div>
+
+</div>
+</div>
+</div>
+<div class="cell">
+
+</div>
+<p><a href="#tbl-cxn2-lemma-lemma-FYE">Table&nbsp;20</a> shows the data from <span class="citation" data-cites="gries_extending_2004">Gries &amp; Stefanowitsch (<a href="#ref-gries_extending_2004" role="doc-biblioref">2004</a>)</span> and the current study for the lemmas that are distinctive for the ditransitive / arg0(np)-v(v)-arg1(np)-arg2(pp).</p>
+<div id="tbl-cxn2-lemma-lemma-FYE" class="cell tbl-parent quarto-layout-panel anchored">
+<div class="panel-caption table-caption">
+<p>Table&nbsp;20: Comparison lemmas distinctive for arg0(np)-v(v)-arg2(np)-arg1(np).</p>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div id="tbl-cxn2-lemma-lemma-FYE-1" class="quarto-layout-cell quarto-layout-cell-subref anchored" data-ref-parent="tbl-cxn2-lemma-lemma-FYE" style="flex-basis: 50.0%;justify-content: center;">
+
+<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; "><table class=" lightable-paper table" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;"><caption>(a) Gries and Stefanowitsch (2013) </caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> WORD </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> Prep.Dative </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> Ditransitive </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> FYE </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> give </td>
+   <td style="text-align:right;"> 146 </td>
+   <td style="text-align:right;"> 461 </td>
+   <td style="text-align:right;"> 119.74 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> tell </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 128 </td>
+   <td style="text-align:right;"> 57.95 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> show </td>
+   <td style="text-align:right;"> 15 </td>
+   <td style="text-align:right;"> 49 </td>
+   <td style="text-align:right;"> 11.07 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> offer </td>
+   <td style="text-align:right;"> 15 </td>
+   <td style="text-align:right;"> 43 </td>
+   <td style="text-align:right;"> 9.99 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> cost </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 20 </td>
+   <td style="text-align:right;"> 8.99 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> teach </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 15 </td>
+   <td style="text-align:right;"> 5.83 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> wish </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 9 </td>
+   <td style="text-align:right;"> 3.30 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ask </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 12 </td>
+   <td style="text-align:right;"> 2.88 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> promise </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 7 </td>
+   <td style="text-align:right;"> 3.44 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> deny </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 8 </td>
+   <td style="text-align:right;"> 1.92 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> award </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 7 </td>
+   <td style="text-align:right;"> 1.58 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> grant </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 1.25 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> cause </td>
+   <td style="text-align:right;"> 9 </td>
+   <td style="text-align:right;"> 8 </td>
+   <td style="text-align:right;"> 0.67 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> drop </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 0.62 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> charge </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 0.53 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> get </td>
+   <td style="text-align:right;"> 32 </td>
+   <td style="text-align:right;"> 20 </td>
+   <td style="text-align:right;"> 0.46 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> allocate </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 0.41 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> send </td>
+   <td style="text-align:right;"> 113 </td>
+   <td style="text-align:right;"> 64 </td>
+   <td style="text-align:right;"> 0.39 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> owe </td>
+   <td style="text-align:right;"> 9 </td>
+   <td style="text-align:right;"> 6 </td>
+   <td style="text-align:right;"> 0.35 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> lose </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 0.24 </td>
+  </tr>
+</tbody>
+</table></div>
+
+</div>
+<div id="tbl-cxn2-lemma-lemma-FYE-2" class="quarto-layout-cell quarto-layout-cell-subref anchored" data-ref-parent="tbl-cxn2-lemma-lemma-FYE" style="flex-basis: 50.0%;justify-content: center;">
+
+<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; "><table class=" lightable-paper table" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;"><caption>(b) Current study </caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> WORD </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg1(np)-arg2(pp) </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg2(np)-arg1(np) </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> FYE </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> give </td>
+   <td style="text-align:right;"> 225 </td>
+   <td style="text-align:right;"> 662 </td>
+   <td style="text-align:right;"> 377.99 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> tell </td>
+   <td style="text-align:right;"> 21 </td>
+   <td style="text-align:right;"> 150 </td>
+   <td style="text-align:right;"> 91.40 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ask </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 36 </td>
+   <td style="text-align:right;"> 25.80 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> show </td>
+   <td style="text-align:right;"> 29 </td>
+   <td style="text-align:right;"> 61 </td>
+   <td style="text-align:right;"> 25.26 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> grant </td>
+   <td style="text-align:right;"> 9 </td>
+   <td style="text-align:right;"> 25 </td>
+   <td style="text-align:right;"> 11.90 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> teach </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 15 </td>
+   <td style="text-align:right;"> 8.04 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> owe </td>
+   <td style="text-align:right;"> 9 </td>
+   <td style="text-align:right;"> 14 </td>
+   <td style="text-align:right;"> 5.35 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> deny </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 6 </td>
+   <td style="text-align:right;"> 3.75 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> pay </td>
+   <td style="text-align:right;"> 61 </td>
+   <td style="text-align:right;"> 27 </td>
+   <td style="text-align:right;"> 2.67 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> earn </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 2.58 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> write </td>
+   <td style="text-align:right;"> 13 </td>
+   <td style="text-align:right;"> 10 </td>
+   <td style="text-align:right;"> 2.45 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> send </td>
+   <td style="text-align:right;"> 143 </td>
+   <td style="text-align:right;"> 49 </td>
+   <td style="text-align:right;"> 2.36 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> hand </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 2.22 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> award </td>
+   <td style="text-align:right;"> 13 </td>
+   <td style="text-align:right;"> 7 </td>
+   <td style="text-align:right;"> 1.16 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> feed </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 1.08 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> find </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 1.08 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> serve </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0.49 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> singe </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0.49 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> lend </td>
+   <td style="text-align:right;"> 18 </td>
+   <td style="text-align:right;"> 6 </td>
+   <td style="text-align:right;"> 0.38 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> save </td>
+   <td style="text-align:right;"> 18 </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 0.00 </td>
+  </tr>
+</tbody>
+</table></div>
+
+</div>
+</div>
+</div>
+<div class="cell">
+
+</div>
+<p>The threshold of -log10(0.05) can be employed as a benchmark to distinguish between collexemes that are significantly attracted to or repelled from the prepositional dative or ditransitive construction. Collexemes with log values greater than 1.3 is attracted to the construction, while those with scores less than -1.3 are repelled from it. Values around zero would indicate almost free alternation between the two constructions. Nevertheless, the distinction between central and peripheral collexemes is not clear-cut and instead represents a continuum. Therefore, the selection of any benchmark should be considered with caution. Furthermore, it should be noted that the p-values are dependent on the sample size. A larger corpus typically yields lower p-values and more significant log-transformed scores (<span class="citation" data-cites="levshina_2015">Levshina (<a href="#ref-levshina_2015" role="doc-biblioref">2015</a>)</span>).</p>
+<p>It is impossible to do an exact one-one comparison because there are a few key differences between the data in <span class="citation" data-cites="gries_extending_2004">Gries &amp; Stefanowitsch (<a href="#ref-gries_extending_2004" role="doc-biblioref">2004</a>)</span> and the current study. The <span class="citation" data-cites="gries_extending_2004">Gries &amp; Stefanowitsch (<a href="#ref-gries_extending_2004" role="doc-biblioref">2004</a>)</span> study examines “to” dative alternations exclusively, meaning that alternations with another preposition are not accounted for in the data. On the other hand, the current study examines all instances where an arg2(pp) is present. For example, constructions that include “for” or “with” are also counted as arg0(np)-v(v)-arg1(np)-arg2(pp). The current study counts 5497 occurrences of the schema matching with the prepositional dative, including all the prepositions. The <span class="citation" data-cites="gries_extending_2004">Gries &amp; Stefanowitsch (<a href="#ref-gries_extending_2004" role="doc-biblioref">2004</a>)</span>) study only counts 1919 occurrences of the “to”-dative. This means that they essentially examine somewhat different phenomena. Consequently, the verbs that are extracted from the corpus only overlap a small amount. The same words for the collexemes distinctive for the arg0(np)-v(v)-arg1(np)-arg2(pp) construction are “take, sell, bring, leave, do” and the different words are “extend, drive, name, provide, charge, deliver, hear, deal, play, pass, make, supply, read, hand, feed, keep, pay, assign, set, write, cut, lend”. The same words for the collexemes distinctive for the arg0(np)-v(v)-arg2(np)-arg1(np) construction are “give, tell, ask, show, grant, teach, owe, deny, send, award” and the different words are “pay, earn, write, hand, feed, find, serve, singe, lend, save, offer, cost, wish, promise, cause, drop, charge, get, allocate, lose”. An interesting example is the word “bring” in <a href="#tbl-cxn1-lemma-lemma-FYE-1">Table&nbsp;19 (a)</a>, which has an FYE score of 8.83 and was found to be the most distinctive collexeme for the prepositional dative that alternates between the two constructions. This is not the case for the current study. In the current study, “bring” only has an FYE score of 0.95, which is below the standard threshold of 1.3, suggesting that it alternates more freely than previously assumed. However, given the differences between the two studies, comparing only FYE scores would not allow such a claim to be made. What can be carefully stated is that the lemma “bring” alternates more freely between arg0(np)-v(v)-arg1(np)-arg2(pp) and arg0(np)-v(v)-arg2(np)-arg1(np). Due to the limited scope of this research, it is impossible to analyze the differences more thoroughly, but it could prove helpful for further research. Nevertheless, the similarities and differences can be used to compare lemmas and role sets.</p>
+</section>
+<section id="comparison-of-lemmas-and-role-sets-from-the-current-study" class="level3" data-number="3.2.3">
+<h3 data-number="3.2.3" class="anchored" data-anchor-id="comparison-of-lemmas-and-role-sets-from-the-current-study"><span class="header-section-number">3.2.3</span> Comparison of lemmas and role sets from the current study</h3>
+<p>This final analysis section examines the results from the DCA on the lemmas and role sets from the current study. <a href="#tbl-cxn1-lemma-roleset-FYE-current">Table&nbsp;21</a> shows the collexemes distinctive for arg0(np)-v(v)-arg1(np)-arg2(pp) and <a href="#tbl-cxn2-lemma-roleset-FYE-current">Table&nbsp;25</a> shows the collexemes distinctive for arg0(np)-v(v)-arg2(np)-arg1(np).</p>
+<section id="lemmas-and-role-sets-distinctive-for-arg0np-vv-arg1np-arg2pp" class="level4" data-number="3.2.3.1">
+<h4 data-number="3.2.3.1" class="anchored" data-anchor-id="lemmas-and-role-sets-distinctive-for-arg0np-vv-arg1np-arg2pp"><span class="header-section-number">3.2.3.1</span> Lemmas and role sets distinctive for arg0(np)-v(v)-arg1(np)-arg2(pp)</h4>
+<div id="tbl-cxn1-lemma-roleset-FYE-current" class="cell tbl-parent quarto-layout-panel anchored">
+<div class="panel-caption table-caption">
+<p>Table&nbsp;21: Comparison lemma &amp; roleset distinctive for arg0(np)-v(v)-arg1(np)-arg2(pp).</p>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div id="tbl-cxn1-lemma-roleset-FYE-current-1" class="quarto-layout-cell quarto-layout-cell-subref anchored" data-ref-parent="tbl-cxn1-lemma-roleset-FYE-current" style="flex-basis: 50.0%;justify-content: center;">
+
+<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; "><table class=" lightable-paper table" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;"><caption>(a) Lemmas cxn1 current study </caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> WORD </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg1(np)-arg2(pp) </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg2(np)-arg1(np) </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> FYE </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> take </td>
+   <td style="text-align:right;"> 213 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 8.82 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> sell </td>
+   <td style="text-align:right;"> 82 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 2.36 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> extend </td>
+   <td style="text-align:right;"> 32 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 1.14 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> bring </td>
+   <td style="text-align:right;"> 175 </td>
+   <td style="text-align:right;"> 27 </td>
+   <td style="text-align:right;"> 0.95 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> leave </td>
+   <td style="text-align:right;"> 41 </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 0.78 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> do </td>
+   <td style="text-align:right;"> 60 </td>
+   <td style="text-align:right;"> 8 </td>
+   <td style="text-align:right;"> 0.68 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> drive </td>
+   <td style="text-align:right;"> 17 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0.64 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> name </td>
+   <td style="text-align:right;"> 16 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0.63 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> provide </td>
+   <td style="text-align:right;"> 91 </td>
+   <td style="text-align:right;"> 14 </td>
+   <td style="text-align:right;"> 0.60 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> charge </td>
+   <td style="text-align:right;"> 23 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 0.53 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> deliver </td>
+   <td style="text-align:right;"> 19 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 0.39 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> hear </td>
+   <td style="text-align:right;"> 13 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0.31 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> deal </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0.00 </td>
+  </tr>
+</tbody>
+</table></div>
+
+</div>
+<div id="tbl-cxn1-lemma-roleset-FYE-current-2" class="quarto-layout-cell quarto-layout-cell-subref anchored" data-ref-parent="tbl-cxn1-lemma-roleset-FYE-current" style="flex-basis: 50.0%;justify-content: center;">
+
+<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; "><table class=" lightable-paper table" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;"><caption>(b) Role sets cxn1 current study </caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> WORD </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg1(np)-arg2(pp) </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg2(np)-arg1(np) </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> FYE </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> sell.01 </td>
+   <td style="text-align:right;"> 82 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 2.36 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> bring.01 </td>
+   <td style="text-align:right;"> 175 </td>
+   <td style="text-align:right;"> 27 </td>
+   <td style="text-align:right;"> 0.95 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> do.02 </td>
+   <td style="text-align:right;"> 60 </td>
+   <td style="text-align:right;"> 8 </td>
+   <td style="text-align:right;"> 0.68 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> drive.02 </td>
+   <td style="text-align:right;"> 17 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0.64 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> provide.01 </td>
+   <td style="text-align:right;"> 91 </td>
+   <td style="text-align:right;"> 14 </td>
+   <td style="text-align:right;"> 0.60 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> name.01 </td>
+   <td style="text-align:right;"> 15 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0.48 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> leave.12 </td>
+   <td style="text-align:right;"> 32 </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 0.42 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> deliver.01 </td>
+   <td style="text-align:right;"> 19 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 0.39 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> hear.01 </td>
+   <td style="text-align:right;"> 13 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0.31 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> extend.02 </td>
+   <td style="text-align:right;"> 17 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 0.25 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> deal.02 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0.00 </td>
+  </tr>
+</tbody>
+</table></div>
+
+</div>
+</div>
+</div>
+<p><a href="#tbl-cxn1-lemma-roleset-FYE-current">Table&nbsp;21</a> shows quite some differences between the results of the DCA on the lemmas and role sets. A notable word missing from the role set column is “take” which had the highest FYE value in the lemma subtable. “take” was also considered relevant in the <span class="citation" data-cites="gries_extending_2004">Gries &amp; Stefanowitsch (<a href="#ref-gries_extending_2004" role="doc-biblioref">2004</a>)</span> study. The reason that it does not appear in the role set subtable of this research is that most role sets of “take” only appear in arg0(np)-v(v)-arg1(np)-arg2(pp) and do not alternate with arg0(np)-v(v)-arg2(np)-arg1(np). Therefore, it is not considered a word that appears in both constructions. <a href="#tbl-take">Table&nbsp;22</a> clarifies this:</p>
+<div id="tbl-take" class="anchored">
+<table class="table">
+<caption>Table&nbsp;22: Lemma “take” and the role sets it appears in</caption>
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Lemma</strong></th>
+<th><strong>Role set</strong></th>
+<th><strong>Meaning</strong></th>
+<th><strong>Appears most in</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>take</td>
+<td>take.01</td>
+<td>take, acquire, …</td>
+<td>189: arg0(np)-v(v)-arg1(np)-arg2(pp)<br>8: arg0(np)-v(v)-arg1(np)-arg2(advp)</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>take.03</td>
+<td>cause (to be)</td>
+<td>11: arg0(np)-v(v)-arg1(np)-arg2(pp)<br>3: arg0(np-v(v)-arg2(pp)-arg1(np)</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>take.04</td>
+<td>understand to be</td>
+<td>11: arg0(np)-v(v)-arg1(np)-arg2(pp)<br>5: arg0(np)-v(v)-arg1(np)-arg2(rb)</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>take.10</td>
+<td>need, requiring</td>
+<td>2: arg0(np)-v(v)-arg2(np)-arg1(np)</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>take.25</td>
+<td>take by surprise</td>
+<td>1: arg0(np)-v(v)-arg1(np)-arg2(pp)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>It appears that in none of the role sets of “take” there is an alternation between arg0(np)-v(v)-arg1(np)-arg2(pp) and rg0(np)-v(v)-arg2(np)-arg1(np). “take.01” is the meaning of “take, acquire, come to have, choose, …” appears 189 times in arg0(np)-v(v)-arg1(np)-arg2(pp) and 8 times in arg0(np)-v(v)-arg1(np)-arg2(advp) but not in arg0(np)-v(v)-arg2(np)-arg1(np). Only in the role set of “take.10”, meaning “need, requiring”, does it appear in arg0(np)-v(v)-arg2(np)-arg1(np) as in the following utterances from the corpus: “I should’ve known that if it took her ten minutes I should ’ve hung up”.</p>
+<div id="tbl-take10" class="anchored">
+<table class="table">
+<caption>Table&nbsp;23: Lemma “take” as role set “take.10” in arg0(np)-v(v)-arg2(np)-arg1(np)</caption>
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>roleType</strong></th>
+<th><strong>pos</strong></th>
+<th><strong>string</strong></th>
+<th><strong>indices</strong></th>
+<th><strong>roleset</strong></th>
+<th><strong>lemma</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>arg0</td>
+<td>np</td>
+<td>it</td>
+<td>6</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>v</td>
+<td>v</td>
+<td>took</td>
+<td>7</td>
+<td>take.10</td>
+<td>take</td>
+</tr>
+<tr class="odd">
+<td>arg2</td>
+<td>np</td>
+<td>her</td>
+<td>8</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>arg1</td>
+<td>np</td>
+<td>ten mintues</td>
+<td>9:10</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>As a result, “take.01” has 189 appearances in arg0(np)-v(v)-arg1(np)-arg2(pp) and 0 appearances in arg0(np)-v(v)-arg2(np)-arg1(np). It has an even stronger association with arg0(np)-v(v)-arg1(np)-arg2(pp) than previously established. This is why “take” does not appear in the role set subtable of <a href="#tbl-cxn1-lemma-roleset-FYE-current">Table&nbsp;21</a>, which only considers role sets that appear in both constructions.</p>
+<p>The same reasoning can be applied to the other words that appear in the lemma subtable but not in the role set subtable. For example, the lemma “leave” only alternates in the role set “leave.12”. This role set has “put in a location/state when physically leaving” as meaning. The arg0(np)-v(v)-arg2(np)-arg1(np) can be seen in the following utterance: “Once she disappeared from her family Kach says Hose locked her in a bedroom leaving her a bucket to use for a toilet and giving her peanut butter sandwiches and bottled water.”</p>
+<div id="tbl-leave12" class="anchored">
+<table class="table">
+<caption>Table&nbsp;24: Lemma “leave” as role set “leave.12” in arg0(np)-v(v)-arg2(np)-arg1(np)</caption>
+<colgroup>
+<col style="width: 19%">
+<col style="width: 12%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>roleType</strong></th>
+<th><strong>pos</strong></th>
+<th><strong>string</strong></th>
+<th><strong>indices</strong></th>
+<th><strong>roleset</strong></th>
+<th><strong>lemma</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>arg0</td>
+<td>np</td>
+<td>Hose</td>
+<td>8</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>v</td>
+<td>v</td>
+<td>leaving</td>
+<td>14</td>
+<td>leave.12</td>
+<td>leave</td>
+</tr>
+<tr class="odd">
+<td>arg2</td>
+<td>np</td>
+<td>her</td>
+<td>15</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>arg1</td>
+<td>np</td>
+<td>a bucket…</td>
+<td>16:22</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><a href="#tbl-cxn1-lemma-roleset-FYE-current">Table&nbsp;21</a> shows that the values are either equal or lower regarding the FYE values. They are equal when the lemma only appears in one role set in alternation. For example, “sell” and “sell.01” both have FYE 2.36 and “drive” and “drive.02” which have FYE 0.64. The values are lower when the lemma appears in multiple role sets in alternation. This is the case for the discussed examples above, like “take” and “leave”. These lower values suggest that the alternation happens more freely when taking the specific sense of the word into account instead of looking at the general lemma.</p>
+</section>
+<section id="lemmas-and-role-sets-distinctive-for-arg0np-vv-arg2np-arg1np" class="level4" data-number="3.2.3.2">
+<h4 data-number="3.2.3.2" class="anchored" data-anchor-id="lemmas-and-role-sets-distinctive-for-arg0np-vv-arg2np-arg1np"><span class="header-section-number">3.2.3.2</span> Lemmas and role sets distinctive for arg0(np)-v(v)-arg2(np)-arg1(np)</h4>
+<p>The following <a href="#tbl-cxn2-lemma-roleset-FYE-current">Table&nbsp;25</a> shows the lemmas and role sets distinctive for arg0(np)-v(v)-arg2(np)-arg1(np).</p>
+<div id="tbl-cxn2-lemma-roleset-FYE-current" class="cell tbl-parent quarto-layout-panel anchored">
+<div class="panel-caption table-caption">
+<p>Table&nbsp;25: Comparison lemma &amp; roleset distinctive for arg0(np)-v(v)-arg2(np)-arg1(np).</p>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div id="tbl-cxn2-lemma-roleset-FYE-current-1" class="quarto-layout-cell quarto-layout-cell-subref anchored" data-ref-parent="tbl-cxn2-lemma-roleset-FYE-current" style="flex-basis: 50.0%;justify-content: center;">
+
+<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; "><table class=" lightable-paper table" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;"><caption>(a) Lemmas cxn2 current study </caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> WORD </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg1(np)-arg2(pp) </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg2(np)-arg1(np) </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> FYE </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> give </td>
+   <td style="text-align:right;"> 225 </td>
+   <td style="text-align:right;"> 662 </td>
+   <td style="text-align:right;"> 377.99 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> tell </td>
+   <td style="text-align:right;"> 21 </td>
+   <td style="text-align:right;"> 150 </td>
+   <td style="text-align:right;"> 91.40 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ask </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 36 </td>
+   <td style="text-align:right;"> 25.80 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> show </td>
+   <td style="text-align:right;"> 29 </td>
+   <td style="text-align:right;"> 61 </td>
+   <td style="text-align:right;"> 25.26 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> grant </td>
+   <td style="text-align:right;"> 9 </td>
+   <td style="text-align:right;"> 25 </td>
+   <td style="text-align:right;"> 11.90 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> teach </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 15 </td>
+   <td style="text-align:right;"> 8.04 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> owe </td>
+   <td style="text-align:right;"> 9 </td>
+   <td style="text-align:right;"> 14 </td>
+   <td style="text-align:right;"> 5.35 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> deny </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 6 </td>
+   <td style="text-align:right;"> 3.75 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> pay </td>
+   <td style="text-align:right;"> 61 </td>
+   <td style="text-align:right;"> 27 </td>
+   <td style="text-align:right;"> 2.67 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> earn </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 2.58 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> write </td>
+   <td style="text-align:right;"> 13 </td>
+   <td style="text-align:right;"> 10 </td>
+   <td style="text-align:right;"> 2.45 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> send </td>
+   <td style="text-align:right;"> 143 </td>
+   <td style="text-align:right;"> 49 </td>
+   <td style="text-align:right;"> 2.36 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> hand </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 2.22 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> award </td>
+   <td style="text-align:right;"> 13 </td>
+   <td style="text-align:right;"> 7 </td>
+   <td style="text-align:right;"> 1.16 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> feed </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 1.08 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> find </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 1.08 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> serve </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0.49 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> singe </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0.49 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> lend </td>
+   <td style="text-align:right;"> 18 </td>
+   <td style="text-align:right;"> 6 </td>
+   <td style="text-align:right;"> 0.38 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> save </td>
+   <td style="text-align:right;"> 18 </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 0.00 </td>
+  </tr>
+</tbody>
+</table></div>
+
+</div>
+<div id="tbl-cxn2-lemma-roleset-FYE-current-2" class="quarto-layout-cell quarto-layout-cell-subref anchored" data-ref-parent="tbl-cxn2-lemma-roleset-FYE-current" style="flex-basis: 50.0%;justify-content: center;">
+
+<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; "><table class=" lightable-paper table" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;"><caption>(b) Role sets cxn2 current study </caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> WORD </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg1(np)-arg2(pp) </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> arg0(np)-v(v)-arg2(np)-arg1(np) </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> FYE </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> give.01 </td>
+   <td style="text-align:right;"> 224 </td>
+   <td style="text-align:right;"> 662 </td>
+   <td style="text-align:right;"> 378.54 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> tell.01 </td>
+   <td style="text-align:right;"> 19 </td>
+   <td style="text-align:right;"> 150 </td>
+   <td style="text-align:right;"> 93.09 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> show.01 </td>
+   <td style="text-align:right;"> 29 </td>
+   <td style="text-align:right;"> 61 </td>
+   <td style="text-align:right;"> 25.26 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> grant.01 </td>
+   <td style="text-align:right;"> 9 </td>
+   <td style="text-align:right;"> 25 </td>
+   <td style="text-align:right;"> 11.90 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> teach.01 </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 15 </td>
+   <td style="text-align:right;"> 8.04 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> owe.01 </td>
+   <td style="text-align:right;"> 9 </td>
+   <td style="text-align:right;"> 14 </td>
+   <td style="text-align:right;"> 5.35 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> send.01 </td>
+   <td style="text-align:right;"> 111 </td>
+   <td style="text-align:right;"> 49 </td>
+   <td style="text-align:right;"> 4.44 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> deny.01 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 6 </td>
+   <td style="text-align:right;"> 3.75 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> pay.01 </td>
+   <td style="text-align:right;"> 61 </td>
+   <td style="text-align:right;"> 27 </td>
+   <td style="text-align:right;"> 2.67 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> earn.01 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 2.58 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> write.01 </td>
+   <td style="text-align:right;"> 13 </td>
+   <td style="text-align:right;"> 10 </td>
+   <td style="text-align:right;"> 2.45 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> save.01 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 2.38 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> hand.01 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 2.22 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> award.01 </td>
+   <td style="text-align:right;"> 13 </td>
+   <td style="text-align:right;"> 7 </td>
+   <td style="text-align:right;"> 1.16 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> charge.01 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 1.08 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> feed.01 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 1.08 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> find.01 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 1.08 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> lend.01 </td>
+   <td style="text-align:right;"> 18 </td>
+   <td style="text-align:right;"> 6 </td>
+   <td style="text-align:right;"> 0.38 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> sing.01 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0.00 </td>
+  </tr>
+</tbody>
+</table></div>
+
+</div>
+</div>
+</div>
+<p>A first observation is that the FYE values for the lemmas and role sets distinctive for arg0(np)-v(v)-arg2(np)-arg1(np) are, in general, higher than in <a href="#tbl-cxn1-lemma-roleset-FYE-current">Table&nbsp;21</a>. This suggests that the lemma and role sets for arg0(np)-v(v)-arg2(np)-arg1(np) are more distinctive and alternate less freely than those distinctive for arg0(np)-v(v)-arg1(np)-arg2(pp). However, once again, the difference in frequency between these two constructions must be considered when interpreting the results. Unsurprisingly, the most distinctive word for arg0(np)-v(v)-arg2(np)-arg1(np) is “give” with role set “give.01”. It can also be noted that the FYE values between the lemmas and role sets follow the opposite movement, as in <a href="#tbl-cxn1-lemma-roleset-FYE-current">Table&nbsp;21</a>. Here, the FYE values are equal or higher instead of equal or lower. For example, the role sets “give.01”, “tell.01”, “send.01” and “save.01” have higher FYE values than their respective lemmas. This can be explained by the fact that when split into role sets, the frequency of that role set in arg0(np)-v(v)-arg1(np)-arg2(pp) is lower than the frequency of the lemma of that role set in arg0(np)-v(v)-arg1(np)-arg2(pp). This leads to a higher distinctiveness towards arg0(np)-v(v)-arg2(np)-arg1(np). This can be seen in the lemma “save” and role set “save.01”. The lemma “save” has FYE 0.00, and the role set “save.01” has an FYE value of 2.38. <a href="#tbl-save">Table&nbsp;26</a> illustrates this:</p>
+<div id="tbl-save" class="anchored">
+<table class="table">
+<caption>Table&nbsp;26: Lemma “save” and the role sets it appears in</caption>
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Lemma</strong></th>
+<th><strong>Role set</strong></th>
+<th><strong>Meaning</strong></th>
+<th><strong>Appears most in</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>save</td>
+<td>save.02</td>
+<td>desperate peril sense</td>
+<td>13: arg0(np)-v(v)-arg1(np)-arg2(pp)<br>1: arg0(np)-v(v)-arg1(np)-arg2(np)</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>save.01</td>
+<td>keep from spending</td>
+<td>4: arg0(np)-v(v)-arg2(np)-arg1(np)<br>1: arg0(np-v(v)-arg1(np)-arg2(pp)</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>save.03</td>
+<td>collect, accrue</td>
+<td>4: arg0(np)-v(v)-arg1(np)-arg2(pp)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>In role sets “save.02” and “save.03”, “save” does not appear in the construction arg0(np)-v(v)-arg2(np)-arg1(np) but rather in arg0(np)-v(v)-arg1(np)-arg2(pp). However, in role set “save.01”, “save” is distinctive for arg0(np)-v(v)-arg2(np)-arg1(np), which is why the FYE value is higher than the FYE value of the lemma “save”.</p>
+<p>Another similar case is the word “send”. The lemma “send” has FYE 2.36 and the role set “send.01” has an FYE value of 4.44. <a href="#tbl-send">Table&nbsp;27</a> shows this further:</p>
+<div id="tbl-send" class="anchored">
+<table class="table">
+<caption>Table&nbsp;27: Lemma “send” and the role sets it appears in</caption>
+<colgroup>
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 54%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Lemma</strong></th>
+<th><strong>Role set</strong></th>
+<th><strong>Meaning</strong></th>
+<th><strong>Appears most in</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>send</td>
+<td>send.01</td>
+<td>give</td>
+<td>111: arg0(np)-v(v)-arg1(np)-arg2(pp)<br>49: arg0(np)-v(v)-arg2(np)-arg1(np)</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>send.02</td>
+<td>cause to action</td>
+<td>30: arg0(np)-v(v)-arg1(np)-arg2(c(“s,”vp”))<br>21: arg0(np)-v(v)-arg1(np)-arg2(pp)</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>send.03</td>
+<td>cause motion</td>
+<td>11: arg0(np)-v(v)-arg1(np)-arg2(pp)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>It is not a surprise that the lemma “send” in the role set “send.01” with the meaning “give” is distinctive for arg0(np)-v(v)-arg2(np)-arg1(np). This is because it serves a similar function as the role set “give.01” which is the most distinctive for arg0(np)-v(v)-arg2(np)-arg1(np). For example, consider the following sentence from the corpus: “But I think in a larger sense we were saying to the President Mr.&nbsp;President uh I hope you’ll send us someone who doesn’t blow the place up doesn’t – doesn’t – doesn’t cre- create hi- his own or her own sort of nuclear option.”</p>
+<table class="table">
+<colgroup>
+<col style="width: 19%">
+<col style="width: 12%">
+<col style="width: 16%">
+<col style="width: 18%">
+<col style="width: 18%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>roleType</strong></th>
+<th><strong>pos</strong></th>
+<th><strong>string</strong></th>
+<th><strong>indices</strong></th>
+<th><strong>roleset</strong></th>
+<th><strong>lemma</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>arg0</td>
+<td>np</td>
+<td>you</td>
+<td>19</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>v</td>
+<td>v</td>
+<td>send</td>
+<td>21</td>
+<td>send.01</td>
+<td>send</td>
+</tr>
+<tr class="odd">
+<td>arg2</td>
+<td>np</td>
+<td>us</td>
+<td>22</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>arg1</td>
+<td>np</td>
+<td>someone…</td>
+<td>23:50</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>The word “send” can be replaced with “give” and the sentence’s meaning would be preserved. This is why it is not surprising that the role set “send.01” is more distinctive for arg0(np)-v(v)-arg2(np)-arg1(np) than the lemma “send”.</p>
+<p>Further, it can be noted that the lemma “ask” is not represented in the role sets table. This is comparable to the cases of “take” and “leave” previously discussed. As <a href="#tbl-ask">Table&nbsp;28</a> shows:</p>
+<div id="tbl-ask" class="anchored">
+<table class="table">
+<caption>Table&nbsp;28: Lemma “ask” and the role sets it appears in</caption>
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 51%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Lemma</strong></th>
+<th><strong>Role set</strong></th>
+<th><strong>Meaning</strong></th>
+<th><strong>Appears most in</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ask</td>
+<td>ask.01</td>
+<td>ask a question</td>
+<td>36: arg0(np)-v(v)-arg2(np)-arg1(np)<br>4: arg0(np)-v(v)-arg2(rp)-arg1(np)</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>ask.02</td>
+<td>ask a favor</td>
+<td>1: arg0(np)-v(v)-arg1(np)-arg2(pp)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The lemma “ask” only appears in arg0(np)-v(v)-arg1(np)-arg2(pp) as role set “ask.02” which has “ask a favor, ask a request, ask for” as meaning. Role set “ask.01” only appears in arg0(np)-v(v)-arg2(np)-arg1(np) and one other construction. This means that “ask” as role set “ask.01” does not alternate between arg0(np)-v(v)-arg2(np)-arg1(np) and arg0(np)-v(v)-arg1(np)-arg2(pp) which is why it is not represented in this role sets table.</p>
+</section>
+</section>
+</section>
+</section>
+<section id="conclusion" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Conclusion</h1>
+<p>In conclusion, it can be stated that applying a Computational Construction Grammar and PropBank-annotated approach to a Distinctive Collexeme Analysis is a methodological possibility. Using the CCxG Explorer developed by the EHAI research team, it was workable to extract a specific argument structure construction schema from the PropBank-annotated corpus. It showed that the most frequent constructions in that schema are arg0(np)-v(v)-arg1(np)-arg2(pp) and arg0(np)-v(v)-arg2(np)-arg1(np). These were then used to perform a DCA. This comparative analysis showed that by looking at role sets rather than lemmas, it is possible to get a more fine-grained analysis of verbs in a specific construction schema. Furthermore, it provides insights into the co-occurrence patterns and alternations between the different word senses of lemmas in an argument structure construction.</p>
+<p>Further, it gives information about which constructional alternations are possible for a lemma and its role sets. However, it must be noted that these are not definitive conclusions. Further research is required to answer the many questions raised during this study.</p>
+</section>
+<section id="appendix" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Appendix</h1>
+<p>The data, analysis results and R scripts are available in full at https://github.com/TomMoeras/ccxg-collostructional (<span class="citation" data-cites="Moerman_Computational_Construction_Grammar">Moerman</span>).</p>
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-beuls_construction_toappear" class="csl-entry" role="doc-biblioentry">
+Beuls, Katrien &amp; Paul Van Eecke. to appear. Construction <span>Grammar</span> and <span>Artificial</span> <span>Intelligence</span>. 29.
+</div>
+<div id="ref-beuls_operationalising_2021" class="csl-entry" role="doc-biblioentry">
+Beuls, Katrien &amp; Paul Van Eecke. 2021. Operationalising <span>Usage</span>-<span>Based</span> <span>Construction</span> <span>Grammar</span> on a <span>Large</span> <span>Scale</span>: <span>A</span> <span>Case</span> <span>Study</span> for <span>English</span> <span>Argument</span> <span>Structure</span>. Essonne.
+</div>
+<div id="ref-beuls_computational_2021" class="csl-entry" role="doc-biblioentry">
+Beuls, Katrien, Paul Van Eecke &amp; Vanja Sophie Cangalovic. 2021. A <span>Computational</span> <span>Construction</span> <span>Grammar</span> <span>Approach</span> to <span>Semantic</span> <span>Frame</span> <span>Extraction</span>. <em>Linguistics Vanguard</em> 7(1). <a href="https://doi.org/10.1515/lingvan-2018-0015">https://doi.org/10.1515/lingvan-2018-0015</a>.
+</div>
+<div id="ref-bonial_english_2012" class="csl-entry" role="doc-biblioentry">
+Bonial, Claire, Jena Hwang, Julia Bonn, Kathryn Conger, Olga Babko-Malaya &amp; Martha Palmer. 2012. English <span>Propbank</span> <span>Annotation</span> <span>Guidelines</span>. <em>Center for Computational Language and Education Research Institute of Cognitive Science University of Colorado at Boulder</em> 48.
+</div>
+<div id="ref-ehai_babel" class="csl-entry" role="doc-biblioentry">
+EHAI. Babel. <em>GitLab</em>. <a href="https://gitlab.ai.vub.ac.be/ehai/babel">https://gitlab.ai.vub.ac.be/ehai/babel</a> (21 January, 2023).
+</div>
+<div id="ref-ellis_construction_2009" class="csl-entry" role="doc-biblioentry">
+Ellis, Nick C. &amp; Fernando Ferreira–Junior. 2009. Construction <span>Learning</span> as a <span>Function</span> of <span>Frequency</span>, <span>Frequency</span> <span>Distribution</span>, and <span>Function</span>. <em>The Modern language journal</em> 93(3). 370–385. <a href="https://doi.org/10.1111/j.1540-4781.2009.00896.x">https://doi.org/10.1111/j.1540-4781.2009.00896.x</a>.
+</div>
+<div id="ref-fillmore_mechanisms_1988" class="csl-entry" role="doc-biblioentry">
+Fillmore, Charles J. 1988. The <span>Mechanisms</span> of "<span>Construction</span> <span>Grammar</span>". In <em>Annual <span>Meeting</span> of the <span>Berkeley</span> <span>Linguistics</span> <span>Society</span></em>, vol. 14, 35–55.
+</div>
+<div id="ref-fillmore_regularity_1988" class="csl-entry" role="doc-biblioentry">
+Fillmore, Charles J., Paul Kay &amp; Mary C. O’Connor. 1988. Regularity and <span>Idiomaticity</span> in <span>Grammatical</span> <span>Constructions</span>: <span>The</span> <span>Case</span> of <span>Let</span> <span>Alone</span>. <em>Language</em> 64(3). 501–538. <a href="https://doi.org/10.2307/414531">https://doi.org/10.2307/414531</a>.
+</div>
+<div id="ref-gilquin_making_2013" class="csl-entry" role="doc-biblioentry">
+Gilquin, Gaëtanelle. 2013. Making <span>Sense</span> of <span>Collostructional</span> <span>Analysis</span>: <span>On</span> the <span>Interplay</span> <span>Between</span> <span>Verb</span> <span>Senses</span> and <span>Constructions</span>. <em>Constructions and frames</em> 5(2). 119–142. <a href="https://doi.org/10.1075/cf.5.2.01gil">https://doi.org/10.1075/cf.5.2.01gil</a>.
+</div>
+<div id="ref-goldberg_constructions_1995" class="csl-entry" role="doc-biblioentry">
+Goldberg, Adele E. 1995. <em>Constructions: <span>A</span> <span>Construction</span> <span>Grammar</span> <span>Approach</span> to <span>Argument</span> <span>Structure</span></em>. The University of Chicago Press.
+</div>
+<div id="ref-goldberg_surface_2002" class="csl-entry" role="doc-biblioentry">
+Goldberg, Adele E. 2002. Surface <span>Generalizations</span>: <span>An</span> <span>Alternative</span> to <span>Alternations</span>. <a href="https://doi.org/10.1515/cogl.2002.022">https://doi.org/10.1515/cogl.2002.022</a>.
+</div>
+<div id="ref-gries_collostructional_2013" class="csl-entry" role="doc-biblioentry">
+Gries, Stefan Th. 2013. Collostructional <span>Analysis</span>. <em>The Oxford Handbook of Construction Grammar</em> 93–108.
+</div>
+<div id="ref-gries_script" class="csl-entry" role="doc-biblioentry">
+Gries, Stefan Th. 2022. Coll.analysis 4.0. A script for r to compute perform collostructional analyses. <a href="https://www.stgries.info/teaching/groningen/index.html">https://www.stgries.info/teaching/groningen/index.html</a> (21 January, 2023).
+</div>
+<div id="ref-gries_extending_2004" class="csl-entry" role="doc-biblioentry">
+Gries, Stefan Th &amp; Anatol Stefanowitsch. 2004. Extending <span>Collostructional</span> <span>Analysis</span>: <span>A</span> <span>Corpus</span>-<span>Based</span> <span>Perspective</span> <span>Onalternations</span>’. <em>International journal of corpus linguistics</em> 9(1). 97–129. <a href="https://doi.org/10.1075/ijcl.9.1.06gri">https://doi.org/10.1075/ijcl.9.1.06gri</a>.
+</div>
+<div id="ref-gries_cluster_2010" class="csl-entry" role="doc-biblioentry">
+Gries, Stefan Th &amp; Anatol Stefanowitsch. 2010. Cluster <span>Analysis</span> and the <span>Identification</span> of <span>Collexeme</span> <span>Classes</span>. <em>Empirical and experimental methods in cognitive/functional research</em> 73. 90.
+</div>
+<div id="ref-hilpert_distinctive_2006" class="csl-entry" role="doc-biblioentry">
+Hilpert, Martin. 2006. Distinctive <span>Collexeme</span> <span>Analysis</span> and <span>Diachrony</span>. <a href="https://doi.org/10.1515/CLLT.2006.012">https://doi.org/10.1515/CLLT.2006.012</a>.
+</div>
+<div id="ref-levshina_2015" class="csl-entry" role="doc-biblioentry">
+Levshina, Natalia. 2015. How to <span>Do</span> <span>Linguistics</span> with <span>R</span>. <em>Data Exploration and Statistical Analysis, Amsterdam-Philadelphia</em>.
+</div>
+<div id="ref-Moerman_Computational_Construction_Grammar" class="csl-entry" role="doc-biblioentry">
+Moerman, Thomas. <em><span class="nocase">Computational Construction Grammar and Collostructional Analysis</span></em>.
+</div>
+<div id="ref-propbank" class="csl-entry" role="doc-biblioentry">
+Palmer, Martha. The proposition bank (PropBank). <em>Github</em>. <a href="https://propbank.github.io/">https://propbank.github.io/</a> (21 January, 2023).
+</div>
+<div id="ref-stefanowitsch_collostructional_2014" class="csl-entry" role="doc-biblioentry">
+Stefanowitsch, Anatol. 2014. Collostructional <span>Analysis</span>: <span>A</span> <span>Case</span> <span>Study</span> of the <span>English</span> into-<span>Causative</span>. <em>Constructions collocations patterns</em> 217–238. <a href="https://doi.org/10.1515/9783110356854.217">https://doi.org/10.1515/9783110356854.217</a>.
+</div>
+<div id="ref-stefanowitsch_channel_2008" class="csl-entry" role="doc-biblioentry">
+Stefanowitsch, Anatol &amp; Stefan Th Gries. 2008. Channel and <span>Constructional</span> <span>Meaning</span>: <span>A</span> <span>Collostructional</span> <span>Case</span> <span>Study</span>. <em>Cognitive sociolinguistics: language variation, cultural models, social systems. Berlin: Mouton de Gruyter</em> 129–152. <a href="https://doi.org/10.1515/9783110199154.2.129">https://doi.org/10.1515/9783110199154.2.129</a>.
+</div>
+<div id="ref-weischedel_ontonotes_2013" class="csl-entry" role="doc-biblioentry">
+Weischedel, Ralph, Martha Palmer, Mitchell Marcus, Eduard Hovy, Sameer Pradhan, Lance Ramshaw, Nianwen Xue, Ann Taylor, Jeff Kaufman &amp; Michelle Franchini. 2013. Ontonotes <span>Release</span> 5.0. <em>Linguistic Data Consortium, Philadelphia, PA</em> 23.
+</div>
+<div id="ref-wilinski_brink_2017" class="csl-entry" role="doc-biblioentry">
+Wiliński, Jaros\law. 2017. On the <span>Brink</span> of-<span>Noun</span> <span>Vs</span>. On the <span>Verge</span> of-<span>Noun</span>: <span>A</span> <span>Distinctive</span>-<span>Collexeme</span> <span>Analysis</span>. <em>Research in Language (RiL)</em> 15(4). 425–443. <a href="https://doi.org/10.1515/rela-2017-0024">https://doi.org/10.1515/rela-2017-0024</a>.
+</div>
+</div></section></div></main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
