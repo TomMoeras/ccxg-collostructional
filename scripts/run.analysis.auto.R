@@ -113,7 +113,7 @@ dist.collexemes <- function(precbitsexponent = precbitsexponent) {
   
   assoc.cor <- cor(assoc, method="kendall")
   assoc.cor <- round(assoc.cor, 3)
-  write.table(assoc.cor, file=file.path(project_dir, "results_analysis", str_glue("assoc_cor_{basename(file_output)}.csv")), sep="\t", row.names=TRUE, col.names=NA, quote=FALSE)
+  write.table(assoc.cor, file=file.path(project_dir, "results_analysis", "reproduced_analyses", str_glue("assoc_cor_{basename(file_output)}.csv")), sep="\t", row.names=TRUE, col.names=NA, quote=FALSE)
   # corrgram(assoc, order = TRUE, lower.panel = panel.shade, upper.panel = panel.pie)
   # corrgram(assoc, order = TRUE, lower.panel = panel.ellipse, upper.panel = panel.pts)
   

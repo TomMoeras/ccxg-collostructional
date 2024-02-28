@@ -1,10 +1,17 @@
+# This code imports the necessary libraries, reads the data file, extracts the roles and rolesets, and adds a column to the data frame called argument_structure_construction. The function add_arg_struct takes the roles data frame and extracts the roleType and pos columns from the roles data frame. It then concatenates the roleType and pos columns into a string and collapses the role strings into a single string separated by '-'. It then adds the argument_structure_construction column to the corpus dataframe.
+
 # Import necessary libraries
+library(base)
+library(graphics)
+library(stats)
+library(utils)
+library(ggplot2)
+library(tibble)
 library(jsonlite)
 library(dplyr)
 library(here)
 library(tidyr)
 library(stringr)
-library(rlang)
 
 # Get the path to the project root directory
 project_dir <- here::here()
@@ -66,8 +73,10 @@ combine_arg_struct_and_roleset <- function(corpus, rolesets, lemmas) {
   return(corpus_analysis_df)
 }
 
+# Combine the corpus data with the rolesets and lemmas data
 corpus_analysis_df <- combine_arg_struct_and_roleset(corpus_df, roleset_df, lemma_df)
 
+# Write the combined data to a file
 write.table(corpus_analysis_df, file = file.path(project_dir, "data", "raw_data", "raw_corpus_data.csv"), row.names = FALSE, sep = "\t", col.names = TRUE, quote = FALSE)
 
 

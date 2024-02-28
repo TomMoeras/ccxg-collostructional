@@ -1,12 +1,17 @@
 # R Scripts that auto runs a collostructional analysis on a PropBank-annotated corpus and generates the necessary files for analysis
 
 # Import necessary libraries and install if necessary
+library(base)
+library(graphics)
+library(stats)
+library(utils)
+library(ggplot2)
+library(tibble)
 library(jsonlite)
 library(dplyr)
 library(here)
 library(tidyr)
 library(stringr)
-
 
 # Get the path to the project root directory
 project_dir <- here::here()

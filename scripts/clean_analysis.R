@@ -10,14 +10,21 @@ cxn_roleset_preference_list = list()
 # Get the unique constructions in the "PREF" column
 constructions = unique(results_roleset_cxnDT$PREF)
 
+# Create data frame with only constructions that are relevant to the analysis
+# This is necessary because the results_roleset_cxnDT data frame is not filtered by construction
 constructions_df = data.frame(constructions)
 
+# Assign the first construction in the constructions vector to cxn1
 cxn1 = constructions_df$constructions[1]
+# Assign the second construction in the constructions vector to cxn2
 cxn2 = constructions_df$constructions[2]
 
+# Rename the third column in the results_roleset_cxnDT data frame to the first construction
 colnames(results_roleset_cxnDT)[2] <- cxn1
+# Rename the fourth column in the results_roleset_cxnDT data frame to the second construction
 colnames(results_roleset_cxnDT)[3] <- cxn2
 
+# Filter the results_roleset_cxnDT data frame to show only the rows with the constructions in the constructions vector
 mix_results_all_cxn_roleset <- results_roleset_cxnDT %>% 
   filter(!!as.symbol(cxn1) > 0 & !!as.symbol(cxn2) > 0)
 

@@ -1,6 +1,10 @@
 # Applying CCG and Collostructional Analysis on a PropBank-annotated corpus
 
+<!-- Very good README, although it would be good if it described the project in its entirety, e.g. the file(s) with the paper itself, output formats... the idea would be to make it as easy as possible to know what to read -->
+
 This project uses a Computational Construction Grammar (CCG) approach and collostructional analysis on a PropBank-annotated corpus. It explores the data gained from this and focuses on the differences between lemmas and their word senses when used in alternating constructions. The R scripts can be run on any .json output given by the CCxG Explorer available here: https://ehai.ai.vub.ac.be/ccxg-explorer/.
+
+The paper itself can be viewed in .qmd (Quarto) or .html. It describes the methodology and results in more detail. For those interested in seeing how the tables and plots were generated, the Quarto files reveal this information. For those who are satisfied with reading about the project without these datails, the HTML file suffices.
 
 ## Running a distinctive collexeme analysis / reproducing results
 
